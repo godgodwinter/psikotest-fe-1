@@ -1,10 +1,13 @@
+<script setup></script>
 <template>
   <div class="bg-white flex flex-col justify-center sm:py-32">
     <div class="relative py-0 sm:max-w-xl sm:mx-auto">
       <div
         class="absolute inset-0 bg-gradient-to-r from-cyan-400 to-sky-500 shadow-lg transform -skew-y-2 sm:skew-y-0 sm:-rotate-2 sm:rounded-3xl"
       ></div>
-      <div class="relative px-4 py-10 bg-white shadow-2xl sm:rounded-3xl sm:p-10">
+      <div
+        class="relative px-4 py-10 bg-white border border-sky-800 hover:shadow-2xl sm:rounded-3xl sm:p-10"
+      >
         <div class="max-w-md mx-auto">
           <!-- <div>
                     <img src="../../assets/img/avatar/baemon-ava-1.jpg"
@@ -12,7 +15,7 @@
                     </div> -->
           <div class="divide-y divide-gray-200">
             <div class="flex flex-col bg-white shadow-sm px-10 py-4 rounded-3xl w-50">
-              <div class="font-medium self-center text-xl sm:text-3xl text-gray-800">
+              <div class="font-bold self-center text-xl sm:text-3xl text-gray-800">
                 LOGIN
                 <!-- {{dataToken}}
                                 {{dataIsLogin}} -->
@@ -63,31 +66,31 @@
                       />
                     </div>
                   </div>
-
-                  <button class="flex w-full">
-                    <span
-                      href="#"
-                      type="submit"
-                      class="flex mt-2 items-center justify-center focus:outline-none text-white text-sm sm:text-base bg-blue-500 hover:bg-blue-600 rounded-2xl py-2 w-full transition duration-150 ease-in"
-                    >
-                      <span class="mr-2 uppercase">Sign In</span>
-                      <span>
-                        <svg
-                          class="h-6 w-6"
-                          fill="none"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                          />
-                        </svg>
-                      </span>
-                    </span>
-                  </button>
+                  <router-link :to="{ name: 'AdminDashboard' }">
+                    <button class="flex w-full">
+                      <span
+                        href="#"
+                        type="submit"
+                        class="flex mt-2 items-center justify-center focus:outline-none text-white text-sm sm:text-base bg-blue-500 hover:bg-blue-600 rounded-2xl py-2 w-full transition duration-150 ease-in"
+                      >
+                        <span class="mr-2 uppercase">Sign In</span>
+                        <span>
+                          <svg
+                            class="h-6 w-6"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                          </svg>
+                        </span>
+                      </span></button
+                  ></router-link>
                 </div>
               </div>
             </div>

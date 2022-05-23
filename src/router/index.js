@@ -1,10 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router';
 // layouts
 import LandingLayout from '../layouts/LandingLayout.vue';
+import AdminLayout from '../layouts/AdminLayout.vue';
 // pages
 import NotFound from '../views/NotFound.vue';
 import LandingIndex from '../views/landing/LandingIndex.vue';
 import LandingLogin from '../views/landing/LandingLogin.vue';
+
+// admin
+import DashBoard from '../views/admin/DashBoard.vue'
 
 const routes = [
   {
@@ -27,6 +31,19 @@ const routes = [
         path: '/404',
         name: 'NotFound',
         component: NotFound,
+      },
+    ],
+  },
+  {
+    path: '/pages/',
+    name: 'LandingAdmin',
+    component: AdminLayout,
+    redirect: '/pages/admin',
+    children: [
+      {
+        path: '/pages/admin', 
+        name: 'AdminDashboard',
+        component: DashBoard,
       },
     ],
   },

@@ -29,8 +29,7 @@ import ButtonTwo from "../../components/atoms/ButtonTwo.vue";
     </div>
   </div>
 
-  <div class="container max-w-8xl mx-auto">
-    <!-- Start Second Row -->
+  <!-- <div class="container max-w-8xl mx-auto">
     <div class="grid grid-cols-1 md:grid-cols-2 px-4 xl:p-0 gap-4 xl:gap-6 5 my-14">
       <div class="bg-transparent p-6 rounded-xl border border-transparent pl-20 pt-10">
         <h1
@@ -83,6 +82,5 @@ import ButtonTwo from "../../components/atoms/ButtonTwo.vue";
         />
       </div>
     </div>
-  </div>
-  <!-- End Second Row -->
+  </div> -->
 </template>
