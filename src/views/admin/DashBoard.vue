@@ -8,6 +8,9 @@ import {
   DialogTitle,
 } from "@headlessui/vue";
 
+import { useStoreAdminBar } from "@/stores/adminBar";
+const storeAdminBar = useStoreAdminBar();
+storeAdminBar.setPagesActive("AdminDashboard");
 const isOpen = ref(false);
 
 function closeModal() {

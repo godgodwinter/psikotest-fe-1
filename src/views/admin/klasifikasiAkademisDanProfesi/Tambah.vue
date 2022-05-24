@@ -4,6 +4,7 @@ import { ref } from "vue";
 import BreadCrumb from "@/components/atoms/BreadCrumb.vue";
 import BreadCrumbSpace from "@/components/atoms/BreadCrumbSpace.vue";
 import { Field, Form } from "vee-validate";
+import Toast from "@/components/lib/Toast.js";
 
 const dataAsli = ref([]);
 const data = ref([]);
@@ -44,21 +45,26 @@ const doStoreData = async (d) => {
   };
   try {
     const response = await Api.post("admin/klasifikasi", dataStore);
-    let res = response.data;
-    console.log("====================================");
-    console.log(res);
-    console.log("====================================");
-    // Toast.success("Success", "Data Berhasil ditambahkan!");
+    Toast.success("Success", "Data Berhasil ditambahkan!");
     resetForm();
 
     return response.data;
   } catch (error) {
-    // Toast.danger("Warning", "Data gagal ditambahkan!");
-    console.log("====================================");
-    console.log("gagal");
-    console.log("====================================");
+    Toast.danger("Warning", "Data gagal ditambahkan!");
     console.error(error);
   }
+};
+const resetForm = () => {
+  dataDetail.value = {
+    bidang: "",
+    akademis: "",
+    profesi: "",
+    nilaistandart: "",
+    iqstandart: "",
+    jurusandanbidangstudi: "",
+    pekerjaandanketerangan: "",
+    ket: "",
+  };
 };
 </script>
 <template>
@@ -256,16 +262,16 @@ const doStoreData = async (d) => {
                           >Link</label
                         >
                         <Field
-                          v-model="dataDetail.nama"
+                          v-model="dataDetail.ket"
                           :rules="validateData"
                           type="text"
-                          name="nama"
-                          ref="nama"
+                          name="ket"
+                          ref="ket"
                           class="input input-bordered md:w-full max-w-2xl"
                           required
                         />
                         <div class="text-xs text-red-600 mt-1">
-                          {{ errors.nama }}
+                          {{ errors.ket }}
                         </div>
                       </div>
                     </div>

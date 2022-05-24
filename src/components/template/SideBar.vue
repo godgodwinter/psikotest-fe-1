@@ -3,10 +3,11 @@ import { computed } from "vue";
 import { useStoreAdminBar } from "@/stores/adminBar";
 import { useStoreAuth } from "@/stores/auth";
 import { useRouter, useRoute } from "vue-router";
+import { ref } from "vue";
 const router = useRouter();
 const storeAdminBar = useStoreAdminBar();
 const isSideBarActive = computed(() => storeAdminBar.getIsSidebarActive);
-const getIsSidebarActive = computed(() => storeAdminBar.getIsSidebarActive);
+const pagesActive = computed(() => storeAdminBar.getPagesActive);
 async function goLogout() {
   localStorage.removeItem("token");
   localStorage.removeItem("isLogin");
@@ -19,6 +20,7 @@ if (getIsLogin.value == false) {
   //logout
   router.push({ name: "LandingLogin" });
 }
+const pagesActiveClass = ref("border border-gray-500 rounded-lg bg-gray-300");
 </script>
 <template>
   <aside
@@ -130,7 +132,12 @@ if (getIsLogin.value == false) {
                 <span class="ml-3">Yayasan / Dinas </span>
               </router-link>
             </li>
-            <li class="bg-white lg:w-full">
+            <li
+              class="bg-white lg:w-full"
+              :class="[
+                pagesActive == 'AdminKlasifikasi' ? pagesActiveClass : '',
+              ]"
+            >
               <router-link
                 :to="{ name: 'AdminKlasifikasi' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"

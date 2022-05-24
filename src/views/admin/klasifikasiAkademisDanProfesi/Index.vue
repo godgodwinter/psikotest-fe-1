@@ -2,9 +2,32 @@
 import { ref } from "vue";
 import BreadCrumb from "@/components/atoms/BreadCrumb.vue";
 import BreadCrumbSpace from "@/components/atoms/BreadCrumbSpace.vue";
+import Toast from "../../../components/lib/Toast";
+import Api from "@/axios/axios";
+import ButtonEdit from "@/components/atoms/ButtonEdit.vue";
+import ButtonDelete from "@/components/atoms/ButtonDel.vue";
+import { useStoreAdminBar } from "@/stores/adminBar";
+const storeAdminBar = useStoreAdminBar();
+storeAdminBar.setPagesActive("AdminKlasifikasi");
 
 const dataAsli = ref([]);
 const data = ref([]);
+
+const getData = async () => {
+  try {
+    const response = await Api.get("admin/klasifikasi");
+    // console.log(response);
+    dataAsli.value = response.data;
+    data.value = response.data;
+    // console.log(data.value);
+    return response;
+  } catch (error) {
+    Toast.danger("Warning", "Data Gagal dimual");
+    console.error(error);
+  }
+};
+
+getData();
 
 const columns = [
   {
@@ -24,42 +47,42 @@ const columns = [
   },
   {
     label: "Bidang",
-    field: "nama",
+    field: "bidang",
     type: "String",
   },
   {
     label: "Akademis",
-    field: "alamat",
+    field: "akademis",
     type: "String",
   },
   {
     label: "Profesi",
-    field: "status",
+    field: "profesi",
     type: "String",
   },
   {
     label: "Nilai Standart",
-    field: "logo",
+    field: "nilaistandart",
     type: "String",
   },
   {
     label: "IQ Standart",
-    field: "logo",
+    field: "iqstandart",
     type: "String",
   },
   {
     label: "Jurusan & Bidang Studi yang ditekuni",
-    field: "logo",
+    field: "jurusandanbidangstudi",
     type: "String",
   },
   {
     label: "Pekerjaan & Keterangan",
-    field: "logo",
+    field: "pekerjaandanketerangan",
     type: "String",
   },
   {
     label: "Link",
-    field: "logo",
+    field: "ket",
     type: "String",
   },
 ];
