@@ -95,7 +95,17 @@ function openModal() {
       Open dialog
     </button>
   </div>
-
+  <div class="mockup-phone">
+    <div class="camera"></div>
+    <div class="display">
+      <div class="artboard artboard-demo phone-1">Hi.</div>
+    </div>
+  </div>
+  <div class="mockup-code">
+    <pre data-prefix="$"><code>npm i daisyui</code></pre>
+    <pre data-prefix=">" class="text-warning"><code>installing...</code></pre>
+    <pre data-prefix=">" class="text-success"><code>Done!</code></pre>
+  </div>
   <div class="pt-6 px-4 lg:flex">
     <div class="card card-compact w-96 bg-base-100 shadow-xl">
       <figure>
