@@ -97,7 +97,7 @@ const resetForm = () => {
 };
 </script>
 <template>
-  <div class="pt-10 px-10 md:flex justify-between">
+  <div class="pt-4 px-10 md:flex justify-between">
     <div>
       <span
         class="text-2xl sm:text-3xl leading-none font-bold text-gray-700 shadow-sm"
