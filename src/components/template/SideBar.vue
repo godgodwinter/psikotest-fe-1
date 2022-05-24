@@ -30,7 +30,7 @@ const pagesActiveClass = ref("border border-gray-300 rounded-lg bg-gray-300");
     aria-label="Sidebar"
   >
     <div
-      class="relative flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white pt-0"
+      class="relative flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white pt-6 md:pt-4"
     >
       <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
         <div class="flex-1 px-3 bg-white divide-y space-y-1">
