@@ -15,6 +15,7 @@ const dataDetail = ref({
   tipe: "",
   link: "",
   file: "",
+  jenis: "",
 });
 
 // validasi
@@ -81,7 +82,7 @@ const resetForm = () => {
     <div class="md:flex justify-between px-10">
       <div class="space-x-1 space-y-1 pt-1 md:pt-0"></div>
       <div class="space-x-1 space-y-1 pt-1 md:pt-0">
-        <router-link :to="{ name: 'AdminKlasifikasi' }">
+        <router-link :to="{ name: 'AdminReferensi' }">
           <button
             class="btn hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
           >
