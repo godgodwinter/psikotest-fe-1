@@ -16,7 +16,9 @@ import AdminKlasifikasi from '../views/admin/klasifikasiAkademisDanProfesi/Index
 import AdminKlasifikasiTambah from '../views/admin/klasifikasiAkademisDanProfesi/Tambah.vue'
 import AdminKlasifikasiEdit from '../views/admin/klasifikasiAkademisDanProfesi/Edit.vue'
 import AdminReferensi from '../views/admin/referensiStudiDanKerja/Index.vue'
-import AdminBulletin from '../views/admin/bulletinPsikologi/Index.vue'
+import AdminReferensiTambah from '../views/admin/referensiStudiDanKerja/Tambah.vue'
+import AdminReferensiEdit from '../views/admin/referensiStudiDanKerja/Edit.vue'
+import AdminBuletin from '../views/admin/buletinPsikologi/Index.vue'
 import AdminTerapis from '../views/admin/terapisKarakterPositif/Index.vue'
 import AdminPenanganan from '../views/admin/penangananDeteksiMasalah/Index.vue'
 import AdminKataBijak from '../views/admin/kataBijak/Index.vue'
@@ -99,9 +101,19 @@ const routes = [
         component: AdminReferensi,
       },
       {
-        path: '/pages/admin/bulletin', 
-        name: 'AdminBulletin',
-        component: AdminBulletin,
+        path: '/pages/admin/referensi/tambah', 
+        name: 'AdminReferensiTambah',
+        component: AdminReferensiTambah,
+      },
+      {
+        path: '/pages/admin/referensi/edit/:id', 
+        name: 'AdminReferensiEdit',
+        component: AdminReferensiEdit,
+      },
+      {
+        path: '/pages/admin/buletin', 
+        name: 'AdminBuletin',
+        component: AdminBuletin,
       },
       {
         path: '/pages/admin/terapis', 

@@ -170,7 +170,10 @@ const pagesActiveClass = ref("border border-gray-300 rounded-lg bg-gray-300");
                 <span class="ml-3">Klasifikasi Akademis & Profesi</span>
               </router-link>
             </li>
-            <li class="bg-white lg:w-full">
+            <li
+              class="bg-white lg:w-full"
+              :class="[pagesActive == 'referensi' ? pagesActiveClass : '']"
+            >
               <router-link
                 :to="{ name: 'AdminReferensi' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
@@ -193,7 +196,7 @@ const pagesActiveClass = ref("border border-gray-300 rounded-lg bg-gray-300");
             </li>
             <li class="bg-white lg:w-full">
               <router-link
-                :to="{ name: 'AdminBulletin' }"
+                :to="{ name: 'AdminBuletin' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
               >
                 <svg
