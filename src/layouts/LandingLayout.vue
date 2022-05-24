@@ -49,6 +49,12 @@ const actIncrement = () => {
 const actIncrementBy = (num) => {
   storeCounter.incrementBy(num);
 };
+
+const arr = ref([
+  "Kegembiraan yang Anda miliki gunakan secara wajar dan realita",
+  "Nikmatilah hidup itu dengan gembira seperti menyongsong terbitnya Matahari dengan penuh harapan",
+  "Menanti datangnya kegembiraan hal yang sangat diharapkan setiap orang maka nikmatilah kegembiraan dengan hati riang, lembut",
+]);
 </script>
 <template>
   <!-- aside sidebar -->
@@ -99,9 +105,15 @@ const actIncrementBy = (num) => {
   <!-- <LandingHeader class="sticky z-10" /> -->
   <div class="static bg-white" v-if="!isSidebarActive">
     <div
-      class="fixed z-50 w-full font-serif font-semibold text-sm bg-slate-700 text-white flex justify-center py-2"
+      class="fixed z-50 w-full font-serif font-semibold text-sm bg-slate-700 text-white flex justify-center py-2 px-4 text-center"
     >
-      <p>Kata - kata bijak : Details</p>
+      <VueWriter
+        :array="arr"
+        :eraseSpeed="50"
+        :typeSpeed="40"
+        :delay="5000"
+        :intervals="500"
+      />
     </div>
   </div>
 
@@ -109,7 +121,10 @@ const actIncrementBy = (num) => {
     <div class="container max-w-4xl mx-auto font-serif">
       <div class="w-full">
         <div class="flex justify-between px-3 pt-2 pb-4">
-          <router-link :to="{ name: 'LandingIndex' }" class="flex px-2 py-0 w-2/5">
+          <router-link
+            :to="{ name: 'LandingIndex' }"
+            class="flex px-2 py-0 w-2/5"
+          >
             <img
               src="../assets/img/logo/google-developers.svg"
               alt="icon"
@@ -138,7 +153,10 @@ const actIncrementBy = (num) => {
               </div>
             </div>
 
-            <span @click="sidebarToggle" class="text-gray-600 text-xl md:hidden block">
+            <span
+              @click="sidebarToggle"
+              class="text-gray-600 text-xl md:hidden block"
+            >
               <svg
                 v-if="!isSidebarActive"
                 xmlns="http://www.w3.org/2000/svg"

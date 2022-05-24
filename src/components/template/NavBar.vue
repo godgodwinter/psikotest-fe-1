@@ -8,9 +8,27 @@ const storeAdminBar = useStoreAdminBar();
 const toggleSideBar = () => {
   storeAdminBar.toggleSideBar();
 };
+const arr = ref([
+  "Kegembiraan yang Anda miliki gunakan secara wajar dan realita",
+  "Nikmatilah hidup itu dengan gembira seperti menyongsong terbitnya Matahari dengan penuh harapan",
+  "Menanti datangnya kegembiraan hal yang sangat diharapkan setiap orang maka nikmatilah kegembiraan dengan hati riang, lembut",
+]);
 </script>
 <template>
-  <nav class="bg-white border-b border-gray-200 fixed z-30 w-full">
+  <div class="static bg-white" v-if="!isSidebarActive">
+    <div
+      class="fixed z-50 w-full font-serif font-semibold text-sm bg-slate-700 text-white flex justify-center py-2 px-4 text-center"
+    >
+      <VueWriter
+        :array="arr"
+        :eraseSpeed="50"
+        :typeSpeed="40"
+        :delay="5000"
+        :intervals="500"
+      />
+    </div>
+  </div>
+  <nav class="bg-white border-b border-gray-200 fixed z-30 w-full top-8">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
       <div class="flex items-center justify-between">
         <div class="flex items-center justify-start">
@@ -89,7 +107,7 @@ const toggleSideBar = () => {
           </form> -->
         </div>
         <div class="flex items-center">
-          <button
+          <!-- <button
             @click="toggleSideBar()"
             id="toggleSidebarMobileSearch"
             type="button"
@@ -108,8 +126,15 @@ const toggleSideBar = () => {
                 clip-rule="evenodd"
               />
             </svg>
-          </button>
+          </button> -->
           <div class="hidden lg:flex items-center">
+            <!-- <VueWriter
+              :array="arr"
+              :eraseSpeed="50"
+              :typeSpeed="40"
+              :delay="5000"
+              :intervals="500"
+            /> -->
             <!-- <span class="text-base font-normal text-gray-500 mr-5">Open source ❤️ </span> -->
             <div class="-mb-1">
               <div>

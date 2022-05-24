@@ -8,7 +8,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "mosha-vue-toastify": "^1.0.23",
     "@headlessui/vue": "^1.6.1",
     "@vuepic/vue-datepicker": "^3.0.0",
     "@vueup/vue-quill": "^1.0.0-beta.8",
@@ -16,11 +15,13 @@
     "axios": "^0.26.1",
     "daisyui": "^2.15.0",
     "jwt-decode": "^3.1.2",
+    "mosha-vue-toastify": "^1.0.23",
     "pinia": "^2.0.14",
     "vee-validate": "^4.5.11",
     "vue": "^3.2.25",
     "vue-good-table-next": "^0.1.0",
-    "vue-router": "4"
+    "vue-router": "4",
+    "vue-writer": "^1.2.0"
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.0",

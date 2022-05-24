@@ -10,6 +10,9 @@ import { QuillEditor } from '@vueup/vue-quill'
 import AOS from 'aos'
 import VueGoodTablePlugin from 'vue-good-table-next';
 
+// testing
+import VueWriter from "vue-writer";
+
 // style
 import '@vuepic/vue-datepicker/dist/main.css'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
@@ -27,6 +30,9 @@ app.component('Datepicker', Datepicker);
 app.component('QuillEditor', QuillEditor)
 app.use(AOS.init());
 app.use(VueGoodTablePlugin)
+
+// testing
+app.use(VueWriter)
 
 
 
