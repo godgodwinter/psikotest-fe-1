@@ -1,24 +1,22 @@
 import {defineStore} from 'pinia';
-export const useCounterStore = defineStore({
-    id: 'auth',
+export const useStoreAuth = defineStore({
+    id: 'storeAuth',
     state: ()=>({
-        count: 0
+        token: localStorage.getItem('token') ? localStorage.getItem('token') : '',
+        isLogin: localStorage.getItem('isLogin') ? localStorage.getItem('isLogin') : false,
     }),
     getters:{
-        getCount:(state)=> state.count,
-        doubleCount:(state)=> state.count * 2,
-        divideBy:(state)=> (divisor) => state.count / divisor,
+        getToken:(state)=> state.token,
+        getIsLogin:(state)=> state.isLogin,
     },
     actions:{
-        increment(){
-            this.count++;
+        setToken(token){
+            this.token = token;
         },
-        decrement(){
-            this.count--;
-        },
-        incrementBy(amount){
-            this.count += amount;
-        },
+        setIsLogin(isLogin){
+            this.isLogin = isLogin;
+        }
+        
     }
 
 });

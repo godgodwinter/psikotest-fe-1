@@ -1,65 +1,52 @@
 <script setup>
-import Api from "@/axios/axios.js";
 import { ref } from "vue";
 import BreadCrumb from "@/components/atoms/BreadCrumb.vue";
 import BreadCrumbSpace from "@/components/atoms/BreadCrumbSpace.vue";
 import { Field, Form } from "vee-validate";
 
-const dataAsli = ref([]);
+const dataSekolahAsli = ref([]);
 const data = ref([]);
 const dataDetail = ref({
-  bidang: "",
-  akademis: "",
-  profesi: "",
-  nilaistandart: "",
-  iqstandart: "",
-  jurusandanbidangstudi: "",
-  pekerjaandanketerangan: "",
-  ket: "",
+  nama: "",
 });
 
-// validasi
-const validateData = (value) => {
-  if (!value) {
-    return "This field is required";
-  }
-  if (value.length < 1) {
-    return "This Field must be at least 2 characters";
-  }
-  return true;
-};
-const onSubmit = () => {
-  const res = doStoreData();
-};
-const doStoreData = async (d) => {
-  let dataStore = {
-    bidang: dataDetail.value.bidang,
-    akademis: dataDetail.value.akademis,
-    profesi: dataDetail.value.profesi,
-    nilaistandart: dataDetail.value.nilaistandart,
-    iqstandart: dataDetail.value.iqstandart,
-    jurusandanbidangstudi: dataDetail.value.jurusandanbidangstudi,
-    pekerjaandanketerangan: dataDetail.value.pekerjaandanketerangan,
-    ket: dataDetail.value.ket,
-  };
-  try {
-    const response = await Api.post("admin/klasifikasi", dataStore);
-    let res = response.data;
-    console.log("====================================");
-    console.log(res);
-    console.log("====================================");
-    // Toast.success("Success", "Data Berhasil ditambahkan!");
-    resetForm();
-
-    return response.data;
-  } catch (error) {
-    // Toast.danger("Warning", "Data gagal ditambahkan!");
-    console.log("====================================");
-    console.log("gagal");
-    console.log("====================================");
-    console.error(error);
-  }
-};
+const columns = [
+  {
+    label: "No",
+    field: "no",
+    width: "50px",
+    tdClass: "text-center",
+    thClass: "text-center",
+  },
+  {
+    label: "Actions",
+    field: "actions",
+    sortable: false,
+    width: "50px",
+    tdClass: "text-center",
+    thClass: "text-center",
+  },
+  {
+    label: "Nama",
+    field: "nama",
+    type: "String",
+  },
+  {
+    label: "Alamat",
+    field: "alamat",
+    type: "String",
+  },
+  {
+    label: "Status",
+    field: "status",
+    type: "String",
+  },
+  {
+    label: "Logo",
+    field: "logo",
+    type: "String",
+  },
+];
 </script>
 <template>
   <div class="pt-4 px-10 md:flex justify-between">
@@ -112,7 +99,7 @@ const doStoreData = async (d) => {
       <div class="bg-white shadow rounded-lg px-0 py-4">
         <div class="w-full lg:w-fi mx-4">
           <div class="p-2 sm:p-6 xl:p-8">
-            <Form v-slot="{ errors }" @submit="onSubmit">
+            <Form v-slot="{ errors }" @submit="onSubmit" v-if="data">
               <div class="pt-0 px-0">
                 <div class="w-full mx-0">
                   <div class="bg-white rounded-lg p-0 sm:p-6 xl:p-0">
@@ -124,16 +111,16 @@ const doStoreData = async (d) => {
                           >Bidang</label
                         >
                         <Field
-                          v-model="dataDetail.bidang"
+                          v-model="dataDetail.nama"
                           :rules="validateData"
                           type="text"
-                          name="bidang"
-                          ref="bidang"
+                          name="nama"
+                          ref="nama"
                           class="input input-bordered md:w-full max-w-2xl"
                           required
                         />
                         <div class="text-xs text-red-600 mt-1">
-                          {{ errors.bidang }}
+                          {{ errors.nama }}
                         </div>
                       </div>
                       <div>
@@ -143,16 +130,16 @@ const doStoreData = async (d) => {
                           >Akademis</label
                         >
                         <Field
-                          v-model="dataDetail.akademis"
+                          v-model="dataDetail.nama"
                           :rules="validateData"
                           type="text"
-                          name="akademis"
-                          ref="akademis"
+                          name="nama"
+                          ref="nama"
                           class="input input-bordered md:w-full max-w-2xl"
                           required
                         />
                         <div class="text-xs text-red-600 mt-1">
-                          {{ errors.akademis }}
+                          {{ errors.nama }}
                         </div>
                       </div>
                       <div>
@@ -162,16 +149,16 @@ const doStoreData = async (d) => {
                           >Profesi</label
                         >
                         <Field
-                          v-model="dataDetail.profesi"
+                          v-model="dataDetail.nama"
                           :rules="validateData"
                           type="text"
-                          name="profesi"
-                          ref="profesi"
+                          name="nama"
+                          ref="nama"
                           class="input input-bordered md:w-full max-w-2xl"
                           required
                         />
                         <div class="text-xs text-red-600 mt-1">
-                          {{ errors.profesi }}
+                          {{ errors.nama }}
                         </div>
                       </div>
                       <div>
@@ -181,16 +168,16 @@ const doStoreData = async (d) => {
                           >Nilai Standart</label
                         >
                         <Field
-                          v-model="dataDetail.nilaistandart"
+                          v-model="dataDetail.nama"
                           :rules="validateData"
                           type="text"
-                          name="nilaistandart"
-                          ref="nilaistandart"
+                          name="nama"
+                          ref="nama"
                           class="input input-bordered md:w-full max-w-2xl"
                           required
                         />
                         <div class="text-xs text-red-600 mt-1">
-                          {{ errors.nilaistandart }}
+                          {{ errors.nama }}
                         </div>
                       </div>
                       <div>
@@ -200,16 +187,16 @@ const doStoreData = async (d) => {
                           >IQ Standart</label
                         >
                         <Field
-                          v-model="dataDetail.iqstandart"
+                          v-model="dataDetail.nama"
                           :rules="validateData"
                           type="text"
-                          name="iqstandart"
-                          ref="iqstandart"
+                          name="nama"
+                          ref="nama"
                           class="input input-bordered md:w-full max-w-2xl"
                           required
                         />
                         <div class="text-xs text-red-600 mt-1">
-                          {{ errors.iqstandart }}
+                          {{ errors.nama }}
                         </div>
                       </div>
                       <div>
@@ -219,16 +206,16 @@ const doStoreData = async (d) => {
                           >Jurusan dan Bidang Studi yang ditekuni</label
                         >
                         <Field
-                          v-model="dataDetail.jurusandanbidangstudi"
+                          v-model="dataDetail.nama"
                           :rules="validateData"
                           type="text"
-                          name="jurusandanbidangstudi"
-                          ref="jurusandanbidangstudi"
+                          name="nama"
+                          ref="nama"
                           class="input input-bordered md:w-full max-w-2xl"
                           required
                         />
                         <div class="text-xs text-red-600 mt-1">
-                          {{ errors.jurusandanbidangstudi }}
+                          {{ errors.nama }}
                         </div>
                       </div>
                       <div>
@@ -237,16 +224,12 @@ const doStoreData = async (d) => {
                           class="text-sm font-medium text-gray-900 block mb-2"
                           >Pekerjaan dan Keterangan</label
                         ><textarea
-                          v-model="dataDetail.pekerjaandanketerangan"
-                          :rules="validateData"
-                          name="pekerjaandanketerangan"
-                          ref="pekerjaandanketerangan"
                           class="textarea textarea-bordered md:w-full max-w-2xl"
                           placeholder=""
                         ></textarea>
 
                         <div class="text-xs text-red-600 mt-1">
-                          {{ errors.pekerjaandanketerangan }}
+                          {{ errors.nama }}
                         </div>
                       </div>
                       <div>

@@ -3,7 +3,7 @@ import { ref } from "vue";
 import BreadCrumb from "@/components/atoms/BreadCrumb.vue";
 import BreadCrumbSpace from "@/components/atoms/BreadCrumbSpace.vue";
 
-const dataSekolahAsli = ref([]);
+const dataAsli = ref([]);
 const data = ref([]);
 
 const columns = [

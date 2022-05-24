@@ -1,11 +1,24 @@
 <script setup>
 import { computed } from "vue";
 import { useStoreAdminBar } from "@/stores/adminBar";
+import { useStoreAuth } from "@/stores/auth";
 import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
 const storeAdminBar = useStoreAdminBar();
 const isSideBarActive = computed(() => storeAdminBar.getIsSidebarActive);
 const getIsSidebarActive = computed(() => storeAdminBar.getIsSidebarActive);
+async function goLogout() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("isLogin");
+  router.go();
+}
+const storeAuth = useStoreAuth();
+const getIsLogin = computed(() => storeAuth.getIsLogin);
+// const getToken = computed(() => storeAuth.getToken);
+if (getIsLogin.value == false) {
+  //logout
+  router.push({ name: "LandingLogin" });
+}
 </script>
 <template>
   <aside
