@@ -5,8 +5,10 @@ import BreadCrumb from "@/components/atoms/BreadCrumb.vue";
 import BreadCrumbSpace from "@/components/atoms/BreadCrumbSpace.vue";
 import { Field, Form } from "vee-validate";
 import Toast from "@/components/lib/Toast.js";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
+const route = useRoute();
+const id = route.params.id;
 
 const dataAsli = ref([]);
 const data = ref([]);
@@ -21,6 +23,30 @@ const dataDetail = ref({
   ket: "",
 });
 
+const getDataId = async () => {
+  try {
+    const response = await Api.get(`admin/klasifikasi/${id}`);
+    // console.log(response);
+    // dataDetail.value = response.data;
+    dataDetail.value = {
+      bidang: response.data.bidang,
+      akademis: response.data.akademis,
+      profesi: response.data.profesi,
+      nilaistandart: response.data.nilaistandart,
+      iqstandart: response.data.iqstandart,
+      jurusandanbidangstudi: response.data.jurusandanbidangstudi,
+      pekerjaandanketerangan: response.data.pekerjaandanketerangan,
+      ket: response.data.ket,
+    };
+    // console.log(data.value);
+    return response;
+  } catch (error) {
+    Toast.danger("Warning", "Data Gagal dimual");
+    console.error(error);
+  }
+};
+
+getDataId();
 // validasi
 const validateData = (value) => {
   if (!value) {
@@ -46,8 +72,8 @@ const doStoreData = async (d) => {
     ket: dataDetail.value.ket,
   };
   try {
-    const response = await Api.post(`admin/klasifikasi`, dataStore);
-    Toast.success("Success", "Data Berhasil ditambahkan!");
+    const response = await Api.put(`admin/klasifikasi/${id}`, dataStore);
+    Toast.success("Success", "Data Berhasil diupdate!");
     // resetForm();
     router.push({ name: "AdminKlasifikasi" });
 
@@ -75,13 +101,13 @@ const resetForm = () => {
     <div>
       <span
         class="text-2xl sm:text-3xl leading-none font-bold text-gray-700 shadow-sm"
-        >Klasifikasi Akademis dan Profesi</span
-      >
+        >Klasifikasi Akademis dan Profesi
+      </span>
     </div>
     <div class="md:py-0 py-4">
       <BreadCrumb>
         <template v-slot:content>
-          Klasifikasi <BreadCrumbSpace /> Tambah
+          Klasifikasi <BreadCrumbSpace /> Edit
         </template>
       </BreadCrumb>
     </div>

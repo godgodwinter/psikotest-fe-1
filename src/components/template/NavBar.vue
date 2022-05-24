@@ -54,7 +54,9 @@ const toggleSideBar = () => {
               class="h-6 mr-2"
               alt="Windster Logo"
             />
-            <span class="self-center whitespace-nowrap">Babeng</span>
+            <span class="self-center whitespace-nowrap"
+              >PELITA MULTI TALENTA</span
+            >
           </a>
           <!-- <form action="#" method="GET" class="hidden lg:block lg:pl-32">
             <label for="topbar-search" class="sr-only">Search</label>

@@ -20,7 +20,7 @@ if (getIsLogin.value == false) {
   //logout
   router.push({ name: "LandingLogin" });
 }
-const pagesActiveClass = ref("border border-gray-500 rounded-lg bg-gray-300");
+const pagesActiveClass = ref("border border-gray-300 rounded-lg bg-gray-300");
 </script>
 <template>
   <aside
@@ -39,16 +39,31 @@ const pagesActiveClass = ref("border border-gray-500 rounded-lg bg-gray-300");
           >
             <li class="bg-white lg:w-full">
               <div class="flex gap-2 items-center justify-center">
-                <img
+                <!-- <img
                   src="@/assets/img/avatar/baemon-ava-2.jpg"
                   alt=""
                   class="rounded-full w-20 h-20 object-cover"
-                />
-                <div>
-                  <p class="text-gray-500 text-md font-semibold">Paijo</p>
-                  <p class="text-gray-500 text-sm font-medium">Admin</p>
-                  <p class="text-gray-500 text-xs font-light mt-2">1</p>
+                /> -->
+                <!-- <div class="avatar">
+                  <div class="w-24 mask mask-squircle">
+                    <img src="@/assets/img/avatar/baemon-ava-2.jpg" />
+                  </div>
+                </div> -->
+                <div class="avatar online">
+                  <div
+                    class="w-24 rounded-full border border-sky-200 hover:border-sky-400 shadow hover:shadow-lg"
+                  >
+                    <img src="@/assets/img/avatar/baemon-ava-2.jpg" />
+                  </div>
                 </div>
+              </div>
+              <div>
+                <p class="text-gray-800 text-md font-semibold text-center py-2">
+                  Paijo
+                </p>
+                <p class="text-gray-500 text-sm font-medium text-center">
+                  Admin
+                </p>
               </div>
             </li>
             <li class="bg-white lg:w-full flex justify-center">
@@ -134,9 +149,7 @@ const pagesActiveClass = ref("border border-gray-500 rounded-lg bg-gray-300");
             </li>
             <li
               class="bg-white lg:w-full"
-              :class="[
-                pagesActive == 'AdminKlasifikasi' ? pagesActiveClass : '',
-              ]"
+              :class="[pagesActive == 'klasifikasi' ? pagesActiveClass : '']"
             >
               <router-link
                 :to="{ name: 'AdminKlasifikasi' }"

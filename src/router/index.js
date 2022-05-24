@@ -14,6 +14,7 @@ import AdminSekolahTambah from '../views/admin/sekolah/Tambah.vue'
 import AdminYayasan from '../views/admin/yayasan/Index.vue'
 import AdminKlasifikasi from '../views/admin/klasifikasiAkademisDanProfesi/Index.vue'
 import AdminKlasifikasiTambah from '../views/admin/klasifikasiAkademisDanProfesi/Tambah.vue'
+import AdminKlasifikasiEdit from '../views/admin/klasifikasiAkademisDanProfesi/Edit.vue'
 import AdminReferensi from '../views/admin/referensiStudiDanKerja/Index.vue'
 import AdminBulletin from '../views/admin/bulletinPsikologi/Index.vue'
 import AdminTerapis from '../views/admin/terapisKarakterPositif/Index.vue'
@@ -75,6 +76,7 @@ const routes = [
         name: 'AdminYayasan',
         component: AdminYayasan,
       },
+      // MENU-KLASIFIKASI
       {
         path: '/pages/admin/klasifikasi', 
         name: 'AdminKlasifikasi',
@@ -85,6 +87,12 @@ const routes = [
         name: 'AdminKlasifikasiTambah',
         component: AdminKlasifikasiTambah,
       },
+      {
+        path: '/pages/admin/klasifikasi/edit/:id', 
+        name: 'AdminKlasifikasiEdit',
+        component: AdminKlasifikasiEdit,
+      },
+      // MENU-KLASIFIKASI
       {
         path: '/pages/admin/referensi', 
         name: 'AdminReferensi',

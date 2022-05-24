@@ -7,15 +7,16 @@ import Api from "@/axios/axios";
 import ButtonEdit from "@/components/atoms/ButtonEdit.vue";
 import ButtonDelete from "@/components/atoms/ButtonDel.vue";
 import { useStoreAdminBar } from "@/stores/adminBar";
+import router from "../../../router";
 const storeAdminBar = useStoreAdminBar();
-storeAdminBar.setPagesActive("AdminKlasifikasi");
+storeAdminBar.setPagesActive("klasifikasi");
 
 const dataAsli = ref([]);
 const data = ref([]);
 
 const getData = async () => {
   try {
-    const response = await Api.get("admin/klasifikasi");
+    const response = await Api.get(`admin/klasifikasi`);
     // console.log(response);
     dataAsli.value = response.data;
     data.value = response.data;
@@ -86,6 +87,26 @@ const columns = [
     type: "String",
   },
 ];
+
+const doEditData = async (id, index) => {
+  router.push({
+    name: "AdminKlasifikasiEdit",
+    params: { id: id },
+  });
+};
+
+const doDeleteData = async (id, index) => {
+  if (confirm("Apakah anda yakin menghapus data ini?")) {
+    try {
+      const response = await Api.delete(`admin/klasifikasi/${id}`);
+      data.value.splice(index, 1);
+      Toast.success("Success", "Data Berhasil dihapus!");
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
 </script>
 <template>
   <div class="pt-4 px-10 md:flex justify-between">
