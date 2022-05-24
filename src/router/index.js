@@ -19,6 +19,8 @@ import AdminReferensi from '../views/admin/referensiStudiDanKerja/Index.vue'
 import AdminReferensiTambah from '../views/admin/referensiStudiDanKerja/Tambah.vue'
 import AdminReferensiEdit from '../views/admin/referensiStudiDanKerja/Edit.vue'
 import AdminBuletin from '../views/admin/buletinPsikologi/Index.vue'
+import AdminBuletinTambah from '../views/admin/buletinPsikologi/Tambah.vue'
+import AdminBuletinEdit from '../views/admin/buletinPsikologi/Edit.vue'
 import AdminTerapis from '../views/admin/terapisKarakterPositif/Index.vue'
 import AdminPenanganan from '../views/admin/penangananDeteksiMasalah/Index.vue'
 import AdminKataBijak from '../views/admin/kataBijak/Index.vue'
@@ -114,6 +116,16 @@ const routes = [
         path: '/pages/admin/buletin', 
         name: 'AdminBuletin',
         component: AdminBuletin,
+      },
+      {
+        path: '/pages/admin/buletin', 
+        name: 'AdminBuletinTambah',
+        component: AdminBuletinTambah,
+      },
+      {
+        path: '/pages/admin/buletin', 
+        name: 'AdminBuletinEdit',
+        component: AdminBuletinEdit,
       },
       {
         path: '/pages/admin/terapis', 
