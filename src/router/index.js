@@ -22,7 +22,11 @@ import AdminSekolahDetail from '../views/admin/sekolah/Detail.vue'
 // MENU-SEKOLAH-SUB
 import AdminSekolahDetailDashboard from '../views/admin/sekolah/submenu/DashBoard.vue'
 import AdminSekolahDetailSiswa from '../views/admin/sekolah/submenu/siswa/Index.vue'
+import AdminSekolahDetailSiswaTambah from '../views/admin/sekolah/submenu/siswa/Tambah.vue'
+import AdminSekolahDetailSiswaEdit from '../views/admin/sekolah/submenu/siswa/Edit.vue'
 import AdminSekolahDetailKelas from '../views/admin/sekolah/submenu/kelas/Index.vue'
+import AdminSekolahDetailKelasTambah from '../views/admin/sekolah/submenu/kelas/Tambah.vue'
+import AdminSekolahDetailKelasEdit from '../views/admin/sekolah/submenu/kelas/Edit.vue'
 // MENU-SEKOLAH-SUB
 // MENU-SEKOLAH
 
@@ -133,9 +137,29 @@ const routes = [
             component: AdminSekolahDetailSiswa,
           },
           {
+            path: '/pages/admin/sekolahdetail/:id/siswa/tambah', 
+            name: 'AdminSekolahDetailSiswaTambah',
+            component: AdminSekolahDetailSiswaTambah,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/siswa/edit/:id2', 
+            name: 'AdminSekolahDetailSiswaEdit',
+            component: AdminSekolahDetailSiswaEdit,
+          },
+          {
             path: '/pages/admin/sekolahdetail/:id/kelas', 
             name: 'AdminSekolahDetailKelas',
             component: AdminSekolahDetailKelas,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/kelas/tambah', 
+            name: 'AdminSekolahDetailKelasTambah',
+            component: AdminSekolahDetailKelasTambah,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/kelas/edit/:id2', 
+            name: 'AdminSekolahDetailKelasEdit',
+            component: AdminSekolahDetailKelasEdit,
           },
         ],
       },
