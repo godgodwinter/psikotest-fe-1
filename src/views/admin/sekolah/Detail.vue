@@ -2,20 +2,22 @@
 import { ref } from "vue";
 import BreadCrumb from "@/components/atoms/BreadCrumb.vue";
 import BreadCrumbSpace from "@/components/atoms/BreadCrumbSpace.vue";
-import Toast from "../../../components/lib/Toast";
-import Api from "@/axios/axios";
 import ButtonEdit from "@/components/atoms/ButtonEdit.vue";
 import ButtonDelete from "@/components/atoms/ButtonDel.vue";
+import ButtonDetail from "@/components/atoms/ButtonDetail1.vue";
+import Api from "@/axios/axios";
+import Toast from "@/components/lib/Toast";
+
 import { useStoreAdminBar } from "@/stores/adminBar";
 const storeAdminBar = useStoreAdminBar();
-storeAdminBar.setPagesActive("referensi");
+storeAdminBar.setPagesActive("sekolah");
 
 const dataAsli = ref([]);
 const data = ref([]);
 
 const getData = async () => {
   try {
-    const response = await Api.get(`admin/referensi`);
+    const response = await Api.get(`admin/sekolah`);
     // console.log(response);
     dataAsli.value = response.data;
     data.value = response.data;
@@ -28,7 +30,6 @@ const getData = async () => {
 };
 
 getData();
-
 const columns = [
   {
     label: "No",
@@ -46,25 +47,30 @@ const columns = [
     thClass: "text-center",
   },
   {
-    label: "Judul",
+    label: "Nama",
     field: "nama",
     type: "String",
   },
   {
-    label: "Tipe",
-    field: "tipe",
+    label: "Alamat",
+    field: "alamat",
     type: "String",
   },
   {
-    label: "File",
-    field: "file",
+    label: "Status",
+    field: "status",
+    type: "String",
+  },
+  {
+    label: "Logo",
+    field: "logo",
     type: "String",
   },
 ];
 
 const doEditData = async (id, index) => {
   router.push({
-    name: "AdminReferensiEdit",
+    name: "AdminSekolahEdit",
     params: { id: id },
   });
 };
@@ -72,7 +78,7 @@ const doEditData = async (id, index) => {
 const doDeleteData = async (id, index) => {
   if (confirm("Apakah anda yakin menghapus data ini?")) {
     try {
-      const response = await Api.delete(`admin/klasifikasi/${id}`);
+      const response = await Api.delete(`admin/sekolah/${id}`);
       data.value.splice(index, 1);
       Toast.success("Success", "Data Berhasil dihapus!");
       return response.data;
@@ -87,14 +93,12 @@ const doDeleteData = async (id, index) => {
     <div>
       <span
         class="text-2xl sm:text-3xl leading-none font-bold text-gray-700 shadow-sm"
-        >Referensi Studi & Kerja</span
+        >Sekolah</span
       >
     </div>
     <div class="md:py-0 py-4">
       <BreadCrumb>
-        <template v-slot:content>
-          Referensi <BreadCrumbSpace /> Index
-        </template>
+        <template v-slot:content> Sekolah <BreadCrumbSpace /> Index </template>
       </BreadCrumb>
     </div>
   </div>
@@ -102,7 +106,7 @@ const doDeleteData = async (id, index) => {
   <div class="md:pt-6">
     <div class="md:flex justify-between px-10">
       <div class="space-x-1 space-y-1 pt-1 md:pt-0">
-        <router-link :to="{ name: 'AdminReferensiTambah' }">
+        <router-link :to="{ name: 'AdminSekolahTambah' }">
           <button
             class="btn btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
           >
@@ -125,6 +129,25 @@ const doDeleteData = async (id, index) => {
         >
       </div>
       <div class="space-x-1 space-y-1 pt-1 md:pt-0">
+        <button
+          class="btn btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+            />
+          </svg>
+          API PRO BK
+        </button>
         <button
           class="btn btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
         >
@@ -193,6 +216,14 @@ const doDeleteData = async (id, index) => {
                   <ButtonDelete
                     @click="doDeleteData(props.row.id, props.index)"
                   />
+                  <router-link
+                    :to="{
+                      name: 'AdminSekolahDetail',
+                      params: { id: props.row.id },
+                    }"
+                  >
+                    <ButtonDetail
+                  /></router-link>
                 </div>
               </span>
 

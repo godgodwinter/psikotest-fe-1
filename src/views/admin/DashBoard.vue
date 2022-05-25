@@ -10,7 +10,7 @@ import {
 
 import { useStoreAdminBar } from "@/stores/adminBar";
 const storeAdminBar = useStoreAdminBar();
-storeAdminBar.setPagesActive("AdminDashboard");
+storeAdminBar.setPagesActive("dashboard");
 const isOpen = ref(false);
 
 function closeModal() {

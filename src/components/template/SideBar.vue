@@ -90,7 +90,10 @@ const pagesActiveClass = ref("border border-gray-300 rounded-lg bg-gray-300");
           <ul
             class="space-y-2 pb-2 lg:flex flex-wrap px-2 gap-0 justify-between"
           >
-            <li class="bg-white lg:w-full py-2">
+            <li
+              class="bg-white lg:w-full py-2"
+              :class="[pagesActive == 'dashboard' ? pagesActiveClass : '']"
+            >
               <router-link
                 :to="{ name: 'AdminDashboard' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
@@ -108,7 +111,10 @@ const pagesActiveClass = ref("border border-gray-300 rounded-lg bg-gray-300");
                 <span class="ml-3">Dashboard </span>
               </router-link>
             </li>
-            <li class="bg-white lg:w-full py-0">
+            <li
+              class="bg-white lg:w-full py-0"
+              :class="[pagesActive == 'sekolah' ? pagesActiveClass : '']"
+            >
               <router-link
                 :to="{ name: 'AdminSekolah' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
@@ -128,7 +134,10 @@ const pagesActiveClass = ref("border border-gray-300 rounded-lg bg-gray-300");
                 <span class="ml-3">Sekolah </span>
               </router-link>
             </li>
-            <li class="bg-white lg:w-full">
+            <li
+              class="bg-white lg:w-full"
+              :class="[pagesActive == 'yayasan' ? pagesActiveClass : '']"
+            >
               <router-link
                 :to="{ name: 'AdminYayasan' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
@@ -219,7 +228,10 @@ const pagesActiveClass = ref("border border-gray-300 rounded-lg bg-gray-300");
                 <span class="ml-3">Buletin Psikologi </span>
               </router-link>
             </li>
-            <li class="bg-white lg:w-full">
+            <li
+              class="bg-white lg:w-full"
+              :class="[pagesActive == 'terapis' ? pagesActiveClass : '']"
+            >
               <router-link
                 :to="{ name: 'AdminTerapis' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
@@ -239,7 +251,14 @@ const pagesActiveClass = ref("border border-gray-300 rounded-lg bg-gray-300");
                 <span class="ml-3">Terapis Karakter Positif </span>
               </router-link>
             </li>
-            <li class="bg-white lg:w-full">
+            <li
+              class="bg-white lg:w-full"
+              :class="[
+                pagesActive == 'penanganandeteksimasalah'
+                  ? pagesActiveClass
+                  : '',
+              ]"
+            >
               <router-link
                 :to="{ name: 'AdminPenanganan' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
@@ -282,7 +301,12 @@ const pagesActiveClass = ref("border border-gray-300 rounded-lg bg-gray-300");
                 <span class="ml-3">Kata - kata Bijak </span>
               </router-link>
             </li>
-            <li class="bg-white lg:w-full">
+            <li
+              class="bg-white lg:w-full"
+              :class="[
+                pagesActive == 'masternilaipsikologi' ? pagesActiveClass : '',
+              ]"
+            >
               <router-link
                 :to="{ name: 'AdminMasterNilaiPsikologi' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
@@ -302,7 +326,10 @@ const pagesActiveClass = ref("border border-gray-300 rounded-lg bg-gray-300");
                 <span class="ml-3">Master Nilai Psikologi </span>
               </router-link>
             </li>
-            <li class="bg-white lg:w-full">
+            <li
+              class="bg-white lg:w-full"
+              :class="[pagesActive == 'minatbakat' ? pagesActiveClass : '']"
+            >
               <router-link
                 :to="{ name: 'AdmiMinatBakat' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
@@ -322,7 +349,10 @@ const pagesActiveClass = ref("border border-gray-300 rounded-lg bg-gray-300");
                 <span class="ml-3">Minat Bakat </span>
               </router-link>
             </li>
-            <li class="bg-white lg:w-full">
+            <li
+              class="bg-white lg:w-full"
+              :class="[pagesActive == 'administrator' ? pagesActiveClass : '']"
+            >
               <router-link
                 :to="{ name: 'AdminAdministrator' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
@@ -343,7 +373,7 @@ const pagesActiveClass = ref("border border-gray-300 rounded-lg bg-gray-300");
               </router-link>
             </li>
           </ul>
-          <div class="space-y-2 pt-10">
+          <!-- <div class="space-y-2 pt-10">
             <Link
               to="/about"
               class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
@@ -395,7 +425,7 @@ const pagesActiveClass = ref("border border-gray-300 rounded-lg bg-gray-300");
               </svg>
               <span class="ml-3">Help</span>
             </a>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

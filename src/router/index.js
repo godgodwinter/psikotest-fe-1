@@ -11,6 +11,8 @@ import LandingLogin from '../views/landing/LandingLogin.vue';
 import DashBoard from '../views/admin/DashBoard.vue'
 import AdminSekolah from '../views/admin/sekolah/Index.vue'
 import AdminSekolahTambah from '../views/admin/sekolah/Tambah.vue'
+import AdminSekolahEdit from '../views/admin/sekolah/Edit.vue'
+import AdminSekolahDetail from '../views/admin/sekolah/Detail.vue'
 import AdminYayasan from '../views/admin/yayasan/Index.vue'
 import AdminKlasifikasi from '../views/admin/klasifikasiAkademisDanProfesi/Index.vue'
 import AdminKlasifikasiTambah from '../views/admin/klasifikasiAkademisDanProfesi/Tambah.vue'
@@ -78,6 +80,16 @@ const routes = [
         path: '/pages/admin/sekolah/tambah', 
         name: 'AdminSekolahTambah',
         component: AdminSekolahTambah,
+      },
+      {
+        path: '/pages/admin/sekolah/edit/:id', 
+        name: 'AdminSekolahEdit',
+        component: AdminSekolahEdit,
+      },
+      {
+        path: '/pages/admin/sekolah/detail/:id', 
+        name: 'AdminSekolahDetail',
+        component: AdminSekolahDetail,
       },
       // MENU-SEKOLAH
       {

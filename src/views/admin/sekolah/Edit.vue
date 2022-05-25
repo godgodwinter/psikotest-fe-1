@@ -5,9 +5,11 @@ import BreadCrumbSpace from "@/components/atoms/BreadCrumbSpace.vue";
 import { Field, Form } from "vee-validate";
 import Api from "@/axios/axios";
 import Toast from "@/components/lib/Toast";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
+const route = useRoute();
 
+const id = route.params.id;
 const dataSekolahAsli = ref([]);
 const data = ref([]);
 const dataDetail = ref({
@@ -22,6 +24,31 @@ const dataDetail = ref({
   provinsi: "",
 });
 
+const getDataId = async () => {
+  try {
+    const response = await Api.get(`admin/sekolah/${id}`);
+    // console.log(response);
+    // dataDetail.value = response.data;
+    dataDetail.value = {
+      nama: response.data.nama,
+      alamat: response.data.alamat,
+      status: response.data.status,
+      kepsek_nama: response.data.kepsek_nama,
+      tahunajaran_nama: response.data.tahunajaran_nama,
+      semester_nama: response.data.semester_nama,
+      kecamatan: response.data.kecamatan,
+      kabupaten: response.data.kabupaten,
+      provinsi: response.data.provinsi,
+    };
+    // console.log(data.value);
+    return response;
+  } catch (error) {
+    Toast.danger("Warning", "Data Gagal dimual");
+    console.error(error);
+  }
+};
+
+getDataId();
 // validasi
 const validateData = (value) => {
   if (!value) {
@@ -48,7 +75,7 @@ const doStoreData = async (d) => {
     provinsi: dataDetail.value.provinsi,
   };
   try {
-    const response = await Api.post(`admin/sekolah`, dataStore);
+    const response = await Api.put(`admin/sekolah/${id}`, dataStore);
     Toast.success("Success", "Data Berhasil ditambahkan!");
     // resetForm();
     router.push({ name: "AdminSekolah" });
@@ -83,7 +110,7 @@ const resetForm = () => {
     </div>
     <div class="md:py-0 py-4">
       <BreadCrumb>
-        <template v-slot:content> Sekolah <BreadCrumbSpace /> Tambah </template>
+        <template v-slot:content> Sekolah <BreadCrumbSpace /> Edit </template>
       </BreadCrumb>
     </div>
   </div>

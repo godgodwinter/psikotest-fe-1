@@ -2,10 +2,35 @@
 import { ref } from "vue";
 import BreadCrumb from "@/components/atoms/BreadCrumb.vue";
 import BreadCrumbSpace from "@/components/atoms/BreadCrumbSpace.vue";
+import ButtonEdit from "@/components/atoms/ButtonEdit.vue";
+import ButtonDelete from "@/components/atoms/ButtonDel.vue";
+import ButtonDetail from "@/components/atoms/ButtonDetail1.vue";
+import Api from "@/axios/axios";
+import Toast from "@/components/lib/Toast";
+import { useRouter } from "vue-router";
+import { useStoreAdminBar } from "@/stores/adminBar";
 
-const dataSekolahAsli = ref([]);
+const storeAdminBar = useStoreAdminBar();
+storeAdminBar.setPagesActive("sekolah");
+const router = useRouter();
+const dataAsli = ref([]);
 const data = ref([]);
 
+const getData = async () => {
+  try {
+    const response = await Api.get(`admin/sekolah`);
+    // console.log(response);
+    dataAsli.value = response.data;
+    data.value = response.data;
+    // console.log(data.value);
+    return response;
+  } catch (error) {
+    Toast.danger("Warning", "Data Gagal dimual");
+    console.error(error);
+  }
+};
+
+getData();
 const columns = [
   {
     label: "No",
@@ -43,6 +68,26 @@ const columns = [
     type: "String",
   },
 ];
+
+const doEditData = async (id, index) => {
+  router.push({
+    name: "AdminSekolahEdit",
+    params: { id: id },
+  });
+};
+
+const doDeleteData = async (id, index) => {
+  if (confirm("Apakah anda yakin menghapus data ini?")) {
+    try {
+      const response = await Api.delete(`admin/sekolah/${id}`);
+      data.value.splice(index, 1);
+      Toast.success("Success", "Data Berhasil dihapus!");
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
 </script>
 <template>
   <div class="pt-4 px-10 md:flex justify-between">
@@ -172,6 +217,14 @@ const columns = [
                   <ButtonDelete
                     @click="doDeleteData(props.row.id, props.index)"
                   />
+                  <router-link
+                    :to="{
+                      name: 'AdminSekolahDetail',
+                      params: { id: props.row.id },
+                    }"
+                  >
+                    <ButtonDetail
+                  /></router-link>
                 </div>
               </span>
 
