@@ -133,7 +133,7 @@ const pagesSubSideBarActiveClass = ref(
             ]"
           >
             <router-link
-              :to="{ name: 'AdminSekolah' }"
+              :to="{ name: 'AdminSekolahDetailKelas' }"
               class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
             >
               <svg
@@ -160,7 +160,7 @@ const pagesSubSideBarActiveClass = ref(
             ]"
           >
             <router-link
-              :to="{ name: 'AdminSekolah' }"
+              :to="{ name: 'AdminSekolahDetailKelas' }"
               class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
             >
               <svg
@@ -187,7 +187,7 @@ const pagesSubSideBarActiveClass = ref(
             ]"
           >
             <router-link
-              :to="{ name: 'AdminSekolah' }"
+              :to="{ name: 'AdminSekolahDetailKelas' }"
               class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
             >
               <svg
@@ -241,7 +241,7 @@ const pagesSubSideBarActiveClass = ref(
               ]"
             >
               <router-link
-                :to="{ name: 'AdminDashboard' }"
+                :to="{ name: 'AdminSekolahDetailKelas' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
               >
                 <svg
@@ -266,7 +266,7 @@ const pagesSubSideBarActiveClass = ref(
               ]"
             >
               <router-link
-                :to="{ name: 'AdminApiProBK' }"
+                :to="{ name: 'AdminSekolahDetailKelas' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
               >
                 <svg
@@ -293,7 +293,7 @@ const pagesSubSideBarActiveClass = ref(
               ]"
             >
               <router-link
-                :to="{ name: 'AdminSekolah' }"
+                :to="{ name: 'AdminSekolahDetailKelas' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
               >
                 <svg
@@ -320,7 +320,7 @@ const pagesSubSideBarActiveClass = ref(
               ]"
             >
               <router-link
-                :to="{ name: 'AdminSekolah' }"
+                :to="{ name: 'AdminSekolahDetailKelas' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
               >
                 <svg
@@ -347,7 +347,7 @@ const pagesSubSideBarActiveClass = ref(
               ]"
             >
               <router-link
-                :to="{ name: 'AdminSekolah' }"
+                :to="{ name: 'AdminSekolahDetailKelas' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
               >
                 <svg
@@ -374,7 +374,7 @@ const pagesSubSideBarActiveClass = ref(
               ]"
             >
               <router-link
-                :to="{ name: 'AdminSekolah' }"
+                :to="{ name: 'AdminSekolahDetailKelas' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
               >
                 <svg
@@ -401,7 +401,7 @@ const pagesSubSideBarActiveClass = ref(
               ]"
             >
               <router-link
-                :to="{ name: 'AdminSekolah' }"
+                :to="{ name: 'AdminSekolahDetailKelas' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
               >
                 <svg
