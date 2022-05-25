@@ -186,7 +186,7 @@ const pagesSubSideBarActiveClass = ref(
             ]"
           >
             <router-link
-              :to="{ name: 'AdminSekolahDetailKelas' }"
+              :to="{ name: 'AdminSekolahDetailGuruBk' }"
               class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
             >
               <svg
