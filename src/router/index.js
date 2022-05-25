@@ -9,6 +9,11 @@ import LandingLogin from '../views/landing/LandingLogin.vue';
 
 // admin
 import DashBoard from '../views/admin/DashBoard.vue'
+
+import AdminApiProBK from '../views/admin/apiprobk/Index.vue'
+import AdminApiProBKTambah from '../views/admin/apiprobk/Tambah.vue'
+import AdminApiProBKEdit from '../views/admin/apiprobk/Edit.vue'
+
 import AdminSekolah from '../views/admin/sekolah/Index.vue'
 import AdminSekolahTambah from '../views/admin/sekolah/Tambah.vue'
 import AdminSekolahEdit from '../views/admin/sekolah/Edit.vue'
@@ -70,6 +75,23 @@ const routes = [
         name: 'AdminDashboard',
         component: DashBoard,
       },
+      // MENU-APIPROBK
+      {
+        path: '/pages/admin/apiprobk', 
+        name: 'AdminApiProBK',
+        component: AdminApiProBK,
+      },
+      {
+        path: '/pages/admin/apiprobk/tambah', 
+        name: 'AdminApiProBKTambah',
+        component: AdminApiProBKTambah,
+      },
+      {
+        path: '/pages/admin/apiprobk/edit/:id', 
+        name: 'AdminApiProBKEdit',
+        component: AdminApiProBKEdit,
+      },
+      // MENU-APIPROBK
       // MENU-SEKOLAH
       {
         path: '/pages/admin/sekolah', 
