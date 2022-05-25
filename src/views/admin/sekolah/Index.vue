@@ -200,7 +200,7 @@ const doDeleteData = async (id, index) => {
                   />
                   <router-link
                     :to="{
-                      name: 'AdminSekolahDetail',
+                      name: 'AdminSekolahDetailDashboard',
                       params: { id: props.row.id },
                     }"
                   >

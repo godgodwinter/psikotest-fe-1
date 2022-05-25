@@ -1,4 +1,5 @@
 <script setup>
+import SubSideBarMenu from "@/components/organismes/SubSideBarMenu.vue";
 import { ref } from "vue";
 import BreadCrumb from "@/components/atoms/BreadCrumb.vue";
 import BreadCrumbSpace from "@/components/atoms/BreadCrumbSpace.vue";
@@ -70,6 +71,19 @@ getDataId();
       <BreadCrumb>
         <template v-slot:content> Sekolah <BreadCrumbSpace /> Detail </template>
       </BreadCrumb>
+    </div>
+  </div>
+
+  <div class="container mx-auto lg:mx-0 my-5 p-5">
+    <div class="lg:flex no-wrap lg:-mx-2">
+      <!-- Left Side -->
+      <div class="w-full lg:w-3/12 lg:mx-2">
+        <SubSideBarMenu></SubSideBarMenu>
+      </div>
+      <!-- Right Side -->
+      <div class="w-full lg:w-9/12 mx-2 h-64 pt-10 lg:pt-0">
+        <router-view />
+      </div>
     </div>
   </div>
 </template>

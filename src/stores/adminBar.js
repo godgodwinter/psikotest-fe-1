@@ -8,6 +8,7 @@ export const useStoreAdminBar = defineStore({
         state: () => ({ 
             isSidebarActive:false,
             pagesActive:'' ,
+            pagesSubSideBarActive:'' ,
             kataBijak:[]
         }),
     // state: ()=>({
@@ -16,6 +17,7 @@ export const useStoreAdminBar = defineStore({
     getters:{
         getIsSidebarActive:(state)=> state.isSidebarActive,
         getPagesActive:(state)=> state.pagesActive,
+        getPagesSubSideBarActive:(state)=> state.pagesSubSideBarActive,
         getKataBijak:(state)=> state.kataBijak,
     },
     actions:{
@@ -24,6 +26,9 @@ export const useStoreAdminBar = defineStore({
         },
         setPagesActive(pages){
             this.pagesActive = pages;
+        },
+        setPagesSubSideBarActive(pages){
+            this.pagesSubSideBarActive = pages;
         },
         setKataBijak(kataBijak){
             this.kataBijak = kataBijak;

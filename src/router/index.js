@@ -14,10 +14,17 @@ import AdminApiProBK from '../views/admin/apiprobk/Index.vue'
 import AdminApiProBKTambah from '../views/admin/apiprobk/Tambah.vue'
 import AdminApiProBKEdit from '../views/admin/apiprobk/Edit.vue'
 
+// MENU-SEKOLAH
 import AdminSekolah from '../views/admin/sekolah/Index.vue'
 import AdminSekolahTambah from '../views/admin/sekolah/Tambah.vue'
 import AdminSekolahEdit from '../views/admin/sekolah/Edit.vue'
 import AdminSekolahDetail from '../views/admin/sekolah/Detail.vue'
+// MENU-SEKOLAH-SUB
+import AdminSekolahDetailDashboard from '../views/admin/sekolah/submenu/DashBoard.vue'
+import AdminSekolahDetailSiswa from '../views/admin/sekolah/submenu/siswa/Index.vue'
+// MENU-SEKOLAH-SUB
+// MENU-SEKOLAH
+
 import AdminYayasan from '../views/admin/yayasan/Index.vue'
 import AdminKlasifikasi from '../views/admin/klasifikasiAkademisDanProfesi/Index.vue'
 import AdminKlasifikasiTambah from '../views/admin/klasifikasiAkademisDanProfesi/Tambah.vue'
@@ -112,6 +119,19 @@ const routes = [
         path: '/pages/admin/sekolah/detail/:id', 
         name: 'AdminSekolahDetail',
         component: AdminSekolahDetail,
+        redirect: 'pages/admin/sekolahdetail/:id/dashboard',
+        children: [
+          {
+            path: '/pages/admin/sekolahdetail/:id/dashboard', 
+            name: 'AdminSekolahDetailDashboard',
+            component: AdminSekolahDetailDashboard,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/siswa', 
+            name: 'AdminSekolahDetailSiswa',
+            component: AdminSekolahDetailSiswa,
+          },
+        ],
       },
       // MENU-SEKOLAH
       {
