@@ -16,10 +16,6 @@ const dataAsli = ref([]);
 const dataKelas = ref([]);
 const data = ref([]);
 
-let inputTersedia = ref({
-  label: "Tersedia",
-  id: "Tersedia",
-});
 let pilihKelas = ref([
   {
     label: "Semua Kelas",
@@ -129,6 +125,17 @@ const doDeleteData = async (id2, index) => {
     }
   }
 };
+
+const doPilihKelas = () => {
+  // if (inputTersedia.value.id === "Tersedia") {
+  //   data.value = dataAsli.value.filter((item) => {
+  //     return item.kelas_id <= 1000;
+  //   });
+  // }
+  console.log("====================================");
+  console.log("Cari");
+  console.log("====================================");
+};
 </script>
 <template>
   <div class="pt-4 px-10 md:flex justify-between">
@@ -157,6 +164,11 @@ const doDeleteData = async (id2, index) => {
         v-model="inputTersedia"
         v-bind:class="{ disabled: false }"
       ></v-select>
+      <div class="py-2">
+        <button class="btn btn-sm btn-info p-2" @click="doPilihKelas()">
+          Cari
+        </button>
+      </div>
     </div>
   </div>
 

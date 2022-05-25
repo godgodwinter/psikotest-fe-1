@@ -24,18 +24,6 @@ const dataDetail = ref({
 const getDataId = async () => {
   try {
     const response = await Api.get(`admin/datasekolah/${id}/siswa/${id2}`);
-    // console.log(response);
-    // dataDetail.value = response.data;
-
-    // dataDetail.value = response.data.map((item, index) => {
-    //   return {
-    //     ...item,
-    //     nama: item.nama,
-    //     kelas: `${item.kelas ? item.kelas.nama : ""}`,
-    //     username: item.username,
-    //     passworddefault: item.passworddefault,
-    //   };
-    // });
     dataDetail.value = {
       nama: response.data.nama,
       nomeridentitas: response.data.nomeridentitas,
