@@ -33,11 +33,10 @@ const pagesSubSideBarActiveClass = ref(
           <span class="ml-auto">
             <div class="flex justify-center">
               <div class="form-check form-switch">
-                <button
-                  data-tip="Aktif"
-                  class="tooltip form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-green-800 bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
+                <input
                   type="checkbox"
-                  role="switch"
+                  checked="checked"
+                  class="checkbox checkbox-lg checkbox-primary"
                 />
               </div>
             </div>

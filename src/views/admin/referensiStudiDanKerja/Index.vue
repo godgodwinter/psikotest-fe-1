@@ -22,7 +22,7 @@ const getData = async () => {
     // console.log(data.value);
     return response;
   } catch (error) {
-    Toast.danger("Warning", "Data Gagal dimual");
+    Toast.danger("Warning", "Data Gagal dimuat");
     console.error(error);
   }
 };
