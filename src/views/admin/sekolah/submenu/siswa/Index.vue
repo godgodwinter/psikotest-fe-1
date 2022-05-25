@@ -19,6 +19,9 @@ let pilihKelas = [
     label: "X1 B",
     id: "X1 B",
   },
+  {
+    label: "Belum masuk Kelas",
+  },
 ];
 </script>
 <template>

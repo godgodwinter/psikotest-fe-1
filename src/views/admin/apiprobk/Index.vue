@@ -308,7 +308,7 @@ const doBackupPerId = async (id, index, username) => {
   <div class="md:pt-6">
     <div class="md:flex justify-between px-10">
       <div class="space-x-1 space-y-1 pt-1 md:pt-0">
-        <router-link :to="{ name: 'AdminSekolahTambah' }">
+        <!-- <router-link :to="{ name: 'AdminSekolahTambah' }">
           <button
             class="btn btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
           >
@@ -328,7 +328,7 @@ const doBackupPerId = async (id, index, username) => {
             </svg>
             Tambah
           </button></router-link
-        >
+        > -->
         <button
           @click="doBackup()"
           class="btn btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
@@ -349,7 +349,7 @@ const doBackupPerId = async (id, index, username) => {
           </svg>
           Backup
         </button>
-        <button
+        <!-- <button
           class="btn btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
         >
           <svg
@@ -367,7 +367,7 @@ const doBackupPerId = async (id, index, username) => {
             />
           </svg>
           Sikron
-        </button>
+        </button> -->
       </div>
       <div class="space-x-1 space-y-1 pt-1 md:pt-0">
         <label
