@@ -1,11 +1,12 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import BreadCrumb from "@/components/atoms/BreadCrumb.vue";
 import BreadCrumbSpace from "@/components/atoms/BreadCrumbSpace.vue";
 import ButtonEdit from "@/components/atoms/ButtonEdit.vue";
 import ButtonDelete from "@/components/atoms/ButtonDel.vue";
 import ButtonDetail from "@/components/atoms/ButtonDetail1.vue";
 import Api from "@/axios/axios";
+import axios from "axios";
 import Toast from "@/components/lib/Toast";
 import { useRouter } from "vue-router";
 import { useStoreAdminBar } from "@/stores/adminBar";
@@ -18,14 +19,17 @@ const data = ref([]);
 
 const getData = async () => {
   try {
-    const response = await Api.get(`admin/sekolah`);
+    const response = await Api.get(`admin/apiprobk/all`);
     // console.log(response);
     dataAsli.value = response.data;
     data.value = response.data;
+    countData.value = data.value.filter(
+      (item) => item.sertifikat == "belum"
+    ).length;
     // console.log(data.value);
     return response;
   } catch (error) {
-    Toast.danger("Warning", "Data Gagal dimual");
+    // Toast.danger("Warning", "Data Gagal dimual");
     console.error(error);
   }
 };
@@ -53,7 +57,7 @@ const columns = [
     type: "String",
   },
   {
-    label: "GetData",
+    label: "Sertifikat",
     field: "sertifikat",
     type: "String",
   },
@@ -63,34 +67,34 @@ const columns = [
     type: "String",
   },
   {
-    label: "Sinkron Data",
-    field: "sinkron",
+    label: "Deteksi",
+    field: "deteksi",
     type: "String",
   },
   {
     label: "Status Sinkron Data",
-    field: "sinkron_tgl",
+    field: "deteksi_tgl",
     type: "String",
   },
 ];
 
 const doEditData = async (id, index) => {
-  router.push({
-    name: "AdminSekolahEdit",
-    params: { id: id },
-  });
+  // router.push({
+  //   name: "AdminSekolahEdit",
+  //   params: { id: id },
+  // });
 };
 
 const doDeleteData = async (id, index) => {
   if (confirm("Apakah anda yakin menghapus data ini?")) {
-    try {
-      const response = await Api.delete(`admin/sekolah/${id}`);
-      data.value.splice(index, 1);
-      Toast.success("Success", "Data Berhasil dihapus!");
-      return response.data;
-    } catch (error) {
-      console.error(error);
-    }
+    // try {
+    //   const response = await Api.delete(`admin/sekolah/${id}`);
+    //   data.value.splice(index, 1);
+    //   Toast.success("Success", "Data Berhasil dihapus!");
+    //   return response.data;
+    // } catch (error) {
+    //   console.error(error);
+    // }
   }
 };
 
@@ -106,21 +110,184 @@ const doStoreData = async (d) => {
       },
     });
     // console.log(response.data);
-    Toast.success("Success", "Data Berhasil ditambahkan!");
+    // Toast.success("Success", "Data Berhasil ditambahkan!");
     getData();
     return response.data;
   } catch (error) {
-    Toast.danger("Warning", "Data gagal ditambahkan!");
+    // Toast.danger("Warning", "Data gagal ditambahkan!");
     console.error(error);
   }
 };
 const doSubmitFile = async () => {
   formData.append("file", file.value.files[0]);
-  // debugger;
-  // console.log(formData);
-  // console.log("selected file", file.value.files[0]);
-  // //Upload to server
   doStoreData();
+};
+
+const countData = ref(0);
+const diProses = ref(0);
+const progressBarValue = ref(0);
+let dataForm = {};
+let dataFormDeteksi = {};
+
+watch(diProses, async (newQuestion, oldQuestion) => {
+  if (newQuestion == oldQuestion) return;
+
+  progressBarValue.value = (
+    (newQuestion / (countData.value * 2)) *
+    100
+  ).toFixed(2);
+});
+
+const doStoreDataBackupSertifikat = async (d, index) => {
+  try {
+    const response = await Api.post("admin/apiprobk/api_backup", d);
+    // console.log(response.data);
+    // Toast.success("Success", "Data Berhasil ditambahkan!");
+    data.value[index].deteksi = "sudah";
+    diProses.value++;
+    return response.data;
+  } catch (error) {
+    diProses.value++;
+    data.value[index].deteksi = "gagal";
+    // Toast.danger("Warning", "Data gagal ditambahkan!");
+    console.error(error);
+  }
+};
+
+const doStoreDataBackupDeteksi = async (d, index) => {
+  // console.log(d);
+  try {
+    const response = await Api.post("admin/apiprobk/api_backup_deteksi", d);
+    // console.log(response.data);
+    // Toast.success("Success", "Data Berhasil ditambahkan!");
+    data.value[index].deteksi = "sudah";
+    diProses.value++;
+    return response.data;
+  } catch (error) {
+    diProses.value++;
+    data.value[index].deteksi = "gagal";
+    // Toast.danger("Warning", "Data gagal ditambahkan!");
+    console.error(error);
+  }
+};
+
+const doProsesGetApiGagal = async (id, index) => {
+  // console.log(d);
+  try {
+    const response = await Api.post("admin/apiprobk/gagal", {
+      id: id,
+    });
+    // console.log(response.data);
+    // Toast.warning("Warning", "Update Proses gagal!");
+    data.value[index].sertifikat = "gagal";
+    data.value[index].deteksi = "gagal";
+    diProses.value++;
+    return response.data;
+  } catch (error) {
+    diProses.value++;
+    data.value[index].sertifikat = "gagal";
+    data.value[index].deteksi = "gagal";
+    // Toast.danger("Warning", "Data gagal diupdate!");
+    console.error(error);
+  }
+};
+
+const getDataFromApiUjianSertifikat = async (
+  username,
+  apiprobk_id = 0,
+  index = 0
+) => {
+  try {
+    const response = await axios.post(
+      "http://161.97.84.91:9001/api/probk/DataSertifikat_Get",
+      {
+        username: username,
+      },
+      {
+        headers: {},
+      }
+    );
+    // console.log(response);
+    dataForm = response.data;
+    dataForm.apiprobk_id = apiprobk_id;
+    // console.log(dataForm);
+    doStoreDataBackupSertifikat(dataForm, index);
+    data.value[index].sertifikat = "sudah";
+    return response;
+  } catch (error) {
+    doProsesGetApiGagal(apiprobk_id, index);
+    // data.value[index].sertifikat = "gagal";
+    // Toast.danger("Warning", "Proses gagal");
+    console.error(error);
+  }
+};
+
+const getDataFromApiUjianDeteksi = async (
+  username,
+  apiprobk_id = 0,
+  index = 0
+) => {
+  try {
+    const response = await axios.post(
+      "http://161.97.84.91:9001/api/probk/DataDeteksi_Get",
+      {
+        username: username,
+      },
+      {
+        headers: {},
+      }
+    );
+    // console.log(response);
+    dataFormDeteksi = response.data;
+    dataFormDeteksi.apiprobk_id = apiprobk_id;
+    // console.log(dataFormDeteksi);
+    doStoreDataBackupDeteksi(dataFormDeteksi, index);
+    data.value[index].sertifikat = "sudah";
+    return response;
+  } catch (error) {
+    doProsesGetApiGagal(apiprobk_id, index);
+    // data.value[index].sertifikat = "gagal";
+    // Toast.danger("Warning", "Proses gagal");
+    console.error(error);
+  }
+};
+
+const doBackup = async () => {
+  if (confirm("Apakah anda yakin melakukan proses ini?")) {
+    try {
+      diProses.value = 0;
+      console.log("sync data");
+      // foreach then getData then push on datatable
+      // 2.async insert data from api to be
+      for (let i = 0; i < data.value.length; i++) {
+        if (data.value[i].sertifikat == "belum") {
+          getDataFromApiUjianSertifikat(
+            data.value[i].username,
+            data.value[i].id,
+            i
+          );
+        }
+        if (data.value[i].sertifikat == "belum") {
+          getDataFromApiUjianDeteksi(
+            data.value[i].username,
+            data.value[i].id,
+            i
+          );
+        }
+        // console.log(data.value[i].username);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
+
+const doBackupPerId = async (id, index, username) => {
+  if (confirm("Apakah anda yakin melakukan backup data ini?")) {
+    // console.log(id, index, username);
+    getDataFromApiUjianSertifikat(username, id, index);
+    getDataFromApiUjianDeteksi(username, id, index);
+  }
 };
 </script>
 <template>
@@ -163,6 +330,7 @@ const doSubmitFile = async () => {
           </button></router-link
         >
         <button
+          @click="doBackup()"
           class="btn btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
         >
           <svg
@@ -222,7 +390,7 @@ const doSubmitFile = async () => {
           </svg>
           Import
         </label>
-        <button
+        <!-- <button
           class="btn btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
         >
           <svg
@@ -240,7 +408,23 @@ const doSubmitFile = async () => {
             />
           </svg>
           Export
-        </button>
+        </button> -->
+      </div>
+    </div>
+  </div>
+  <div class="md:pt-6">
+    <div class="md:flex justify-center px-10 gap-4">
+      <div class="space-x-1 space-y-1 pt-1 md:pt-0 flex justify-end w-full">
+        <div
+          class="radial-progress bg-primary text-primary-content border-4 border-primary"
+          :style="{ '--value': progressBarValue }"
+        >
+          {{ progressBarValue }}%
+        </div>
+      </div>
+      <div class="space-x-1 space-y-1 pt-1 md:pt-0 w-full">
+        <h1>Proses : {{ diProses }} / {{ countData * 2 }}</h1>
+        <h1>Jumlah Data :{{ countData }}</h1>
       </div>
     </div>
   </div>
@@ -267,18 +451,32 @@ const doSubmitFile = async () => {
                 <div
                   class="text-sm font-medium text-center flex justify-center"
                 >
-                  <ButtonEdit @click="doEditData(props.row.id, props.index)" />
-                  <ButtonDelete
-                    @click="doDeleteData(props.row.id, props.index)"
-                  />
-                  <router-link
-                    :to="{
-                      name: 'AdminSekolahDetail',
-                      params: { id: props.row.id },
-                    }"
+                  <button
+                    @click="
+                      doBackupPerId(
+                        props.row.id,
+                        props.index,
+                        props.row.username
+                      )
+                    "
+                    data-tip="Backup"
+                    class="tooltip text-orange-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-orange-300 bg-orange-400 rounded-lg"
                   >
-                    <ButtonDetail
-                  /></router-link>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                      />
+                    </svg>
+                  </button>
                 </div>
               </span>
 
@@ -286,6 +484,134 @@ const doSubmitFile = async () => {
                 <div class="text-center">{{ props.index + 1 }}</div>
               </span>
 
+              <span v-else-if="props.column.field == 'sertifikat'">
+                <div
+                  class="text-sm font-medium text-center flex justify-center"
+                >
+                  <button
+                    v-if="props.row.sertifikat == 'sudah'"
+                    data-tip="Sukses"
+                    class="tooltip text-green-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-green-300 bg-green-400 rounded-lg"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    v-else-if="props.row.sertifikat == 'gagal'"
+                    data-tip="Gagal"
+                    class="tooltip text-red-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-red-300 bg-red-400 rounded-lg"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    v-else
+                    data-tip="Belum"
+                    class="tooltip text-gray-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-gray-300 bg-gray-400"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </span>
+              <span v-else-if="props.column.field == 'deteksi'">
+                <div
+                  class="text-sm font-medium text-center flex justify-center"
+                >
+                  <button
+                    v-if="props.row.deteksi == 'sudah'"
+                    data-tip="Sukses"
+                    class="tooltip text-green-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-green-300 bg-green-400"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    v-else-if="props.row.deteksi == 'gagal'"
+                    data-tip="Gagal"
+                    class="tooltip text-red-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-red-300 bg-red-400 rounded-lg"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    v-else
+                    data-tip="Belum"
+                    class="tooltip text-gray-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-gray-300 bg-gray-400 rounded-lg"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </span>
               <span v-else>
                 {{ props.formattedRow[props.column.field] }}
               </span>
