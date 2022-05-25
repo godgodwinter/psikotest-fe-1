@@ -48,23 +48,28 @@ const columns = [
     thClass: "text-center",
   },
   {
-    label: "Nama",
-    field: "nama",
+    label: "Username",
+    field: "username",
     type: "String",
   },
   {
-    label: "Alamat",
-    field: "alamat",
+    label: "GetData",
+    field: "sertifikat",
     type: "String",
   },
   {
-    label: "Status",
-    field: "status",
+    label: "Status Get Data",
+    field: "sertifikat_tgl",
     type: "String",
   },
   {
-    label: "Logo",
-    field: "logo",
+    label: "Sinkron Data",
+    field: "sinkron",
+    type: "String",
+  },
+  {
+    label: "Status Sinkron Data",
+    field: "sinkron_tgl",
     type: "String",
   },
 ];
@@ -87,6 +92,35 @@ const doDeleteData = async (id, index) => {
       console.error(error);
     }
   }
+};
+
+const file = ref(null);
+let formData = new FormData();
+const doStoreData = async (d) => {
+  // console.log(data);
+  try {
+    // const response = await Api.post("testing/apiprobk/upload", formData);
+    const response = await Api.post(`admin/apiprobk/upload`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    // console.log(response.data);
+    Toast.success("Success", "Data Berhasil ditambahkan!");
+    getData();
+    return response.data;
+  } catch (error) {
+    Toast.danger("Warning", "Data gagal ditambahkan!");
+    console.error(error);
+  }
+};
+const doSubmitFile = async () => {
+  formData.append("file", file.value.files[0]);
+  // debugger;
+  // console.log(formData);
+  // console.log("selected file", file.value.files[0]);
+  // //Upload to server
+  doStoreData();
 };
 </script>
 <template>
@@ -168,8 +202,9 @@ const doDeleteData = async (id, index) => {
         </button>
       </div>
       <div class="space-x-1 space-y-1 pt-1 md:pt-0">
-        <button
-          class="btn btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
+        <label
+          for="modalImport"
+          class="btn modal-button btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -186,7 +221,7 @@ const doDeleteData = async (id, index) => {
             />
           </svg>
           Import
-        </button>
+        </label>
         <button
           class="btn btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
         >
@@ -257,6 +292,28 @@ const doDeleteData = async (id, index) => {
             </template>
           </vue-good-table>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Put this part before </body> tag -->
+  <input type="checkbox" id="modalImport" class="modal-toggle" />
+  <div class="modal">
+    <div class="modal-box w-11/12 max-w-5xl">
+      <label
+        for="modalImport"
+        class="btn btn-sm btn-circle absolute right-2 top-2"
+        >✕</label
+      >
+      <h3 class="font-bold text-lg">Import data menggunakan .xlx / .xlxs !</h3>
+      <div class="py-4">
+        <input type="file" ref="file" />
+        <button class="btn btn-info text-gray-100" @click="doSubmitFile()">
+          Upload
+        </button>
+      </div>
+      <div class="modal-action">
+        <!-- <label for="modalImport" class="btn">Done!</label> -->
       </div>
     </div>
   </div>
