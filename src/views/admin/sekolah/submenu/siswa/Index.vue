@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import ButtonEdit from "@/components/atoms/ButtonEdit.vue";
 import ButtonDelete from "@/components/atoms/ButtonDel.vue";
+import ButtonDetail from "@/components/atoms/ButtonDetail1.vue";
 import BreadCrumb from "@/components/atoms/BreadCrumb.vue";
 import BreadCrumbSpace from "@/components/atoms/BreadCrumbSpace.vue";
 import { useRouter, useRoute } from "vue-router";
@@ -198,6 +199,8 @@ const doPilihKelas = () => {
                   <ButtonDelete
                     @click="doDeleteData(props.row.id, props.index)"
                   />
+
+                  <ButtonDetail />
                 </div>
               </span>
 

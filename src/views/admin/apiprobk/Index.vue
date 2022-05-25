@@ -26,6 +26,15 @@ const getData = async () => {
     countData.value = data.value.filter(
       (item) => item.sertifikat == "belum"
     ).length;
+
+    countDataSinkron.value = data.value.filter(
+      (item) =>
+        item.sertifikat == "sudah" &&
+        item.deteksi == "sudah" &&
+        item.sinkron == "belum"
+    ).length;
+    diProses.value = 0;
+    diProsesSinkron.value = 0;
     // console.log(data.value);
     return response;
   } catch (error) {
@@ -72,8 +81,18 @@ const columns = [
     type: "String",
   },
   {
-    label: "Status Sinkron Data",
+    label: "Status Deteksi Data",
     field: "deteksi_tgl",
+    type: "String",
+  },
+  {
+    label: "Sinkron",
+    field: "sinkron",
+    type: "String",
+  },
+  {
+    label: "Status Sinkron Data",
+    field: "sinkron_tgl",
     type: "String",
   },
 ];
@@ -131,11 +150,16 @@ let dataFormDeteksi = {};
 
 watch(diProses, async (newQuestion, oldQuestion) => {
   if (newQuestion == oldQuestion) return;
+  if (countData.value > 0) {
+    progressBarValue.value = (
+      (newQuestion / (countData.value * 2)) *
+      100
+    ).toFixed(2);
 
-  progressBarValue.value = (
-    (newQuestion / (countData.value * 2)) *
-    100
-  ).toFixed(2);
+    if (progressBarValue.value == 100) {
+      Toast.success("Info", "Proses Backup Selesai!");
+    }
+  }
 });
 
 const doStoreDataBackupSertifikat = async (d, index) => {
@@ -255,8 +279,10 @@ const getDataFromApiUjianDeteksi = async (
 const doBackup = async () => {
   if (confirm("Apakah anda yakin melakukan proses ini?")) {
     try {
+      getData();
+      Toast.success("Info", "Proses backup di mulai, Tunggu hingga selesai!");
       diProses.value = 0;
-      console.log("sync data");
+      // console.log("sync data");
       // foreach then getData then push on datatable
       // 2.async insert data from api to be
       for (let i = 0; i < data.value.length; i++) {
@@ -284,9 +310,64 @@ const doBackup = async () => {
 
 const doBackupPerId = async (id, index, username) => {
   if (confirm("Apakah anda yakin melakukan backup data ini?")) {
+    Toast.success("Info", "Proses backup di mulai, Tunggu hingga selesai!");
     // console.log(id, index, username);
     getDataFromApiUjianSertifikat(username, id, index);
     getDataFromApiUjianDeteksi(username, id, index);
+    getData();
+  }
+};
+
+const countDataSinkron = ref(0);
+const diProsesSinkron = ref(0);
+const progressBarValueSinkron = ref(0);
+
+watch(diProsesSinkron, async (newQuestion, oldQuestion) => {
+  if (newQuestion == oldQuestion) return;
+  if (countDataSinkron.value > 0) {
+    progressBarValueSinkron.value = (
+      (newQuestion / countDataSinkron.value) *
+      100
+    ).toFixed(2);
+    if (progressBarValueSinkron.value == 100) {
+      Toast.success("Info", "Proses Sinkron Selesai!");
+    }
+  }
+});
+const doSendSinkronData = async (username, apiprobk_id = 0, index = 0) => {
+  try {
+    const response = await Api.post("admin/apiprobk/sinkron", {
+      username: username,
+      apiprobk_id: apiprobk_id,
+    });
+    // console.log(response.data);
+    // Toast.success("Success", "Data Berhasil ditambahkan!");
+    data.value[index].sinkron = "sudah";
+    diProsesSinkron.value++;
+    return response.data;
+  } catch (error) {
+    diProsesSinkron.value++;
+    data.value[index].sinkron = "gagal";
+    // Toast.danger("Warning", "Data gagal ditambahkan!");
+    console.error(error);
+  }
+};
+
+const doSinkronData = async () => {
+  if (confirm("Apakah anda yakin melakukan Sinkron Data ini?")) {
+    Toast.success("Info", "Proses Sinkron di mulai, Tunggu hingga selesai!");
+    getData();
+    // console.log("Sinkron Data");
+    for (let i = 0; i < data.value.length; i++) {
+      if (
+        data.value[i].sertifikat == "sudah" &&
+        data.value[i].deteksi == "sudah" &&
+        data.value[i].sinkron == "belum"
+      ) {
+        doSendSinkronData(data.value[i].username, data.value[i].id, i);
+      }
+      // console.log(data.value[i].username);
+    }
   }
 };
 </script>
@@ -349,8 +430,9 @@ const doBackupPerId = async (id, index, username) => {
           </svg>
           Backup
         </button>
-        <!-- <button
-          class="btn btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
+        <button
+          @click="doSinkronData()"
+          class="btn btn-accent hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -367,7 +449,7 @@ const doBackupPerId = async (id, index, username) => {
             />
           </svg>
           Sikron
-        </button> -->
+        </button>
       </div>
       <div class="space-x-1 space-y-1 pt-1 md:pt-0">
         <label
@@ -425,6 +507,19 @@ const doBackupPerId = async (id, index, username) => {
       <div class="space-x-1 space-y-1 pt-1 md:pt-0 w-full">
         <h1>Proses : {{ diProses }} / {{ countData * 2 }}</h1>
         <h1>Jumlah Data :{{ countData }}</h1>
+      </div>
+
+      <div class="space-x-1 space-y-1 pt-1 md:pt-0 flex justify-end w-full">
+        <div
+          class="radial-progress bg-accent text-accent-content border-4 border-accent"
+          :style="{ '--value': progressBarValueSinkron }"
+        >
+          {{ progressBarValueSinkron }}%
+        </div>
+      </div>
+      <div class="space-x-1 space-y-1 pt-1 md:pt-0 w-full">
+        <h1>Proses : {{ diProsesSinkron }} / {{ countDataSinkron }}</h1>
+        <h1>Jumlah Data :{{ countDataSinkron }}</h1>
       </div>
     </div>
   </div>
@@ -574,6 +669,70 @@ const doBackupPerId = async (id, index, username) => {
                   </button>
                   <button
                     v-else-if="props.row.deteksi == 'gagal'"
+                    data-tip="Gagal"
+                    class="tooltip text-red-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-red-300 bg-red-400 rounded-lg"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    v-else
+                    data-tip="Belum"
+                    class="tooltip text-gray-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-gray-300 bg-gray-400 rounded-lg"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </span>
+              <span v-else-if="props.column.field == 'sinkron'">
+                <div
+                  class="text-sm font-medium text-center flex justify-center"
+                >
+                  <button
+                    v-if="props.row.sinkron == 'sudah'"
+                    data-tip="Sukses"
+                    class="tooltip text-green-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-green-300 bg-green-400"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    v-else-if="props.row.sinkron == 'gagal'"
                     data-tip="Gagal"
                     class="tooltip text-red-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-red-300 bg-red-400 rounded-lg"
                   >

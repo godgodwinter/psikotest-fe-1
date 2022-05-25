@@ -33,6 +33,7 @@ import AdminSekolahDetailWaliKelasEdit from '../views/admin/sekolah/submenu/wali
 import AdminSekolahDetailGuruBk from '../views/admin/sekolah/submenu/gurubk/Index.vue'
 import AdminSekolahDetailGuruBkTambah from '../views/admin/sekolah/submenu/gurubk/Tambah.vue'
 import AdminSekolahDetailGuruBkEdit from '../views/admin/sekolah/submenu/gurubk/Edit.vue'
+import AdminSekolahDetailHasilPsikologi from '../views/admin/sekolah/submenu/hasilpsikologi/Index.vue'
 // MENU-SEKOLAH-SUB
 // MENU-SEKOLAH
 
@@ -196,6 +197,11 @@ const routes = [
             path: '/pages/admin/sekolahdetail/:id/gurubk/edit/:id2', 
             name: 'AdminSekolahDetailGuruBkEdit',
             component: AdminSekolahDetailGuruBkEdit,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/hasilpsikologi', 
+            name: 'AdminSekolahDetailHasilPsikologi',
+            component: AdminSekolahDetailHasilPsikologi,
           },
         ],
       },
