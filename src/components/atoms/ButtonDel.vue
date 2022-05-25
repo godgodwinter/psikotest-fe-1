@@ -1,6 +1,7 @@
 <template>
   <button
-    class="text-red-100 block rounded-md font-bold py-1 px-1 mr-2 flex items-center hover:text-red-300 bg-red-400 rounded-lg"
+    class="tooltip text-red-100 block rounded-md font-bold py-1 px-1 mr-2 flex items-center hover:text-red-300 bg-red-400 rounded-lg"
+    data-tip="Delete"
   >
     <svg
       class="fill-current h-5 w-5"

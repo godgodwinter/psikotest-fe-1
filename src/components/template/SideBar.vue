@@ -194,7 +194,12 @@ const pagesActiveClass = ref("border border-gray-300 rounded-lg bg-gray-300");
                 <span class="ml-3">Referensi Studi & Kerja </span>
               </router-link>
             </li>
-            <li class="bg-white lg:w-full">
+            <li
+              class="bg-white lg:w-full"
+              :class="[
+                pagesActive == 'buletinpsikologi' ? pagesActiveClass : '',
+              ]"
+            >
               <router-link
                 :to="{ name: 'AdminBuletin' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
@@ -254,7 +259,10 @@ const pagesActiveClass = ref("border border-gray-300 rounded-lg bg-gray-300");
                 <span class="ml-3">Penanganan Deteksi Masalah </span>
               </router-link>
             </li>
-            <li class="bg-white lg:w-full">
+            <li
+              class="bg-white lg:w-full"
+              :class="[pagesActive == 'katabijak' ? pagesActiveClass : '']"
+            >
               <router-link
                 :to="{ name: 'AdminKataBijak' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"

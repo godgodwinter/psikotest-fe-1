@@ -26,6 +26,9 @@ import AdminPenanganan from '../views/admin/penangananDeteksiMasalah/Index.vue'
 import AdminKataBijak from '../views/admin/kataBijak/Index.vue'
 import AdminKataBijakTambah from '../views/admin/kataBijak/Tambah.vue'
 import AdminKataBijakEdit from '../views/admin/kataBijak/Edit.vue'
+import AdminKataBijakDetail from '../views/admin/kataBijak/Detail.vue'
+import AdminKataBijakDetailTambah from '../views/admin/kataBijak/DetailTambah.vue'
+import AdminKataBijakDetailEdit from '../views/admin/kataBijak/DetailEdit.vue'
 import AdminMasterNilaiPsikologi from '../views/admin/masterNilaiPsikologi/Index.vue'
 import AdmiMinatBakat from '../views/admin/minatBakat/Index.vue'
 import AdminAdministrator from '../views/admin/administrator/Index.vue'
@@ -153,6 +156,21 @@ const routes = [
         path: '/pages/admin/katabijak', 
         name: 'AdminKataBijakEdit',
         component: AdminKataBijakEdit,
+      },
+      {
+        path: '/pages/admin/katabijak/detail/:id', 
+        name: 'AdminKataBijakDetail',
+        component: AdminKataBijakDetail,
+      },
+      {
+        path: '/pages/admin/katabijak/detail/:id/tambah', 
+        name: 'AdminKataBijakDetailTambah',
+        component: AdminKataBijakDetailTambah,
+      },
+      {
+        path: '/pages/admin/katabijak/detail/:id/edit/:id2', 
+        name: 'AdminKataBijakDetailEdit',
+        component: AdminKataBijakDetailEdit,
       },
       {
         path: '/pages/admin/masternilaipsikologi', 

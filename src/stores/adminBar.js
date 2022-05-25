@@ -1,9 +1,14 @@
 import {defineStore} from 'pinia';
+
+
+
+
 export const useStoreAdminBar = defineStore({
     id: 'storeAdminBar',
         state: () => ({ 
             isSidebarActive:false,
-            pagesActive:'' 
+            pagesActive:'' ,
+            kataBijak:[]
         }),
     // state: ()=>({
     //     isSidebarActive: false,
@@ -11,6 +16,7 @@ export const useStoreAdminBar = defineStore({
     getters:{
         getIsSidebarActive:(state)=> state.isSidebarActive,
         getPagesActive:(state)=> state.pagesActive,
+        getKataBijak:(state)=> state.kataBijak,
     },
     actions:{
         toggleSideBar(){
@@ -19,5 +25,8 @@ export const useStoreAdminBar = defineStore({
         setPagesActive(pages){
             this.pagesActive = pages;
         },
+        setKataBijak(kataBijak){
+            this.kataBijak = kataBijak;
+        }   
     }
 });

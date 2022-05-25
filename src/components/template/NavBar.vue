@@ -3,16 +3,36 @@ import { ref } from "vue";
 import { computed } from "vue";
 import { useStoreAdminBar } from "@/stores/adminBar";
 import { useRouter, useRoute } from "vue-router";
+import Api from "@/axios/axios";
+import Toast from "@/components/lib/Toast";
 const router = useRouter();
 const storeAdminBar = useStoreAdminBar();
 const toggleSideBar = () => {
   storeAdminBar.toggleSideBar();
 };
-const arr = ref([
-  "Kegembiraan yang Anda miliki gunakan secara wajar dan realita",
-  "Nikmatilah hidup itu dengan gembira seperti menyongsong terbitnya Matahari dengan penuh harapan",
-  "Menanti datangnya kegembiraan hal yang sangat diharapkan setiap orang maka nikmatilah kegembiraan dengan hati riang, lembut",
-]);
+// const arr = ref([
+//   "Kegembiraan yang Anda miliki gunakan secara wajar dan realita",
+//   "Nikmatilah hidup itu dengan gembira seperti menyongsong terbitnya Matahari dengan penuh harapan",
+//   "Menanti datangnya kegembiraan hal yang sangat diharapkan setiap orang maka nikmatilah kegembiraan dengan hati riang, lembut",
+// ]);
+const arr = ref([]);
+const data = ref([]);
+const getData = async () => {
+  try {
+    const response = await Api.get(`guest/katabijak`);
+    // console.log(response);
+    data.value = response.data;
+    data.value.map((item, index) => {
+      arr.value.push(item.penjelasan);
+    });
+
+    return response.data;
+  } catch (error) {
+    Toast.danger("Warning", "Data Gagal dimuat");
+    console.error(error);
+  }
+};
+getData();
 </script>
 <template>
   <div class="static bg-white" v-if="!isSidebarActive">
@@ -20,6 +40,7 @@ const arr = ref([
       class="fixed z-50 w-full font-serif font-semibold text-sm bg-slate-700 text-white flex justify-center py-2 px-4 text-center"
     >
       <VueWriter
+        v-if="arr.length > 0"
         :array="arr"
         :eraseSpeed="50"
         :typeSpeed="40"
