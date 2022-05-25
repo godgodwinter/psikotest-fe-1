@@ -24,6 +24,7 @@ let pilihKelas = ref([
   },
   {
     label: "Belum masuk Kelas",
+    id: "Belum masuk Kelas",
   },
 ]);
 // get Kelas
@@ -126,16 +127,49 @@ const doDeleteData = async (id2, index) => {
     }
   }
 };
+const inputCariKelas = ref({
+  label: "Semua Kelas",
+  id: "Semua Kelas",
+});
 
 const doPilihKelas = () => {
-  // if (inputTersedia.value.id === "Tersedia") {
-  //   data.value = dataAsli.value.filter((item) => {
-  //     return item.kelas_id <= 1000;
-  //   });
-  // }
-  console.log("====================================");
-  console.log("Cari");
-  console.log("====================================");
+  if (inputCariKelas.value.id === "Semua Kelas") {
+    data.value = dataAsli.value.map((item, index) => {
+      return {
+        ...item,
+        nama: item.nama,
+        kelas: `${item.kelas ? item.kelas.nama : ""}`,
+        username: item.username,
+        passworddefault: item.passworddefault,
+      };
+    });
+  } else if (inputCariKelas.value.id === "Belum masuk Kelas") {
+    let dataFiltered = dataAsli.value.filter((item) => {
+      return item.kelas === null;
+    });
+    data.value = dataFiltered.map((item, index) => {
+      return {
+        ...item,
+        nama: item.nama,
+        kelas: "Belum Masuk Kelas",
+        username: item.username,
+        passworddefault: item.passworddefault,
+      };
+    });
+  } else {
+    let dataFiltered = dataAsli.value.filter((item) => {
+      return item.kelas_id == inputCariKelas.value.id;
+    });
+    data.value = dataFiltered.map((item, index) => {
+      return {
+        ...item,
+        nama: item.nama,
+        kelas: `${item.kelas ? item.kelas.nama : ""}`,
+        username: item.username,
+        passworddefault: item.passworddefault,
+      };
+    });
+  }
 };
 </script>
 <template>
@@ -162,7 +196,7 @@ const doPilihKelas = () => {
       <v-select
         class="py-2 px-3 w-72 mx-auto md:mx-0"
         :options="pilihKelas"
-        v-model="inputTersedia"
+        v-model="inputCariKelas"
         v-bind:class="{ disabled: false }"
       ></v-select>
       <div class="py-2">
