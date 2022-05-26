@@ -33,7 +33,11 @@ import AdminSekolahDetailWaliKelasEdit from '../views/admin/sekolah/submenu/wali
 import AdminSekolahDetailGuruBk from '../views/admin/sekolah/submenu/gurubk/Index.vue'
 import AdminSekolahDetailGuruBkTambah from '../views/admin/sekolah/submenu/gurubk/Tambah.vue'
 import AdminSekolahDetailGuruBkEdit from '../views/admin/sekolah/submenu/gurubk/Edit.vue'
+
 import AdminSekolahDetailHasilPsikologi from '../views/admin/sekolah/submenu/hasilpsikologi/Index.vue'
+import AdminSekolahDetailHasilPsikologiDeteksi from '../views/admin/sekolah/submenu/hasilpsikologi/Deteksi.vue'
+
+
 import AdminSekolahDetailNilaiPsikologiSiswa from '../views/admin/sekolah/submenu/nilaipsikologisiswa/Index.vue'
 import AdminSekolahDetailAnalisaMinatBakat from '../views/admin/sekolah/submenu/analisaminatbakat/Index.vue'
 import AdminSekolahDetailAnalisaPenjurusan from '../views/admin/sekolah/submenu/analisapenjurusan/Index.vue'
@@ -219,6 +223,11 @@ const routes = [
             path: '/pages/admin/sekolahdetail/:id/hasilpsikologi', 
             name: 'AdminSekolahDetailHasilPsikologi',
             component: AdminSekolahDetailHasilPsikologi,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/hasilpsikologi/:id2', 
+            name: 'AdminSekolahDetailHasilPsikologiDeteksi',
+            component: AdminSekolahDetailHasilPsikologiDeteksi,
           },
           {
             path: '/pages/admin/sekolahdetail/:id/nilaipsikologisiswa', 

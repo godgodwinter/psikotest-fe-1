@@ -75,13 +75,13 @@ getDataId();
   </div>
 
   <div class="container mx-auto lg:mx-0 my-5 p-5">
-    <div class="lg:flex no-wrap lg:-mx-2">
+    <div class="xl:flex no-wrap lg:-mx-2">
       <!-- Left Side -->
-      <div class="w-full lg:w-3/12 lg:mx-2">
+      <div class="w-full xl:w-3/12 mx-2">
         <SubSideBarMenu></SubSideBarMenu>
       </div>
       <!-- Right Side -->
-      <div class="w-full lg:w-9/12 mx-2 h-64 pt-10 lg:pt-0">
+      <div class="w-full xl:w-9/12 pt-10 lg:pt-0 mx-2">
         <router-view />
       </div>
     </div>

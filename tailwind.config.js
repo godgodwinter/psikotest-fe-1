@@ -6,6 +6,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+        width: {
+          '1/100': '1%'
+        },
       keyframes: {
           wiggle: {
               '0%, 100%': {
