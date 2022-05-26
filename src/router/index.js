@@ -35,6 +35,8 @@ import AdminSekolahDetailGuruBkTambah from '../views/admin/sekolah/submenu/gurub
 import AdminSekolahDetailGuruBkEdit from '../views/admin/sekolah/submenu/gurubk/Edit.vue'
 import AdminSekolahDetailHasilPsikologi from '../views/admin/sekolah/submenu/hasilpsikologi/Index.vue'
 import AdminSekolahDetailNilaiPsikologiSiswa from '../views/admin/sekolah/submenu/nilaipsikologisiswa/Index.vue'
+import AdminSekolahDetailAnalisaMinatBakat from '../views/admin/sekolah/submenu/analisaminatbakat/Index.vue'
+import AdminSekolahDetailAnalisaPenjurusan from '../views/admin/sekolah/submenu/analisapenjurusan/Index.vue'
 // MENU-SEKOLAH-SUB
 // MENU-SEKOLAH
 
@@ -208,6 +210,16 @@ const routes = [
             path: '/pages/admin/sekolahdetail/:id/nilaipsikologisiswa', 
             name: 'AdminSekolahDetailNilaiPsikologiSiswa',
             component: AdminSekolahDetailNilaiPsikologiSiswa,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/analisaminatbakat', 
+            name: 'AdminSekolahDetailAnalisaMinatBakat',
+            component: AdminSekolahDetailAnalisaMinatBakat,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/analisanpenjurusan', 
+            name: 'AdminSekolahDetailAnalisaPenjurusan',
+            component: AdminSekolahDetailAnalisaPenjurusan,
           },
         ],
       },
