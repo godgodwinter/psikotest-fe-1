@@ -218,7 +218,7 @@ const doPilihKelas = () => {
                       }"
                     >
                       <button
-                        data-tip="Detail"
+                        data-tip="Deteksi"
                         class="tooltip btn btn-success btn-sm text-gray-100"
                       >
                         <svg
@@ -263,26 +263,33 @@ const doPilihKelas = () => {
                 <div
                   class="text-sm font-medium text-center flex justify-center"
                 >
-                  <button
-                    data-tip="Detail"
-                    class="tooltip btn btn-success btn-sm text-gray-100"
-                    v-if="props.row.siswadetail.length > 0"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2"
+                  <div v-if="props.row.siswadetail.length > 0">
+                    <router-link
+                      :to="{
+                        name: 'AdminSekolahDetailHasilPsikologiPenanganan',
+                        params: { id, id2: props.row.id },
+                      }"
                     >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-                      />
-                    </svg>
-                  </button>
+                      <button
+                        data-tip="Penanganan Masalah Deteksi"
+                        class="tooltip btn btn-success btn-sm text-gray-100"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                          />
+                        </svg></button
+                    ></router-link>
+                  </div>
                   <button
                     data-tip="Data API PRO BK tidak ditemukan"
                     class="tooltip btn btn-warning btn-sm text-gray-100"
@@ -309,26 +316,33 @@ const doPilihKelas = () => {
                 <div
                   class="text-sm font-medium text-center flex justify-center"
                 >
-                  <button
-                    data-tip="Detail"
-                    class="tooltip btn btn-success btn-sm text-gray-100"
-                    v-if="props.row.siswadetail.length > 0"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2"
+                  <div v-if="props.row.siswadetail.length > 0">
+                    <router-link
+                      :to="{
+                        name: 'AdminSekolahDetailHasilPsikologiSertifikat',
+                        params: { id, id2: props.row.id },
+                      }"
                     >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-                      />
-                    </svg>
-                  </button>
+                      <button
+                        data-tip="Sertifikat"
+                        class="tooltip btn btn-success btn-sm text-gray-100"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                          />
+                        </svg></button
+                    ></router-link>
+                  </div>
                   <button
                     data-tip="Data API PRO BK tidak ditemukan"
                     class="tooltip btn btn-warning btn-sm text-gray-100"
@@ -355,26 +369,33 @@ const doPilihKelas = () => {
                 <div
                   class="text-sm font-medium text-center flex justify-center"
                 >
-                  <button
-                    data-tip="Detail"
-                    class="tooltip btn btn-success btn-sm text-gray-100"
-                    v-if="props.row.siswadetail.length > 0"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2"
+                  <div v-if="props.row.siswadetail.length > 0">
+                    <router-link
+                      :to="{
+                        name: 'AdminSekolahDetailHasilPsikologiTerapis',
+                        params: { id, id2: props.row.id },
+                      }"
                     >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-                      />
-                    </svg>
-                  </button>
+                      <button
+                        data-tip="Terapis"
+                        class="tooltip btn btn-success btn-sm text-gray-100"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                          />
+                        </svg></button
+                    ></router-link>
+                  </div>
                   <button
                     data-tip="Data API PRO BK tidak ditemukan"
                     class="tooltip btn btn-warning btn-sm text-gray-100"

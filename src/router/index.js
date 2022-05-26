@@ -35,6 +35,9 @@ import AdminSekolahDetailGuruBkTambah from '../views/admin/sekolah/submenu/gurub
 import AdminSekolahDetailGuruBkEdit from '../views/admin/sekolah/submenu/gurubk/Edit.vue'
 
 import AdminSekolahDetailHasilPsikologi from '../views/admin/sekolah/submenu/hasilpsikologi/Index.vue'
+import AdminSekolahDetailHasilPsikologiPenanganan from '../views/admin/sekolah/submenu/hasilpsikologi/Penanganan.vue'
+import AdminSekolahDetailHasilPsikologiTerapis from '../views/admin/sekolah/submenu/hasilpsikologi/Terapis.vue'
+import AdminSekolahDetailHasilPsikologiSertifikat from '../views/admin/sekolah/submenu/hasilpsikologi/Sertifikat.vue'
 import AdminSekolahDetailHasilPsikologiDeteksi from '../views/admin/sekolah/submenu/hasilpsikologi/Deteksi.vue'
 
 
@@ -225,9 +228,24 @@ const routes = [
             component: AdminSekolahDetailHasilPsikologi,
           },
           {
-            path: '/pages/admin/sekolahdetail/:id/hasilpsikologi/:id2', 
+            path: '/pages/admin/sekolahdetail/:id/hasilpsikologi/:id2/deteksi', 
             name: 'AdminSekolahDetailHasilPsikologiDeteksi',
             component: AdminSekolahDetailHasilPsikologiDeteksi,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/hasilpsikologi/:id2/sertifikat', 
+            name: 'AdminSekolahDetailHasilPsikologiSertifikat',
+            component: AdminSekolahDetailHasilPsikologiSertifikat,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/hasilpsikologi/:id2/penanganan', 
+            name: 'AdminSekolahDetailHasilPsikologiPenanganan',
+            component: AdminSekolahDetailHasilPsikologiPenanganan,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/hasilpsikologi/:id2/terapis', 
+            name: 'AdminSekolahDetailHasilPsikologiTerapis',
+            component: AdminSekolahDetailHasilPsikologiTerapis,
           },
           {
             path: '/pages/admin/sekolahdetail/:id/nilaipsikologisiswa', 
