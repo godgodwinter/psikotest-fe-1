@@ -75,6 +75,7 @@ import AdminTerapis from '../views/admin/terapisKarakterPositif/Index.vue'
 import AdminTerapisTambah from '../views/admin/terapisKarakterPositif/Tambah.vue'
 import AdminTerapisEdit from '../views/admin/terapisKarakterPositif/Edit.vue'
 import AdminPenanganan from '../views/admin/penangananDeteksiMasalah/Index.vue'
+import AdminPenangananDetailStore from '../views/admin/penangananDeteksiMasalah/DetailStore.vue'
 import AdminKataBijak from '../views/admin/kataBijak/Index.vue'
 import AdminKataBijakTambah from '../views/admin/kataBijak/Tambah.vue'
 import AdminKataBijakEdit from '../views/admin/kataBijak/Edit.vue'
@@ -398,6 +399,11 @@ const routes = [
         path: '/pages/admin/penanganan', 
         name: 'AdminPenanganan',
         component: AdminPenanganan,
+      },
+      {
+        path: '/pages/admin/penanganan/detailstore/:id', 
+        name: 'AdminPenangananDetailStore',
+        component: AdminPenangananDetailStore,
       },
       {
         path: '/pages/admin/katabijak', 
