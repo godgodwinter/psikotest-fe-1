@@ -70,7 +70,7 @@ const getData = async () => {
 };
 getData();
 
-const columns = [
+const columns = ref([
   {
     label: "No",
     field: "no",
@@ -84,11 +84,11 @@ const columns = [
     type: "String",
   },
   {
-    label: "Hasil Deteksi",
-    field: "deteksi",
+    label: "KB",
+    field: "kb",
     type: "String",
   },
-];
+]);
 
 const doEditData = async (id2, index) => {
   router.push({
@@ -147,6 +147,50 @@ const doPilihKelas = () => {
     });
   }
 };
+
+// seleksi yang ditampilkan
+const ListTampilkan = ref([
+  { label: "kb", id: "kb", checked: true },
+  { label: "kb_persen", id: "kb_persen", checked: false },
+  { label: "lm", id: "lm", checked: false },
+  { label: "lm_persen", id: "lm_persen", checked: false },
+  { label: "ks", id: "ks", checked: false },
+  { label: "ks_persen", id: "ks_persen", checked: false },
+  {
+    label: "hspq_a_kn_aspek_positif",
+    id: "hspq_a_kn_aspek_positif",
+    checked: false,
+  },
+]);
+
+const onToggleList = (index) => {
+  ListTampilkan.value[index].checked = !ListTampilkan.value[index].checked;
+
+  if (ListTampilkan.value[index].checked) {
+    columns.value.push({
+      label: ListTampilkan.value[index].label,
+      field: ListTampilkan.value[index].id,
+      // field: `siswadetailwithsertifikat.apiprobkwithsertifikat.apiprobk_sertifikat.${ListTampilkan.value[index].id}`,
+      // field: `siswadetailwithsertifikat`,
+      type: "String",
+    });
+  } else {
+    columns.value.forEach((item, index2) => {
+      if (item.field === ListTampilkan.value[index].id) {
+        columns.value.splice(index2, 1);
+      }
+    });
+  }
+
+  // console.log("====================================");
+  // console.log(
+  //   index,
+  //   ListTampilkan.value[index].label,
+  //   ListTampilkan.value[index].id,
+  //   ListTampilkan.value[index].checked
+  // );
+  // console.log("====================================");
+};
 </script>
 <template>
   <div class="pt-4 px-10 md:flex justify-between">
@@ -170,6 +214,22 @@ const doPilihKelas = () => {
         <button class="btn btn-sm btn-info p-2" @click="doPilihKelas()">
           Cari
         </button>
+      </div>
+    </div>
+  </div>
+  <div class="w-full bg-white shadow shadow-md py-4 px-4">
+    <div class="flex justify-center gap-2 w-full flex-wrap">
+      <div v-for="(item, index) in ListTampilkan">
+        <div class="form-control">
+          <label class="cursor-pointer label" @click="onToggleList(index)">
+            <span class="label-text px-2">{{ item.label }}</span>
+            <input
+              type="checkbox"
+              :checked="item.checked"
+              class="checkbox checkbox-secondary"
+            />
+          </label>
+        </div>
       </div>
     </div>
   </div>
@@ -200,7 +260,7 @@ const doPilihKelas = () => {
               </span>
 
               <span v-else>
-                <div v-if="props.row.siswadetailwithsertifikat.length < 1">
+                <div v-if="props.row.siswadetailwithsertifikat == null">
                   <button
                     data-tip="Data API PRO BK tidak ditemukan"
                     class="tooltip btn btn-warning btn-sm text-gray-100"
@@ -223,6 +283,11 @@ const doPilihKelas = () => {
                 </div>
                 <div v-else>
                   {{ props.formattedRow[props.column.field] }}
+                  {{
+                    props.row.siswadetailwithsertifikat.apiprobkwithsertifikat
+                      .apiprobk_sertifikat[props.column.field]
+                  }}
+                  <!-- {{ props.column.field }} -->
                 </div>
               </span>
             </template>
