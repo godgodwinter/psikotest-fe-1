@@ -153,7 +153,11 @@ const ListTampilkan = ref([
   { label: "Bakat 1", id: "tipe_bakat_1", checked: true },
   { label: "Bakat 2", id: "tipe_bakat_2", checked: false },
   { label: "Bakat 3", id: "tipe_bakat_3", checked: false },
-  { label: "Minat Studi Lanjut SMP", id: "mnt_studi_lanjut_smp", checked: false },
+  {
+    label: "Minat Studi Lanjut SMP",
+    id: "mnt_studi_lanjut_smp",
+    checked: false,
+  },
   {
     label: "Studi Lanjut SMA/SMK Fakultas 1",
     id: "mnt_studi_lanjut_sma_smk_1_fakultas",
@@ -169,7 +173,7 @@ const ListTampilkan = ref([
     id: "mnt_studi_lanjut_sma_smk_2_fakultas",
     checked: false,
   },
-   {
+  {
     label: "Studi Lanjut SMA/SMK Prodi 2",
     id: "mnt_studi_lanjut_sma_smk_2_prodi",
     checked: false,
