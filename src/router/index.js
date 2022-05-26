@@ -37,6 +37,10 @@ import AdminSekolahDetailHasilPsikologi from '../views/admin/sekolah/submenu/has
 import AdminSekolahDetailNilaiPsikologiSiswa from '../views/admin/sekolah/submenu/nilaipsikologisiswa/Index.vue'
 import AdminSekolahDetailAnalisaMinatBakat from '../views/admin/sekolah/submenu/analisaminatbakat/Index.vue'
 import AdminSekolahDetailAnalisaPenjurusan from '../views/admin/sekolah/submenu/analisapenjurusan/Index.vue'
+import AdminSekolahDetailCatatanKasusSiswa from '../views/admin/sekolah/submenu/catatankasussiswa/Index.vue'
+import AdminSekolahDetailCatatanKasusSiswaDetail from '../views/admin/sekolah/submenu/catatankasussiswa/Detail.vue'
+import AdminSekolahDetailCatatanKasusSiswaTambah from '../views/admin/sekolah/submenu/catatankasussiswa/Tambah.vue'
+import AdminSekolahDetailCatatanKasusSiswaEdit from '../views/admin/sekolah/submenu/catatankasussiswa/Edit.vue'
 // MENU-SEKOLAH-SUB
 // MENU-SEKOLAH
 
@@ -220,6 +224,26 @@ const routes = [
             path: '/pages/admin/sekolahdetail/:id/analisanpenjurusan', 
             name: 'AdminSekolahDetailAnalisaPenjurusan',
             component: AdminSekolahDetailAnalisaPenjurusan,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/catatankasussiswa', 
+            name: 'AdminSekolahDetailCatatanKasusSiswa',
+            component: AdminSekolahDetailCatatanKasusSiswa,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/catatankasussiswa/:id2',
+            name: 'AdminSekolahDetailCatatanKasusSiswaDetail',
+            component: AdminSekolahDetailCatatanKasusSiswaDetail,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/catatankasussiswa/:id2/tambah', 
+            name: 'AdminSekolahDetailCatatanKasusSiswaTambah',
+            component: AdminSekolahDetailCatatanKasusSiswaTambah,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/catatankasussiswa/:id2/edit/:id3', 
+            name: 'AdminSekolahDetailCatatanKasusSiswaEdit',
+            component: AdminSekolahDetailCatatanKasusSiswaEdit,
           },
         ],
       },
