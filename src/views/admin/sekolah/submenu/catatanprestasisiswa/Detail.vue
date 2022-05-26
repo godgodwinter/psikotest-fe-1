@@ -51,7 +51,7 @@ getDataKelas();
 const getData = async () => {
   try {
     const response = await Api.get(
-      `admin/datasekolah/${id}/siswa/${id2}/catatankasussiswa`
+      `admin/datasekolah/${id}/siswa/${id2}/catatanprestasisiswa`
     );
     // console.log(response);
     dataAsli.value = response.data;
@@ -88,25 +88,25 @@ const columns = [
     thClass: "text-center",
   },
   {
-    label: "Kasus",
-    field: "kasus",
+    label: "Prestasi",
+    field: "prestasi",
     type: "String",
   },
   {
-    label: "Pengambilan Data",
-    field: "pengambilandata",
+    label: "Teknik Belajar",
+    field: "teknikbelajar",
     type: "String",
   },
   {
-    label: "Teknik Konseling",
-    field: "teknikkonseling",
+    label: "Saranan Belajar",
+    field: "saranabelajar",
     type: "String",
   },
 ];
 
 const doEditData = async (id3, index) => {
   router.push({
-    name: "AdminSekolahDetailCatatanKasusSiswaEdit",
+    name: "AdminSekolahDetailCatatanPrestasiSiswaEdit",
     params: { id, id2, id3 },
   });
 };
@@ -115,7 +115,7 @@ const doDeleteData = async (id3, index) => {
   if (confirm("Apakah anda yakin menghapus data ini?")) {
     try {
       const response = await Api.delete(
-        `admin/datasekolah/${id}/siswa/${id2}/catatankasussiswa/${id3}`
+        `admin/datasekolah/${id}/siswa/${id2}/catatanprestasisiswa/${id3}`
       );
       data.value.splice(index, 1);
       Toast.success("Success", "Data Berhasil dihapus!");
@@ -169,7 +169,7 @@ const doPilihKelas = () => {
     <div>
       <span
         class="text-2xl sm:text-3xl leading-none font-bold text-gray-700 shadow-sm"
-        >Catatan Kasus Siswa
+        >Catatan Prestasi Siswa
       </span>
     </div>
     <div class="md:py-0 py-4 space-x-2 space-y-2"></div>
@@ -179,7 +179,7 @@ const doPilihKelas = () => {
       <div class="space-x-1 space-y-1 pt-1 md:pt-0">
         <router-link
           :to="{
-            name: 'AdminSekolahDetailCatatanKasusSiswaTambah',
+            name: 'AdminSekolahDetailCatatanPrestasiSiswaTambah',
             params: { id, id2 },
           }"
         >
@@ -207,7 +207,7 @@ const doPilihKelas = () => {
       <div class="space-x-1 space-y-1 pt-1 md:pt-0">
         <router-link
           :to="{
-            name: 'AdminSekolahDetailCatatanKasusSiswa',
+            name: 'AdminSekolahDetailCatatanPrestasiSiswa',
             params: { id: id },
           }"
         >

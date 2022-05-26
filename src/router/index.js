@@ -41,6 +41,16 @@ import AdminSekolahDetailCatatanKasusSiswa from '../views/admin/sekolah/submenu/
 import AdminSekolahDetailCatatanKasusSiswaDetail from '../views/admin/sekolah/submenu/catatankasussiswa/Detail.vue'
 import AdminSekolahDetailCatatanKasusSiswaTambah from '../views/admin/sekolah/submenu/catatankasussiswa/Tambah.vue'
 import AdminSekolahDetailCatatanKasusSiswaEdit from '../views/admin/sekolah/submenu/catatankasussiswa/Edit.vue'
+
+import AdminSekolahDetailCatatanPengembanganDiri from '../views/admin/sekolah/submenu/catatanpengembangandiri/Index.vue'
+import AdminSekolahDetailCatatanPengembanganDiriDetail from '../views/admin/sekolah/submenu/catatanpengembangandiri/Detail.vue'
+import AdminSekolahDetailCatatanPengembanganDiriTambah from '../views/admin/sekolah/submenu/catatanpengembangandiri/Tambah.vue'
+import AdminSekolahDetailCatatanPengembanganDiriEdit from '../views/admin/sekolah/submenu/catatanpengembangandiri/Edit.vue'
+
+import AdminSekolahDetailCatatanPrestasiSiswa from '../views/admin/sekolah/submenu/catatanprestasisiswa/Index.vue'
+import AdminSekolahDetailCatatanPrestasiSiswaDetail from '../views/admin/sekolah/submenu/catatanprestasisiswa/Detail.vue'
+import AdminSekolahDetailCatatanPrestasiSiswaTambah from '../views/admin/sekolah/submenu/catatanprestasisiswa/Tambah.vue'
+import AdminSekolahDetailCatatanPrestasiSiswaEdit from '../views/admin/sekolah/submenu/catatanprestasisiswa/Edit.vue'
 // MENU-SEKOLAH-SUB
 // MENU-SEKOLAH
 
@@ -244,6 +254,46 @@ const routes = [
             path: '/pages/admin/sekolahdetail/:id/catatankasussiswa/:id2/edit/:id3', 
             name: 'AdminSekolahDetailCatatanKasusSiswaEdit',
             component: AdminSekolahDetailCatatanKasusSiswaEdit,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/catatanpengembangandiri', 
+            name: 'AdminSekolahDetailCatatanPengembanganDiri',
+            component: AdminSekolahDetailCatatanPengembanganDiri,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/catatanpengembangandiri/:id2',
+            name: 'AdminSekolahDetailCatatanPengembanganDiriDetail',
+            component: AdminSekolahDetailCatatanPengembanganDiriDetail,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/catatanpengembangandiri/:id2/tambah', 
+            name: 'AdminSekolahDetailCatatanPengembanganDiriTambah',
+            component: AdminSekolahDetailCatatanPengembanganDiriTambah,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/catatanpengembangandiri/:id2/edit/:id3', 
+            name: 'AdminSekolahDetailCatatanPengembanganDiriEdit',
+            component: AdminSekolahDetailCatatanPengembanganDiriEdit,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/catatanprestasisiswa', 
+            name: 'AdminSekolahDetailCatatanPrestasiSiswa',
+            component: AdminSekolahDetailCatatanPrestasiSiswa,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/catatanprestasisiswa/:id2',
+            name: 'AdminSekolahDetailCatatanPrestasiSiswaDetail',
+            component: AdminSekolahDetailCatatanPrestasiSiswaDetail,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/catatanprestasisiswa/:id2/tambah', 
+            name: 'AdminSekolahDetailCatatanPrestasiSiswaTambah',
+            component: AdminSekolahDetailCatatanPrestasiSiswaTambah,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/catatanprestasisiswa/:id2/edit/:id3', 
+            name: 'AdminSekolahDetailCatatanPrestasiSiswaEdit',
+            component: AdminSekolahDetailCatatanPrestasiSiswaEdit,
           },
         ],
       },

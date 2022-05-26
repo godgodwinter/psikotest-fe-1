@@ -373,7 +373,7 @@ const pagesSubSideBarActiveClass = ref(
               ]"
             >
               <router-link
-                :to="{ name: 'AdminSekolahDetailKelas' }"
+                :to="{ name: 'AdminSekolahDetailCatatanPengembanganDiri' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
               >
                 <svg
@@ -400,7 +400,7 @@ const pagesSubSideBarActiveClass = ref(
               ]"
             >
               <router-link
-                :to="{ name: 'AdminSekolahDetailKelas' }"
+                :to="{ name: 'AdminSekolahDetailCatatanPrestasiSiswa' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
               >
                 <svg
@@ -420,7 +420,7 @@ const pagesSubSideBarActiveClass = ref(
             </li>
           </ul>
         </div>
-        <ul
+        <!-- <ul
           class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm"
         >
           <li class="flex items-center py-3">
@@ -437,7 +437,7 @@ const pagesSubSideBarActiveClass = ref(
               </div>
             </span>
           </li>
-        </ul>
+        </ul> -->
       </div>
     </div>
     <!-- End of Data Statistik card -->
