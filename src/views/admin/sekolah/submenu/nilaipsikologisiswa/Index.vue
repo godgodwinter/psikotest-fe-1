@@ -84,8 +84,8 @@ const columns = ref([
     type: "String",
   },
   {
-    label: "KB",
-    field: "kb",
+    label: "kb%",
+    field: "kb_persen",
     type: "String",
   },
 ]);

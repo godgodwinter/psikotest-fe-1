@@ -201,7 +201,7 @@ const pagesSubSideBarActiveClass = ref(
                   clip-rule="evenodd"
                 />
               </svg>
-              <span class="ml-3">Guru BK </span>
+              <span class="ml-3">Pengguna</span>
             </router-link>
           </li>
         </ul>
@@ -388,7 +388,7 @@ const pagesSubSideBarActiveClass = ref(
                     clip-rule="evenodd"
                   />
                 </svg>
-                <span class="ml-3">Catatan Pengembangandiri Siswa</span>
+                <span class="ml-3">Catatan Pengembangan Diri Siswa</span>
               </router-link>
             </li>
             <li

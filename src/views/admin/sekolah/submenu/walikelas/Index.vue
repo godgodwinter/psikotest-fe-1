@@ -64,7 +64,7 @@ const columns = [
     thClass: "text-center",
   },
   {
-    label: "Nama Siswa",
+    label: "Nama Guru",
     field: "nama",
     type: "String",
   },
