@@ -62,6 +62,9 @@ import AdminSekolahDetailCatatanPrestasiSiswaEdit from '../views/admin/sekolah/s
 // MENU-SEKOLAH
 
 import AdminYayasan from '../views/admin/yayasan/Index.vue'
+import AdminYayasanTambah from '../views/admin/yayasan/Tambah.vue'
+import AdminYayasanEdit from '../views/admin/yayasan/Edit.vue'
+import AdminYayasanDetail from '../views/admin/yayasan/Detail.vue'
 import AdminKlasifikasi from '../views/admin/klasifikasiAkademisDanProfesi/Index.vue'
 import AdminKlasifikasiTambah from '../views/admin/klasifikasiAkademisDanProfesi/Tambah.vue'
 import AdminKlasifikasiEdit from '../views/admin/klasifikasiAkademisDanProfesi/Edit.vue'
@@ -337,6 +340,21 @@ const routes = [
         path: '/pages/admin/yayasan', 
         name: 'AdminYayasan',
         component: AdminYayasan,
+      },
+      {
+        path: '/pages/admin/yayasan', 
+        name: 'AdminYayasanTambah',
+        component: AdminYayasanTambah,
+      },
+      {
+        path: '/pages/admin/yayasan/:id', 
+        name: 'AdminYayasanEdit',
+        component: AdminYayasanEdit,
+      },
+      {
+        path: '/pages/admin/yayasan/:id/detail', 
+        name: 'AdminYayasanDetail',
+        component: AdminYayasanDetail,
       },
       // MENU-KLASIFIKASI
       {
