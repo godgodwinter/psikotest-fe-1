@@ -21,7 +21,65 @@ const siswa = ref([]);
 const aspekKepribadianRank = ref([]);
 
 const kecerdasan = ref([]);
-const temp = ref([]);
+const temp = ref([{ nama: "" }]);
+
+const PagesView = ref([
+  {
+    no: 1,
+    label: "IQ (Intelegence Quotient) / IST",
+    tampilkan: true,
+  },
+  {
+    no: 2,
+    label: "EQ (Emotional Quotient)",
+    tampilkan: true,
+  },
+  {
+    no: 3,
+    label: "Sc.Q (Social Quotient))",
+    tampilkan: true,
+  },
+  {
+    no: 4,
+    label: "IQ (KM) 8 Kecerdasan 65 % Keterangan : Baik",
+    tampilkan: true,
+  },
+  {
+    no: 5,
+    label: "Pengetahuan Umum",
+    tampilkan: true,
+  },
+  {
+    no: 6,
+    label: "Kreativitas",
+    tampilkan: true,
+  },
+  {
+    no: 7,
+    label: "Kemampuan Mengingat",
+    tampilkan: true,
+  },
+  {
+    no: 8,
+    label: "ASPEK KEPRIBADIAN",
+    tampilkan: true,
+  },
+  {
+    no: 9,
+    label: "TIPE BAKAT YANG DISUKAI",
+    tampilkan: true,
+  },
+  {
+    no: 10,
+    label: "MINAT PEKERJAAN TERKUAT",
+    tampilkan: true,
+  },
+  {
+    no: 11,
+    label: "KESIMPULAN DAN SARAN",
+    tampilkan: true,
+  },
+]);
 
 const kecerdasanList = ref([
   {
@@ -492,6 +550,47 @@ function getKesimpulanEqSq(item = null) {
   }
   return hasil;
 }
+
+function romanize(num) {
+  if (isNaN(num)) return NaN;
+  var digits = String(+num).split(""),
+    key = [
+      "",
+      "C",
+      "CC",
+      "CCC",
+      "CD",
+      "D",
+      "DC",
+      "DCC",
+      "DCCC",
+      "CM",
+      "",
+      "X",
+      "XX",
+      "XXX",
+      "XL",
+      "L",
+      "LX",
+      "LXX",
+      "LXXX",
+      "XC",
+      "",
+      "I",
+      "II",
+      "III",
+      "IV",
+      "V",
+      "VI",
+      "VII",
+      "VIII",
+      "IX",
+    ],
+    roman = "",
+    i = 3;
+  while (i--) roman = (key[+digits.pop() + i * 10] || "") + roman;
+  return Array(+digits.join("") + 1).join("M") + roman;
+}
 </script>
 <template>
   <div>
@@ -591,7 +690,7 @@ function getKesimpulanEqSq(item = null) {
             <table class="table table-compact w-full">
               <tbody>
                 <!-- row 1 -->
-                <tr>
+                <tr v-if="data.kbh">
                   <td class="whitespace-nowrap w-1/100">I.</td>
                   <td class="whitespace-nowrap w-1/100">
                     IQ (Intelegence Quotient) / IST
@@ -986,7 +1085,7 @@ function getKesimpulanEqSq(item = null) {
             <b>{{ kepanjangan(data.iqh) }}</b
             >.
           </p>
-          <p class="indent-8">
+          <p class="indent-8" v-if="temp.length > 7">
             Dalam belajar subyek disarankan menggunakan
             <b>{{ temp[0].nama }},{{ temp[1].nama }}, {{ temp[2].nama }} </b>,
             sedangkan yang perlu dilatih dan dibiasakan yaitu
@@ -994,7 +1093,7 @@ function getKesimpulanEqSq(item = null) {
             >.
           </p>
 
-          <p class="indent-8">
+          <p class="indent-8" v-if="temp.length > 7">
             Kecerdasan Emosi nya
             <b
               >{{ kepanjangan(data.eq_persen_keterangan) }},({{
