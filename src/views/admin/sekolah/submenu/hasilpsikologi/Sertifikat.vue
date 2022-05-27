@@ -809,7 +809,7 @@ function getKesimpulanEqSq(item = null) {
               <tbody>
                 <tr>
                   <th class="whitespace-nowrap w-1/100">VIII.</th>
-                  <th class="whitespace-nowrap w-5/12">ASPEK KEPRIBADIAN</th>
+                  <th class="whitespace-nowrap w-1/12">ASPEK KEPRIBADIAN</th>
                   <th class="whitespace-nowrap w-1/100">%</th>
                   <th class="whitespace-nowrap w-1/100">Keterangan</th>
                   <th class="whitespace-nowrap w-1/100">Rank</th>
@@ -817,7 +817,7 @@ function getKesimpulanEqSq(item = null) {
                 <!-- row 1 -->
                 <tr v-for="(item, index) in aspekKepribadianRank">
                   <td>{{ index + 1 }}</td>
-                  <td>{{ item.nama }}</td>
+                  <td class="whitespace-nowrap w-1/12">{{ item.nama }}</td>
                   <td>{{ item.persen }}</td>
                   <td class="whitespace-pre-wrap">
                     {{ kepanjangan(item.ket) }}
