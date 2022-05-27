@@ -631,7 +631,7 @@ function getKesimpulanEqSq(item = null) {
       </div>
     </div>
 
-    <div class="pt-4 px-10 md:flex justify-between">
+    <div class="pt-4 px-10 md:flex justify-between" v-if="data.kbh">
       <div>
         <span
           class="text-xl sm:text-xl leading-none font-bold text-gray-700 shadow-sm"
@@ -641,7 +641,7 @@ function getKesimpulanEqSq(item = null) {
       </div>
       <div class="md:py-0 py-4 space-x-2 space-y-2"></div>
     </div>
-    <div class="md:py-2 px-4 lg:flex flex-wrap gap-4">
+    <div class="md:py-2 px-4 lg:flex flex-wrap gap-4" v-if="data.kbh">
       <div class="w-full lg:w-full">
         <div class="bg-white shadow rounded-lg px-4 py-4">
           <div class="overflow-x-auto">
