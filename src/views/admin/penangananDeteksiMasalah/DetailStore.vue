@@ -24,7 +24,7 @@ const getDataId = async () => {
       `admin/penanganandeteksimasalah/masterdeteksi/${id}`
     );
     // console.log(response.data.penanganandeteksimasalah.length);
-    // dataDetail.value = response.data;
+    data.value = response.data;
     if (response.data.penanganandeteksimasalah.length == 3) {
       dataDetail.value[0].keterangan =
         response.data.penanganandeteksimasalah[0].keterangan;
@@ -103,7 +103,7 @@ const resetForm = () => {
     <div>
       <span
         class="text-2xl sm:text-3xl leading-none font-bold text-gray-700 shadow-sm"
-        >Penanganan Deteksi Masalah
+        >Penanganan Deteksi Masalah : {{ data.nama }}
       </span>
     </div>
     <div class="md:py-0 py-4">
