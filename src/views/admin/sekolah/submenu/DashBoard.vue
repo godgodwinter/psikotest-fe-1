@@ -41,9 +41,9 @@ let pilihKelas = [
       <div class="card w-96 bg-base-100 shadow-xl">
         <figure class="px-10 pt-10">
           <img
-            src="https://api.lorem.space/image/shoes?w=400&h=225"
+            src="@/assets/img/logo/github-copilot.svg"
             alt="Shoes"
-            class="rounded-xl"
+            class="rounded-xl text-white"
           />
         </figure>
         <div class="card-body items-center text-center">
@@ -59,7 +59,7 @@ let pilihKelas = [
       <div class="card w-96 bg-base-100 shadow-xl">
         <figure class="px-10 pt-10">
           <img
-            src="https://api.lorem.space/image/shoes?w=400&h=225"
+            src="@/assets/img/logo/github-copilot.svg"
             alt="Shoes"
             class="rounded-xl"
           />
