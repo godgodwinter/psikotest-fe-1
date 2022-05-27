@@ -17,6 +17,7 @@ const id2 = route.params.id2;
 const dataAsli = ref([]);
 const dataKelas = ref([]);
 const data = ref([]);
+const siswa = ref(null);
 
 const getData = async () => {
   try {
@@ -24,6 +25,7 @@ const getData = async () => {
     // console.log(response);
     dataAsli.value = response.data;
     data.value = response.data;
+    siswa.value = response.siswa;
     return response;
   } catch (error) {
     Toast.danger("Warning", "Data Gagal dimuat");
@@ -125,13 +127,13 @@ const dataKetNegativ = ref([
                 <tr>
                   <td class="whitespace-nowrap w-1/12">No Induk</td>
                   <td class="whitespace-nowrap w-1/12">:</td>
-                  <td class="whitespace-nowrap w-10/12">{{ data.no_induk }}</td>
+                  <td class="whitespace-nowrap w-10/12">{{ siswa.nomeridentitas }}</td>
                 </tr>
                 <!-- row 2 -->
                 <tr>
                   <td>Nama</td>
                   <td>:</td>
-                  <td>{{ data.nama }}</td>
+                  <td>{{ siswa.nama }}</td>
                 </tr>
                 <!-- row 3 -->
                 <tr>
@@ -143,13 +145,13 @@ const dataKetNegativ = ref([
                 <tr>
                   <td>Jenis Kelamin</td>
                   <td>:</td>
-                  <td>{{ data.jenis_kelamin }}</td>
+                  <td>{{ siswa.jk }}</td>
                 </tr>
                 <!-- row 3 -->
                 <tr>
                   <td>Sekolah</td>
                   <td>:</td>
-                  <td>{{ data.sekolah }}</td>
+                  <td>{{ siswa.sekolah.nama }}</td>
                 </tr>
               </tbody>
             </table>

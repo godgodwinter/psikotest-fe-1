@@ -17,6 +17,7 @@ const id2 = route.params.id2;
 const dataAsli = ref([]);
 const dataKelas = ref([]);
 const data = ref([]);
+const siswa = ref(null);
 
 const getData = async () => {
   try {
@@ -24,6 +25,7 @@ const getData = async () => {
     // console.log(response);
     dataAsli.value = response.data;
     data.value = response.data;
+    siswa.value = response.siswa;
     return response;
   } catch (error) {
     Toast.danger("Warning", "Data Gagal dimuat");
@@ -80,7 +82,7 @@ const dataKetNegativ = ref([
 ]);
 </script>
 <template>
-  <div>
+  <div v-if="siswa">
     <div class="pt-4 px-10 md:flex justify-between">
       <div>
         <span
@@ -125,13 +127,13 @@ const dataKetNegativ = ref([
                 <tr>
                   <td class="whitespace-nowrap w-1/12">No Induk</td>
                   <td class="whitespace-nowrap w-1/12">:</td>
-                  <td class="whitespace-nowrap w-10/12">{{ data.no_induk }}</td>
+                  <td class="whitespace-nowrap w-10/12">{{ siswa.nomeridentitas }}</td>
                 </tr>
                 <!-- row 2 -->
                 <tr>
                   <td>Nama</td>
                   <td>:</td>
-                  <td>{{ data.nama }}</td>
+                  <td>{{ siswa.nama }}</td>
                 </tr>
                 <!-- row 3 -->
                 <tr>
@@ -143,13 +145,13 @@ const dataKetNegativ = ref([
                 <tr>
                   <td>Jenis Kelamin</td>
                   <td>:</td>
-                  <td>{{ data.jenis_kelamin }}</td>
+                  <td>{{ siswa.jk }}</td>
                 </tr>
                 <!-- row 3 -->
                 <tr>
                   <td>Sekolah</td>
                   <td>:</td>
-                  <td>{{ data.sekolah }}</td>
+                  <td>{{ siswa.sekolah.nama }}</td>
                 </tr>
               </tbody>
             </table>
@@ -258,7 +260,8 @@ const dataKetNegativ = ref([
       <div>
         <span
           class="text-2xl sm:text-xl leading-none font-bold text-gray-600 shadow-sm"
-          >II. EQ (Emotional Quotient): 39.88 AR</span
+          >II. EQ (Emotional Quotient): {{ data.deteksi_eq_total_persen }}
+          {{ data.deteksi_eq_total_keterangan }}</span
         >
       </div>
       <div class="md:py-0 py-4 space-x-2 space-y-2"></div>
@@ -268,8 +271,9 @@ const dataKetNegativ = ref([
       <div>
         <span
           class="text-2xl sm:text-xl leading-none font-bold text-gray-600 shadow-sm"
-          >III. SCQ (Social Quotient): 39.44 AR</span
-        >
+          >III. SCQ (Social Quotient): {{ data.deteksi_scq_total_persen }}
+          {{ data.deteksi_scq_total_keterangan }}
+        </span>
       </div>
       <div class="md:py-0 py-4 space-x-2 space-y-2"></div>
     </div>
@@ -277,13 +281,15 @@ const dataKetNegativ = ref([
       <div>
         <span
           class="text-2xl sm:text-xl leading-none font-bold text-gray-600 shadow-sm"
-          >Saat ini anda memiliki Gangguan Karakter : 54.39 C yang dapat
-          menimbulkan masalah dan mengganggu aktivitas usaha anda dalam mencapai
-          keberhasilan. Sedangkan karakter negatif yang perlu anda kendalikan
-          dan bersifat merugikan di antaranya yaitu dalam Posisi Nilai Cukup
-          Tinggi ke atas sampai nilai Sangat Tinggi Sekali, nilai Cukup perlu
-          diperhatikan dikhawatirkan suatu saat akan mengalami perubahan
-          meningkat.</span
+          >Saat ini anda memiliki Gangguan Karakter :{{
+            data.deteksi_total_persen
+          }}
+          {{ data.deteksi_total_keterangan }} yang dapat menimbulkan masalah dan
+          mengganggu aktivitas usaha anda dalam mencapai keberhasilan. Sedangkan
+          karakter negatif yang perlu anda kendalikan dan bersifat merugikan di
+          antaranya yaitu dalam Posisi Nilai Cukup Tinggi ke atas sampai nilai
+          Sangat Tinggi Sekali, nilai Cukup perlu diperhatikan dikhawatirkan
+          suatu saat akan mengalami perubahan meningkat.</span
         >
       </div>
       <div class="md:py-0 py-4 space-x-2 space-y-2"></div>
