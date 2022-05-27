@@ -9,14 +9,14 @@ import ButtonDelete from "@/components/atoms/ButtonDel.vue";
 import { useStoreAdminBar } from "@/stores/adminBar";
 import router from "../../../router";
 const storeAdminBar = useStoreAdminBar();
-storeAdminBar.setPagesActive("administrator");
+storeAdminBar.setPagesActive("owner");
 
 const dataAsli = ref([]);
 const data = ref([]);
 
 const getData = async () => {
   try {
-    const response = await Api.get(`admin/administrator`);
+    const response = await Api.get(`admin/owner`);
     // console.log(response);
     dataAsli.value = response.data;
     data.value = response.data;
@@ -48,7 +48,7 @@ const columns = [
   },
   {
     label: "Nama",
-    field: "name",
+    field: "nama",
     type: "String",
   },
   {
@@ -60,7 +60,7 @@ const columns = [
 
 const doEditData = async (id, index) => {
   router.push({
-    name: "AdminAdministratorEdit",
+    name: "AdminOwnerEdit",
     params: { id: id },
   });
 };
@@ -68,7 +68,7 @@ const doEditData = async (id, index) => {
 const doDeleteData = async (id, index) => {
   if (confirm("Apakah anda yakin menghapus data ini?")) {
     try {
-      const response = await Api.delete(`admin/administrator/${id}`);
+      const response = await Api.delete(`admin/owner/${id}`);
       data.value.splice(index, 1);
       Toast.success("Success", "Data Berhasil dihapus!");
       return response.data;
@@ -83,14 +83,12 @@ const doDeleteData = async (id, index) => {
     <div>
       <span
         class="text-2xl sm:text-3xl leading-none font-bold text-gray-700 shadow-sm"
-        >Administrator</span
+        >Owner</span
       >
     </div>
     <div class="md:py-0 py-4">
       <BreadCrumb>
-        <template v-slot:content>
-          Administrator <BreadCrumbSpace /> Index
-        </template>
+        <template v-slot:content> Owner <BreadCrumbSpace /> Index </template>
       </BreadCrumb>
     </div>
   </div>
@@ -98,7 +96,7 @@ const doDeleteData = async (id, index) => {
   <div class="md:pt-6">
     <div class="md:flex justify-between px-10">
       <div class="space-x-1 space-y-1 pt-1 md:pt-0">
-        <router-link :to="{ name: 'AdminAdministratorTambah' }">
+        <router-link :to="{ name: 'AdminOwnerTambah' }">
           <button
             class="btn btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
           >

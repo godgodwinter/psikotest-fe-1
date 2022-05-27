@@ -85,6 +85,11 @@ import AdminKataBijakDetailEdit from '../views/admin/kataBijak/DetailEdit.vue'
 import AdminMasterNilaiPsikologi from '../views/admin/masterNilaiPsikologi/Index.vue'
 import AdmiMinatBakat from '../views/admin/minatBakat/Index.vue'
 import AdminAdministrator from '../views/admin/administrator/Index.vue'
+import AdminAdministratorTambah from '../views/admin/administrator/Tambah.vue'
+import AdminAdministratorEdit from '../views/admin/administrator/Edit.vue'
+import AdminOwner from '../views/admin/owner/Index.vue'
+import AdminOwnerTambah from '../views/admin/owner/Tambah.vue'
+import AdminOwnerEdit from '../views/admin/owner/Edit.vue'
 
 const routes = [
   {
@@ -449,6 +454,31 @@ const routes = [
         path: '/pages/admin/administrator', 
         name: 'AdminAdministrator',
         component: AdminAdministrator,
+      },
+      {
+        path: '/pages/admin/administrator', 
+        name: 'AdminAdministratorTambah',
+        component: AdminAdministratorTambah,
+      },
+      {
+        path: '/pages/admin/administrator', 
+        name: 'AdminAdministratorEdit',
+        component: AdminAdministratorEdit,
+      },
+      {
+        path: '/pages/admin/owner', 
+        name: 'AdminOwner',
+        component: AdminOwner,
+      },
+      {
+        path: '/pages/admin/owner', 
+        name: 'AdminOwnerTambah',
+        component: AdminOwnerTambah,
+      },
+      {
+        path: '/pages/admin/owner/:id', 
+        name: 'AdminOwnerEdit',
+        component: AdminOwnerEdit,
       },
     ],
   },

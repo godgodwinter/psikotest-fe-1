@@ -9,7 +9,7 @@ import ButtonDelete from "@/components/atoms/ButtonDel.vue";
 import { useStoreAdminBar } from "@/stores/adminBar";
 import router from "../../../router";
 const storeAdminBar = useStoreAdminBar();
-storeAdminBar.setPagesActive("terapis");
+storeAdminBar.setPagesActive("penanganandeteksimasalah");
 
 const dataAsli = ref([]);
 const data = ref([]);
