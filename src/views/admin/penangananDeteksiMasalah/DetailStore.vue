@@ -175,7 +175,7 @@ const resetForm = () => {
                         <label
                           for="name"
                           class="text-sm font-medium text-gray-900 block mb-2"
-                          >Keterangan 1 (54,5 - 70)</label
+                          >Keterangan 2 (71 - 80)</label
                         >
                         <Field
                           v-model="dataDetail[1].keterangan"
@@ -194,7 +194,7 @@ const resetForm = () => {
                         <label
                           for="name"
                           class="text-sm font-medium text-gray-900 block mb-2"
-                          >Keterangan 1 (54,5 - 70)</label
+                          >Keterangan 3 (81 - 99)</label
                         >
                         <Field
                           v-model="dataDetail[2].keterangan"

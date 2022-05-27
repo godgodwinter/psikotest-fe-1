@@ -21,7 +21,7 @@ const siswa = ref(null);
 
 const getData = async () => {
   try {
-    const response = await Api.get(`admin/deteksi/${id2}`);
+    const response = await Api.get(`admin/datahasildeteksi/${id2}/penanganan`);
     // console.log(response);
     dataAsli.value = response.data;
     data.value = response.data;
@@ -33,56 +33,33 @@ const getData = async () => {
   }
 };
 getData();
-const dataKetNegativ = ref([
-  {
-    label: "91-99",
-    ket: "Sangat Tinggi Sekali / Sangat Mengganggu Sekali",
-    kode: "STS",
-  },
-  {
-    label: "81-90",
-    ket: "Tinggi Sekali / Mengganggu Sekali",
-    kode: "TS",
-  },
-  {
-    label: "71-80",
-    ket: "Tinggi / Mengganggu",
-    kode: "T",
-  },
-  {
-    label: "61-70",
-    ket: "Cukup Tinggi / Cukup Mengganggu",
-    kode: "CT",
-  },
-  {
-    label: "41-60",
-    ket: "Cukup / Terkendali",
-    kode: "C",
-  },
-  {
-    label: "31-40",
-    ket: "Agak Rendah / Cukup Terkendali",
-    kode: "AR",
-  },
-  {
-    label: "21-30",
-    ket: "Rendah / Terkendali Baik",
-    kode: "R",
-  },
-  {
-    label: "11-20",
-    ket: "Rendah Sekali / Terkendali Baik Sekali",
-    kode: "RS",
-  },
-  {
-    label: "01-10",
-    ket: "Sangat Rendah Sekali / Sangat Terkendali Baik Sekali",
-    kode: "SRS",
-  },
-]);
+
+const singkatan = (item = 99) => {
+  let hasil = null;
+  if (item > 90) {
+    hasil = "Sangat Tinggi Sekali / Sangat Mengganggu Sekali";
+  } else if (91 > item && item >= 81) {
+    hasil = "Tinggi Sekali / Mengganggu Sekali (TS)";
+  } else if (81 > item && item >= 71) {
+    hasil = "Tinggi / Mengganggu";
+  } else if (71 > item && item >= 61) {
+    hasil = "Cukup Tinggi / Cukup Mengganggu";
+  } else if (61 > item && item >= 41) {
+    hasil = "Cukup / Terkendali ";
+  } else if (41 > item && item >= 31) {
+    hasil = "Agak Rendah / Cukup Terkendali ";
+  } else if (31 > item && item >= 21) {
+    hasil = "Rendah / Terkendali Baik ";
+  } else if (21 > item && item >= 11) {
+    hasil = "Rendah Sekali / Terkendali Baik Sekali";
+  } else {
+    hasil = "Sangat Rendah Sekali / Sangan Terkendali Baik Sekali ";
+  }
+  return hasil;
+};
 </script>
 <template>
-  <div>
+  <div v-if="siswa">
     <div class="pt-4 px-10 md:flex justify-between">
       <div>
         <span
@@ -127,7 +104,9 @@ const dataKetNegativ = ref([
                 <tr>
                   <td class="whitespace-nowrap w-1/12">No Induk</td>
                   <td class="whitespace-nowrap w-1/12">:</td>
-                  <td class="whitespace-nowrap w-10/12">{{ siswa.nomeridentitas }}</td>
+                  <td class="whitespace-nowrap w-10/12">
+                    {{ siswa.nomeridentitas }}
+                  </td>
                 </tr>
                 <!-- row 2 -->
                 <tr>
@@ -160,118 +139,20 @@ const dataKetNegativ = ref([
       </div>
     </div>
 
-    <div class="pt-4 px-10 md:flex justify-between">
-      <div>
-        <span
-          class="text-2xl sm:text-2xl leading-none font-bold text-gray-700 shadow-sm"
-          >ASPEK PSIKOLOGIS YANG DIUNGKAP</span
-        >
-      </div>
-      <div class="md:py-0 py-4 space-x-2 space-y-2"></div>
-    </div>
-
     <div class="md:py-2 px-4 lg:flex flex-wrap gap-4">
       <div class="w-full lg:w-full">
         <div class="bg-white shadow rounded-lg px-4 py-4">
-          <div class="overflow-x-auto">
-            <table class="table table-compact w-full">
-              <tbody>
-                <tr>
-                  <th class="whitespace-nowrap w-1/100">No</th>
-                  <th class="whitespace-nowrap w-5/12">Gangguan Karakter</th>
-                  <th class="whitespace-nowrap w-1/100">Rank</th>
-                  <th class="whitespace-nowrap w-1/100">%</th>
-                  <th class="whitespace-nowrap w-1/100">ket</th>
-                  <th class="whitespace-nowrap w-5/12"></th>
-                </tr>
-                <!-- row 1 -->
-
-                <!-- row 2 -->
-              </tbody>
-            </table>
+          <div class="overflow-x-auto px-4 space-y-10 mt-4 py-4">
+            <div v-for="(item, index) in data.deteksi" class="space-y-2">
+              <h1 class="text-lg font-bold text-gray-700">
+                {{ index + 1 }}. {{ item.nama }} : {{ item.score }} -
+                {{ singkatan(item.keterangan) }}
+              </h1>
+              <p class="indent-8 text-gray-700">{{ item.penanganan }}</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="pt-4 px-10 md:flex justify-between">
-      <div>
-        <span
-          class="text-2xl sm:text-2xl leading-none font-bold text-gray-700 shadow-sm"
-          >KETERANGAN NEGATIF</span
-        >
-      </div>
-      <div class="md:py-0 py-4 space-x-2 space-y-2"></div>
-    </div>
-
-    <div class="md:py-2 px-4 lg:flex flex-wrap gap-4">
-      <div class="w-full lg:w-full">
-        <div class="bg-white shadow rounded-lg px-4 py-4">
-          <div class="overflow-x-auto">
-            <table class="table table-compact w-full">
-              <tbody>
-                <tr>
-                  <th class="whitespace-nowrap w-1/100">Range</th>
-                  <th class="whitespace-nowrap w-1/100">:</th>
-                  <th class="whitespace-nowrap w-full">Keterangan</th>
-                </tr>
-                <!-- row 1 -->
-                <tr v-for="(item, index) in dataKetNegativ">
-                  <td class="text-center">{{ item.label }}</td>
-                  <td>:</td>
-                  <td>{{ item.ket }} ({{ item.kode }})</td>
-                </tr>
-                <!-- row 2 -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="pt-4 px-10 md:flex justify-between">
-      <div>
-        <span
-          class="text-2xl sm:text-xl leading-none font-bold text-gray-600 shadow-sm"
-          >KESIMPULAN DAN SARAN</span
-        >
-      </div>
-      <div class="md:py-0 py-4 space-x-2 space-y-2"></div>
-    </div>
-
-    <div class="pt-4 px-10 md:flex justify-between">
-      <div>
-        <span
-          class="text-2xl sm:text-xl leading-none font-bold text-gray-600 shadow-sm"
-          >II. EQ (Emotional Quotient): 39.88 AR</span
-        >
-      </div>
-      <div class="md:py-0 py-4 space-x-2 space-y-2"></div>
-    </div>
-
-    <div class="pt-4 px-10 md:flex justify-between">
-      <div>
-        <span
-          class="text-2xl sm:text-xl leading-none font-bold text-gray-600 shadow-sm"
-          >III. SCQ (Social Quotient): 39.44 AR</span
-        >
-      </div>
-      <div class="md:py-0 py-4 space-x-2 space-y-2"></div>
-    </div>
-    <div class="pt-4 px-10 md:flex justify-between">
-      <div>
-        <span
-          class="text-2xl sm:text-xl leading-none font-bold text-gray-600 shadow-sm"
-          >Saat ini anda memiliki Gangguan Karakter : 54.39 C yang dapat
-          menimbulkan masalah dan mengganggu aktivitas usaha anda dalam mencapai
-          keberhasilan. Sedangkan karakter negatif yang perlu anda kendalikan
-          dan bersifat merugikan di antaranya yaitu dalam Posisi Nilai Cukup
-          Tinggi ke atas sampai nilai Sangat Tinggi Sekali, nilai Cukup perlu
-          diperhatikan dikhawatirkan suatu saat akan mengalami perubahan
-          meningkat.</span
-        >
-      </div>
-      <div class="md:py-0 py-4 space-x-2 space-y-2"></div>
     </div>
   </div>
 </template>
