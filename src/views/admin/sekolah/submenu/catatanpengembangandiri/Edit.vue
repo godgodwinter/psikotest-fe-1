@@ -116,7 +116,7 @@ const resetForm = () => {
     <div>
       <span
         class="text-2xl sm:text-3xl leading-none font-bold text-gray-700 shadow-sm"
-        >Catatan Pengembangandiri Siswa</span
+        >Catatan Pengembangan Diri Siswa</span
       >
     </div>
     <div class="md:py-0 py-4 space-x-2 space-y-2">
