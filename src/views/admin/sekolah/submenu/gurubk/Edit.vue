@@ -15,6 +15,7 @@ const dataSekolahAsli = ref([]);
 const data = ref([]);
 const dataDetail = ref({
   nama: "",
+  username: "",
 });
 
 const getDataId = async () => {
@@ -22,6 +23,7 @@ const getDataId = async () => {
     const response = await Api.get(`admin/datasekolah/${id}/gurubk/${id2}`);
     dataDetail.value = {
       nama: response.data.nama,
+      username: response.data.username,
     };
     // console.log(data.value);
     return response;
@@ -48,6 +50,8 @@ const onSubmit = () => {
 const doStoreData = async (d) => {
   let dataStore = {
     nama: dataDetail.value.nama,
+    username: dataDetail.value.username,
+    password: dataDetail.value.password,
   };
   try {
     const response = await Api.put(
@@ -67,6 +71,8 @@ const doStoreData = async (d) => {
 const resetForm = () => {
   dataDetail.value = {
     nama: "",
+    username: "",
+    password: "",
   };
 };
 const dataKelas = ref([]);
@@ -134,6 +140,45 @@ let pilihWalikelas = ref([]);
                         />
                         <div class="text-xs text-red-600 mt-1">
                           {{ errors.nama }}
+                        </div>
+                      </div>
+
+                      <div>
+                        <label
+                          for="name"
+                          class="text-sm font-medium text-gray-900 block mb-2"
+                          >Username</label
+                        >
+                        <Field
+                          v-model="dataDetail.username"
+                          :rules="validateData"
+                          type="text"
+                          name="username"
+                          ref="username"
+                          class="input input-bordered md:w-full max-w-2xl"
+                          required
+                        />
+                        <div class="text-xs text-red-600 mt-1">
+                          {{ errors.username }}
+                        </div>
+                      </div>
+                      <div>
+                        <label
+                          for="name"
+                          class="text-sm font-medium text-gray-900 block mb-2"
+                          >Password</label
+                        >
+                        <Field
+                          v-model="dataDetail.password"
+                          :rules="validateData"
+                          type="password"
+                          name="password"
+                          ref="password"
+                          class="input input-bordered md:w-full max-w-2xl"
+                          required
+                        />
+                        <div class="text-xs text-red-600 mt-1">
+                          {{ errors.password }}
                         </div>
                       </div>
                     </div>

@@ -14,7 +14,8 @@ const dataSekolahAsli = ref([]);
 const data = ref([]);
 const dataDetail = ref({
   nama: "",
-  nomerinduk: "",
+  username: "",
+  password: "",
 });
 
 // validasi
@@ -33,6 +34,8 @@ const onSubmit = () => {
 const doStoreData = async (d) => {
   let dataStore = {
     nama: dataDetail.value.nama,
+    username: dataDetail.value.username,
+    password: dataDetail.value.password,
   };
   try {
     const response = await Api.post(
@@ -52,6 +55,8 @@ const doStoreData = async (d) => {
 const resetForm = () => {
   dataDetail.value = {
     nama: "",
+    username: "",
+    password: "",
   };
 };
 </script>
@@ -117,6 +122,45 @@ const resetForm = () => {
                         />
                         <div class="text-xs text-red-600 mt-1">
                           {{ errors.nama }}
+                        </div>
+                      </div>
+
+                      <div>
+                        <label
+                          for="name"
+                          class="text-sm font-medium text-gray-900 block mb-2"
+                          >Username</label
+                        >
+                        <Field
+                          v-model="dataDetail.username"
+                          :rules="validateData"
+                          type="text"
+                          name="username"
+                          ref="username"
+                          class="input input-bordered md:w-full max-w-2xl"
+                          required
+                        />
+                        <div class="text-xs text-red-600 mt-1">
+                          {{ errors.username }}
+                        </div>
+                      </div>
+                      <div>
+                        <label
+                          for="name"
+                          class="text-sm font-medium text-gray-900 block mb-2"
+                          >Password</label
+                        >
+                        <Field
+                          v-model="dataDetail.password"
+                          :rules="validateData"
+                          type="password"
+                          name="password"
+                          ref="password"
+                          class="input input-bordered md:w-full max-w-2xl"
+                          required
+                        />
+                        <div class="text-xs text-red-600 mt-1">
+                          {{ errors.password }}
                         </div>
                       </div>
                     </div>

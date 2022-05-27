@@ -103,7 +103,7 @@ const columns = [
   },
   {
     label: "Password Default",
-    field: "passwordefault",
+    field: "passworddefault",
     type: "String",
   },
 ];
@@ -171,6 +171,33 @@ const doPilihKelas = () => {
     });
   }
 };
+
+const doGenerateAkun = () => {
+  if (confirm("Apakah anda yakin menggenerate akun siswa yang belum dibuat?")) {
+    try {
+      const response = Api.post(`admin/datasekolah/${id}/siswa/generateakun`);
+      getData();
+      Toast.success("Success", "Generate akun berhasil!");
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
+const doGenerateAkunAll = () => {
+  if (confirm("Apakah anda yakin menggenerate akun semua siswa?")) {
+    try {
+      const response = Api.post(
+        `admin/datasekolah/${id}/siswa/generateakunforceall`
+      );
+      getData();
+      Toast.success("Success", "Generate akun berhasil!");
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
 </script>
 <template>
   <div class="pt-4 px-10 md:flex justify-between">
@@ -181,11 +208,20 @@ const doPilihKelas = () => {
       >
     </div>
     <div class="md:py-0 py-4 space-x-2 space-y-2">
-      <button class="btn btn-sm btn-warning text-gray-600">
-        Generate Password
+      <button
+        class="btn btn-sm btn-warning text-gray-100"
+        @click="doGenerateAkun()"
+      >
+        Generate Akun Baru
+      </button>
+      <button
+        class="btn btn-sm btn-error text-gray-100"
+        @click="doGenerateAkunAll()"
+      >
+        Generate Semua Akun
       </button>
       <router-link :to="{ name: 'AdminSekolahDetailSiswaTambah' }">
-        <button class="btn btn-sm btn-info text-gray-600">
+        <button class="btn btn-sm btn-info text-gray-100">
           Tambah
         </button></router-link
       >
