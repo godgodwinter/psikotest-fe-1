@@ -4,7 +4,7 @@ import ButtonTwo from "../../components/atoms/ButtonTwo.vue";
 </script>
 <template>
   <div
-    class="flex justify-center flex-col tracking-tight space-y-1 py-20 lg:py-14 container max-w-4xl mx-auto"
+    class="flex justify-center flex-col tracking-tight space-y-1 py-20 lg:py-14 container max-w-4xl mx-auto bg-white"
   >
     <div
       class="font-extrabold text-[40px] lg:text-[160px] text-transparent bg-clip-text bg-gradient-to-br from-sky-400 to-slate-600 text-center"

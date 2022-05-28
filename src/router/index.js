@@ -21,9 +21,12 @@ import AdminSekolahEdit from '../views/admin/sekolah/Edit.vue'
 import AdminSekolahDetail from '../views/admin/sekolah/Detail.vue'
 // MENU-SEKOLAH-SUB
 import AdminSekolahDetailDashboard from '../views/admin/sekolah/submenu/DashBoard.vue'
+// menu-siswa
 import AdminSekolahDetailSiswa from '../views/admin/sekolah/submenu/siswa/Index.vue'
 import AdminSekolahDetailSiswaTambah from '../views/admin/sekolah/submenu/siswa/Tambah.vue'
 import AdminSekolahDetailSiswaEdit from '../views/admin/sekolah/submenu/siswa/Edit.vue'
+import AdminSekolahDetailSiswaDetail from '../views/admin/sekolah/submenu/siswa/Detail.vue'
+// menu-siswa
 import AdminSekolahDetailKelas from '../views/admin/sekolah/submenu/kelas/Index.vue'
 import AdminSekolahDetailKelasTambah from '../views/admin/sekolah/submenu/kelas/Tambah.vue'
 import AdminSekolahDetailKelasEdit from '../views/admin/sekolah/submenu/kelas/Edit.vue'
@@ -187,6 +190,11 @@ const routes = [
             path: '/pages/admin/sekolahdetail/:id/siswa/edit/:id2', 
             name: 'AdminSekolahDetailSiswaEdit',
             component: AdminSekolahDetailSiswaEdit,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/siswa/detail/:id2', 
+            name: 'AdminSekolahDetailSiswaDetail',
+            component: AdminSekolahDetailSiswaDetail,
           },
           {
             path: '/pages/admin/sekolahdetail/:id/kelas', 

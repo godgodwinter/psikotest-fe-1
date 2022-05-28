@@ -269,8 +269,14 @@ const doGenerateAkunAll = () => {
                   <ButtonDelete
                     @click="doDeleteData(props.row.id, props.index)"
                   />
-
-                  <ButtonDetail />
+                  <router-link
+                    :to="{
+                      name: 'AdminSekolahDetailSiswaDetail',
+                      params: { id, id2: props.row.id },
+                    }"
+                  >
+                    <ButtonDetail />
+                  </router-link>
                 </div>
               </span>
 

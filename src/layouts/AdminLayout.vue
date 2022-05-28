@@ -12,10 +12,13 @@ import SideBar from "@/components/template/SideBar.vue";
 
     <div class="flex overflow-hidden bg-white pt-24 px-2">
       <div
-        class="bg-gray-900 opacity-50 hidden fixed inset-0 z-10"
+        class="bg-white opacity-50 hidden fixed inset-0 z-10"
         id="sidebarBackdrop"
       />
-      <div id="main-content" class="w-full bg-gray-50 relative lg:ml-72">
+      <div
+        id="main-content"
+        class="w-full bg-gray-50 relative lg:ml-72 h-screen"
+      >
         <main>
           <router-view />
           <Footer />
