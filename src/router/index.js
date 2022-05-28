@@ -10,6 +10,9 @@ import LandingLogin from '../views/landing/LandingLogin.vue';
 // admin
 import DashBoard from '../views/admin/DashBoard.vue'
 
+// testing
+import TestingCetak1 from '../views/testing/TestingCetak1.vue'
+
 import AdminApiProBK from '../views/admin/apiprobk/Index.vue'
 import AdminApiProBKTambah from '../views/admin/apiprobk/Tambah.vue'
 import AdminApiProBKEdit from '../views/admin/apiprobk/Edit.vue'
@@ -507,6 +510,11 @@ const routes = [
         component: AdminOwnerEdit,
       },
     ],
+  },
+  {
+    path: '/testing/cetak1', 
+    name: 'TestingCetak1',
+    component: TestingCetak1,
   },
   {
     path: '/:catchAll(.*)', redirect: '/404',
