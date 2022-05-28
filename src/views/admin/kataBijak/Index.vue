@@ -78,6 +78,31 @@ const doDeleteData = async (id, index) => {
     }
   }
 };
+
+const file = ref(null);
+let formData = new FormData();
+const doStoreDataImport = async (d) => {
+  // console.log(data);
+  try {
+    // const response = await Api.post("testing/apiprobk/upload", formData);
+    const response = await Api.post(`admin/proses/import/katabijak`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    // console.log(response.data);
+    // Toast.success("Success", "Data Berhasil ditambahkan!");
+    getData();
+    return response.data;
+  } catch (error) {
+    // Toast.danger("Warning", "Data gagal ditambahkan!");
+    console.error(error);
+  }
+};
+const doSubmitFile = async () => {
+  formData.append("file", file.value.files[0]);
+  doStoreDataImport();
+};
 </script>
 <template>
   <div class="pt-4 px-10 md:flex justify-between">
@@ -122,8 +147,9 @@ const doDeleteData = async (id, index) => {
         >
       </div>
       <div class="space-x-1 space-y-1 pt-1 md:pt-0">
-        <button
-          class="btn btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
+        <label
+          for="modalImport"
+          class="btn modal-button btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -140,7 +166,7 @@ const doDeleteData = async (id, index) => {
             />
           </svg>
           Import
-        </button>
+        </label>
         <button
           class="btn btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
         >
@@ -211,6 +237,28 @@ const doDeleteData = async (id, index) => {
             </template>
           </vue-good-table>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Put this part before </body> tag -->
+  <input type="checkbox" id="modalImport" class="modal-toggle" />
+  <div class="modal">
+    <div class="modal-box w-11/12 max-w-5xl">
+      <label
+        for="modalImport"
+        class="btn btn-sm btn-circle absolute right-2 top-2"
+        >✕</label
+      >
+      <h3 class="font-bold text-lg">Import data menggunakan .xlx / .xlxs !</h3>
+      <div class="py-4">
+        <input type="file" ref="file" />
+        <button class="btn btn-info text-gray-100" @click="doSubmitFile()">
+          Upload
+        </button>
+      </div>
+      <div class="modal-action">
+        <!-- <label for="modalImport" class="btn">Done!</label> -->
       </div>
     </div>
   </div>

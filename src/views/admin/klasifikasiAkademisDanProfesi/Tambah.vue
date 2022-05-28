@@ -245,7 +245,8 @@ const resetForm = () => {
                           for="name"
                           class="text-sm font-medium text-gray-900 block mb-2"
                           >Pekerjaan dan Keterangan</label
-                        ><textarea
+                        >
+                        <textarea
                           v-model="dataDetail.pekerjaandanketerangan"
                           :rules="validateData"
                           name="pekerjaandanketerangan"

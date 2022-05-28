@@ -13,9 +13,9 @@ const id = route.params.id;
 const dataAsli = ref([]);
 const data = ref([]);
 const dataDetail = ref([
-  { batasbawah: 54.5, batasatas: 70, keterangan: "" },
-  { batasbawah: 71, batasatas: 80, keterangan: "" },
-  { batasbawah: 81, batasatas: 99, keterangan: "" },
+  { batasbawah: 54.5, batasatas: 70.0, keterangan: "" },
+  { batasbawah: 71.0, batasatas: 80.0, keterangan: "" },
+  { batasbawah: 81.0, batasatas: 99.0, keterangan: "" },
 ]);
 
 const getDataId = async () => {
@@ -60,17 +60,17 @@ const doStoreData = async (d) => {
     dataForm: [
       {
         batasbawah: 54.5,
-        batasatas: 70,
+        batasatas: 70.0,
         keterangan: dataDetail.value[0].keterangan,
       },
       {
-        batasbawah: 71,
-        batasatas: 80,
+        batasbawah: 71.0,
+        batasatas: 80.0,
         keterangan: dataDetail.value[1].keterangan,
       },
       {
-        batasbawah: 81,
-        batasatas: 99,
+        batasbawah: 81.0,
+        batasatas: 99.0,
         keterangan: dataDetail.value[2].keterangan,
       },
     ],
@@ -92,9 +92,9 @@ const doStoreData = async (d) => {
 };
 const resetForm = () => {
   dataDetail.value = [
-    { batasbawah: 54.5, batasatas: 70, keterangan: "" },
-    { batasbawah: 71, batasatas: 80, keterangan: "" },
-    { batasbawah: 81, batasatas: 99, keterangan: "" },
+    { batasbawah: 54.5, batasatas: 70.0, keterangan: "" },
+    { batasbawah: 71.0, batasatas: 80.0, keterangan: "" },
+    { batasbawah: 81.0, batasatas: 99.0, keterangan: "" },
   ];
 };
 </script>
@@ -158,7 +158,7 @@ const resetForm = () => {
                           class="text-sm font-medium text-gray-900 block mb-2"
                           >Keterangan 1 (54,5 - 70)</label
                         >
-                        <Field
+                        <!-- <Field
                           v-model="dataDetail[0].keterangan"
                           :rules="validateData"
                           type="text"
@@ -166,7 +166,15 @@ const resetForm = () => {
                           ref="keterangan1"
                           class="input input-bordered md:w-full max-w-2xl"
                           required
-                        />
+                        /> -->
+                        <textarea
+                          v-model="dataDetail[0].keterangan"
+                          :rules="validateData"
+                          name="keterangan1"
+                          ref="keterangan1"
+                          class="textarea textarea-bordered md:w-full max-w-2xl h-52"
+                          placeholder=""
+                        ></textarea>
                         <div class="text-xs text-red-600 mt-1">
                           {{ errors.keterangan1 }}
                         </div>
@@ -177,7 +185,15 @@ const resetForm = () => {
                           class="text-sm font-medium text-gray-900 block mb-2"
                           >Keterangan 2 (71 - 80)</label
                         >
-                        <Field
+                        <textarea
+                          v-model="dataDetail[1].keterangan"
+                          :rules="validateData"
+                          name="keterangan2"
+                          ref="keterangan2"
+                          class="textarea textarea-bordered md:w-full max-w-2xl h-52"
+                          placeholder=""
+                        ></textarea>
+                        <!-- <Field
                           v-model="dataDetail[1].keterangan"
                           :rules="validateData"
                           type="text"
@@ -185,7 +201,7 @@ const resetForm = () => {
                           ref="keterangan2"
                           class="input input-bordered md:w-full max-w-2xl"
                           required
-                        />
+                        /> -->
                         <div class="text-xs text-red-600 mt-1">
                           {{ errors.keterangan2 }}
                         </div>
@@ -196,15 +212,14 @@ const resetForm = () => {
                           class="text-sm font-medium text-gray-900 block mb-2"
                           >Keterangan 3 (81 - 99)</label
                         >
-                        <Field
+                        <textarea
                           v-model="dataDetail[2].keterangan"
                           :rules="validateData"
-                          type="text"
-                          name="keterangan3"
-                          ref="keterangan3"
-                          class="input input-bordered md:w-full max-w-2xl"
-                          required
-                        />
+                          name="keterangan2"
+                          ref="keterangan2"
+                          class="textarea textarea-bordered md:w-full max-w-2xl h-52"
+                          placeholder=""
+                        ></textarea>
                         <div class="text-xs text-red-600 mt-1">
                           {{ errors.keterangan3 }}
                         </div>
