@@ -17,7 +17,7 @@ import SideBar from "@/components/template/SideBar.vue";
       />
       <div
         id="main-content"
-        class="w-full bg-gray-50 relative lg:ml-72 h-screen"
+        class="w-full bg-gray-50 relative lg:ml-72 h-min-screen"
       >
         <main>
           <router-view />

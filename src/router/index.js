@@ -54,6 +54,7 @@ import AdminSekolahDetailCatatanKasusSiswa from '../views/admin/sekolah/submenu/
 import AdminSekolahDetailCatatanKasusSiswaDetail from '../views/admin/sekolah/submenu/catatankasussiswa/Detail.vue'
 import AdminSekolahDetailCatatanKasusSiswaTambah from '../views/admin/sekolah/submenu/catatankasussiswa/Tambah.vue'
 import AdminSekolahDetailCatatanKasusSiswaEdit from '../views/admin/sekolah/submenu/catatankasussiswa/Edit.vue'
+import AdminSekolahDetailCatatanKasusSiswaCetak from '../views/admin/sekolah/submenu/catatankasussiswa/Cetak.vue'
 
 import AdminSekolahDetailCatatanPengembanganDiri from '../views/admin/sekolah/submenu/catatanpengembangandiri/Index.vue'
 import AdminSekolahDetailCatatanPengembanganDiriDetail from '../views/admin/sekolah/submenu/catatanpengembangandiri/Detail.vue'
@@ -303,6 +304,11 @@ const routes = [
             path: '/pages/admin/sekolahdetail/:id/catatankasussiswa/:id2/edit/:id3', 
             name: 'AdminSekolahDetailCatatanKasusSiswaEdit',
             component: AdminSekolahDetailCatatanKasusSiswaEdit,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/catatankasussiswa/:id2/cetak/', 
+            name: 'AdminSekolahDetailCatatanKasusSiswaCetak',
+            component: AdminSekolahDetailCatatanKasusSiswaCetak,
           },
           {
             path: '/pages/admin/sekolahdetail/:id/catatanpengembangandiri', 
