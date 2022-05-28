@@ -305,14 +305,20 @@ const doBackup = async () => {
       // foreach then getData then push on datatable
       // 2.async insert data from api to be
       for (let i = 0; i < data.value.length; i++) {
-        if (data.value[i].sertifikat == "belum") {
+        if (
+          data.value[i].sertifikat == "belum" ||
+          data.value[i].sertifikat == "gagal"
+        ) {
           getDataFromApiUjianSertifikat(
             data.value[i].username,
             data.value[i].id,
             i
           );
         }
-        if (data.value[i].sertifikat == "belum") {
+        if (
+          data.value[i].deteksi == "belum" ||
+          data.value[i].deteksi == "gagal"
+        ) {
           getDataFromApiUjianDeteksi(
             data.value[i].username,
             data.value[i].id,
