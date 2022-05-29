@@ -142,41 +142,119 @@ const inputCariKelas = ref({
 
 const doPilihKelas = () => {
   if (inputCariKelas.value.id === "Semua Kelas") {
-    data.value = dataAsli.value.map((item, index) => {
-      return {
+    // data.value = dataAsli.value.map((item, index) => {
+    //   return {
+    //     ...item,
+    //     nama: item.nama,
+    //     kelas: `${item.kelas ? item.kelas.nama : ""}`,
+    //   };
+    // });
+
+    dataAsli.value.forEach((item, index) => {
+      let tempDataList = {};
+      if (item.siswadetailwithsertifikat) {
+        ListTampilkan.value.forEach((listItem) => {
+          tempDataList[listItem.id] =
+            item.siswadetailwithsertifikat.apiprobkwithsertifikat.apiprobk_sertifikat[
+              listItem.id
+            ];
+        });
+      }
+      // console.log(tempDataList);
+      data.value.push({
         ...item,
         nama: item.nama,
+        id: item.id,
         kelas: `${item.kelas ? item.kelas.nama : ""}`,
-      };
+      });
+
+      ListTampilkan.value.forEach((listItem) => {
+        data.value[index][listItem.id] = tempDataList[listItem.id];
+      });
     });
   } else if (inputCariKelas.value.id === "Belum masuk Kelas") {
     let dataFiltered = dataAsli.value.filter((item) => {
       return item.kelas === null;
     });
-    data.value = dataFiltered.map((item, index) => {
-      return {
-        ...item,
-        nama: item.nama,
-        kelas: "Belum Masuk Kelas",
-      };
-    });
+
+    if (dataFiltered.length > 0) {
+      dataFiltered.forEach((item, index) => {
+        let tempDataList = {};
+        if (item.siswadetailwithsertifikat) {
+          ListTampilkan.value.forEach((listItem) => {
+            tempDataList[listItem.id] =
+              item.siswadetailwithsertifikat.apiprobkwithsertifikat.apiprobk_sertifikat[
+                listItem.id
+              ];
+          });
+        }
+        // console.log(tempDataList);
+        data.value.push({
+          ...item,
+          nama: item.nama,
+          id: item.id,
+          kelas: `${item.kelas ? item.kelas.nama : ""}`,
+        });
+
+        ListTampilkan.value.forEach((listItem) => {
+          data.value[index][listItem.id] = tempDataList[listItem.id];
+        });
+      });
+    } else {
+      data.value = [];
+    }
+    // data.value = dataFiltered.map((item, index) => {
+    //   return {
+    //     ...item,
+    //     nama: item.nama,
+    //     kelas: "Belum Masuk Kelas",
+    //   };
+    // });
   } else {
     let dataFiltered = dataAsli.value.filter((item) => {
       return item.kelas_id == inputCariKelas.value.id;
     });
-    data.value = dataFiltered.map((item, index) => {
-      return {
-        ...item,
-        nama: item.nama,
-        kelas: `${item.kelas ? item.kelas.nama : ""}`,
-      };
-    });
+    // data.value = dataFiltered.map((item, index) => {
+    //   return {
+    //     ...item,
+    //     nama: item.nama,
+    //     kelas: `${item.kelas ? item.kelas.nama : ""}`,
+    //   };
+    // });
+
+    if (dataFiltered.length > 0) {
+      data.value = [];
+      dataFiltered.forEach((item, index) => {
+        let tempDataList = {};
+        if (item.siswadetailwithsertifikat) {
+          ListTampilkan.value.forEach((listItem) => {
+            tempDataList[listItem.id] =
+              item.siswadetailwithsertifikat.apiprobkwithsertifikat.apiprobk_sertifikat[
+                listItem.id
+              ];
+          });
+        }
+        // console.log(tempDataList);
+        data.value.push({
+          ...item,
+          nama: item.nama,
+          id: item.id,
+          kelas: `${item.kelas ? item.kelas.nama : ""}`,
+        });
+
+        ListTampilkan.value.forEach((listItem) => {
+          data.value[index][listItem.id] = tempDataList[listItem.id];
+        });
+      });
+    } else {
+      data.value = [];
+    }
   }
 };
 
 // seleksi yang ditampilkan
 const ListTampilkan = ref([
- { label: "Kecerdasan Bahasa/Lingustik", id: "kb_persen", checked: true },
+  { label: "Kecerdasan Bahasa/Lingustik", id: "kb_persen", checked: true },
   {
     label: "Keterangan Kecerdasan Bahasa/Lingustik",
     id: "kbh",
@@ -197,84 +275,256 @@ const ListTampilkan = ref([
   { label: "Kecerdasan Natural", id: "kn_persen", checked: false },
   { label: "Keterangan Kecerdasan Natural", id: "knh", checked: false },
   { label: "Intelligence Quotient", id: "iq", checked: false },
-  { label: "Persentase Intelligence Quotient", id: "iq_persen", checked: false },
+  {
+    label: "Persentase Intelligence Quotient",
+    id: "iq_persen",
+    checked: false,
+  },
   { label: "Keterangan Intelligence Quotient", id: "iqh", checked: false },
   { label: "Persentase Emotional Quotient", id: "eq_persen", checked: false },
-  { label: "Keterangan Emotional Quotient", id: "eq_persen_keterangan", checked: false },
+  {
+    label: "Keterangan Emotional Quotient",
+    id: "eq_persen_keterangan",
+    checked: false,
+  },
   { label: "Persentase Spiritual Quotient", id: "sq_persen", checked: false },
-  { label: "Keterangan Spiritual Quotient", id: "sq_persen_keterangan", checked: false },
+  {
+    label: "Keterangan Spiritual Quotient",
+    id: "sq_persen_keterangan",
+    checked: false,
+  },
   { label: "Persentase Social Quotient", id: "scq_persen", checked: false },
-  { label: "Keterangan Social Quotient", id: "scq_persen_keterangan", checked: false },
+  {
+    label: "Keterangan Social Quotient",
+    id: "scq_persen_keterangan",
+    checked: false,
+  },
   { label: "Sikap Hangat", id: "hspq_a_kn_persen", checked: false },
-  { label: "Keterangan Sikap Hangat", id: "hspq_a_kn_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Hangat",
+    id: "hspq_a_kn_keterangan",
+    checked: false,
+  },
   { label: "Sikap Dingin", id: "hspq_a_kr_persen", checked: false },
-  { label: "Keterangan Sikap Dingin", id: "hspq_a_kr_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Dingin",
+    id: "hspq_a_kr_keterangan",
+    checked: false,
+  },
   { label: "Sikap Emosi Stabil", id: "hspq_c_kn_persen", checked: false },
-  { label: "Keterangan Sikap Emosi Stabil", id: "hspq_c_kn_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Emosi Stabil",
+    id: "hspq_c_kn_keterangan",
+    checked: false,
+  },
   { label: "Sikap Emosi Labil", id: "hspq_c_kr_persen", checked: false },
-  { label: "Keterangan Sikap Emosi Labil", id: "hspq_c_kr_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Emosi Labil",
+    id: "hspq_c_kr_keterangan",
+    checked: false,
+  },
   { label: "Sikap Bergairah", id: "hspq_d_kn_persen", checked: false },
-  { label: "Keterangan Sikap Bergairah", id: "hspq_d_kn_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Bergairah",
+    id: "hspq_d_kn_keterangan",
+    checked: false,
+  },
   { label: "Sikap Sulit Bergairah", id: "hspq_d_kr_persen", checked: false },
-  { label: "Keterangan Sikap Sulit Bergairah", id: "hspq_d_kr_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Sulit Bergairah",
+    id: "hspq_d_kr_keterangan",
+    checked: false,
+  },
   { label: "Sikap Dominasi", id: "hspq_e_kn_persen", checked: false },
-  { label: "Keterangan Sikap Dominasi", id: "hspq_e_kn_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Dominasi",
+    id: "hspq_e_kn_keterangan",
+    checked: false,
+  },
   { label: "Sikap Patuh Tunduk", id: "hspq_e_kr_persen", checked: false },
-  { label: "Keterangan Sikap Patuh Tunduk", id: "hspq_e_kr_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Patuh Tunduk",
+    id: "hspq_e_kr_keterangan",
+    checked: false,
+  },
   { label: "Sikap Keceriaan", id: "hspq_f_kn_persen", checked: false },
-  { label: "Keterangan Sikap Keceriaan", id: "hspq_f_kn_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Keceriaan",
+    id: "hspq_f_kn_keterangan",
+    checked: false,
+  },
   { label: "Sikap Sungguh-sungguh", id: "hspq_f_kr_persen", checked: false },
-  { label: "Keterangan Sikap Sungguh-sungguh", id: "hspq_f_kr_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Sungguh-sungguh",
+    id: "hspq_f_kr_keterangan",
+    checked: false,
+  },
   { label: "Sikap Taat Peraturan", id: "hspq_g_kn_persen", checked: false },
-  { label: "Keterangan Sikap Taat Peraturan", id: "hspq_g_kn_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Taat Peraturan",
+    id: "hspq_g_kn_keterangan",
+    checked: false,
+  },
   { label: "Sikap Menolak Peraturan", id: "hspq_g_kr_persen", checked: false },
-  { label: "Keterangan Sikap Menolak Peraturan", id: "hspq_g_kr_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Menolak Peraturan",
+    id: "hspq_g_kr_keterangan",
+    checked: false,
+  },
   { label: "Sikap Lembuht Hati/Peka", id: "hspq_h_kn_persen", checked: false },
-  { label: "Keterangan Sikap Lembuht Hati/Peka", id: "hspq_h_kn_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Lembuht Hati/Peka",
+    id: "hspq_h_kn_keterangan",
+    checked: false,
+  },
   { label: "Sikap Keras Hati", id: "hspq_h_kr_persen", checked: false },
-  { label: "Keterangan Sikap Keras Hati", id: "hspq_h_kr_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Keras Hati",
+    id: "hspq_h_kr_keterangan",
+    checked: false,
+  },
   { label: "Sikap Pemberani", id: "hspq_i_kn_persen", checked: false },
-  { label: "Keterangan Sikap Pemberani", id: "hspq_i_kn_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Pemberani",
+    id: "hspq_i_kn_keterangan",
+    checked: false,
+  },
   { label: "Sikap Pemalu", id: "hspq_i_kr_persen", checked: false },
-  { label: "Keterangan Sikap Pemalu", id: "hspq_i_kr_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Pemalu",
+    id: "hspq_i_kr_keterangan",
+    checked: false,
+  },
   { label: "Sikap Menarik Diri", id: "hspq_j_kn_persen", checked: false },
-  { label: "Keterangan Sikap Menarik Diri", id: "hspq_j_kn_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Menarik Diri",
+    id: "hspq_j_kn_keterangan",
+    checked: false,
+  },
   { label: "Sikap Bersemangat", id: "hspq_j_kr_persen", checked: false },
-  { label: "Keterangan Sikap Bersemangat", id: "hspq_j_kr_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Bersemangat",
+    id: "hspq_j_kr_keterangan",
+    checked: false,
+  },
   { label: "Sikap Ketakutan", id: "hspq_o_kn_persen", checked: false },
-  { label: "Keterangan Sikap Ketakutan", id: "hspq_o_kn_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Ketakutan",
+    id: "hspq_o_kn_keterangan",
+    checked: false,
+  },
   { label: "Sikap Percaya Diri", id: "hspq_o_kr_persen", checked: false },
-  { label: "Keterangan Sikap Percaya Diri", id: "hspq_o_kr_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Percaya Diri",
+    id: "hspq_o_kr_keterangan",
+    checked: false,
+  },
   { label: "Sikap Mandiri", id: "hspq_q2_kn_persen", checked: false },
-  { label: "Keterangan Sikap Mandiri", id: "hspq_q2_kn_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Mandiri",
+    id: "hspq_q2_kn_keterangan",
+    checked: false,
+  },
   { label: "Sikap Kurang Mandiri", id: "hspq_q2_kr_persen", checked: false },
-  { label: "Keterangan Sikap Kurang Mandiri", id: "hspq_q2_kr_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Kurang Mandiri",
+    id: "hspq_q2_kr_keterangan",
+    checked: false,
+  },
   { label: "Sikap Disiplin", id: "hspq_q3_kn_persen", checked: false },
-  { label: "Keterangan Sikap Disiplin", id: "hspq_q3_kn_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Disiplin",
+    id: "hspq_q3_kn_keterangan",
+    checked: false,
+  },
   { label: "Sikap Kurang Disiplin", id: "hspq_q3_kr_persen", checked: false },
-  { label: "Keterangan Sikap Kurang Disiplin", id: "hspq_q3_kr_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Kurang Disiplin",
+    id: "hspq_q3_kr_keterangan",
+    checked: false,
+  },
   { label: "Sikap Tegang", id: "hspq_q4_kn_persen", checked: false },
-  { label: "Keterangan Sikap Tegang", id: "hspq_q4_kn_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Tegang",
+    id: "hspq_q4_kn_keterangan",
+    checked: false,
+  },
   { label: "Sikap Rileks/Santai", id: "hspq_q4_kr_persen", checked: false },
-  { label: "Keterangan Sikap Rileks/Santai", id: "hspq_q4_kr_keterangan", checked: false },
+  {
+    label: "Keterangan Sikap Rileks/Santai",
+    id: "hspq_q4_kr_keterangan",
+    checked: false,
+  },
   { label: "Kepribadian Terkuat Rank 1", id: "hspq_rank_1", checked: false },
   { label: "Kepribadian Terkuat Rank 2", id: "hspq_rank_2", checked: false },
   { label: "Kepribadian Terkuat Rank 3", id: "hspq_rank_3", checked: false },
   { label: "Kepribadian Terkuat Rank 4", id: "hspq_rank_4", checked: false },
   { label: "Kepribadian Terkuat Rank 5", id: "hspq_rank_5", checked: false },
-  { label: "Rank 1 Faktor Kepribadian Terkuat Positif", id: "hspq_rank_1_positif", checked: false },
-  { label: "Rank 2 Faktor Kepribadian Terkuat Positif", id: "hspq_rank_2_positif", checked: false },
-  { label: "Rank 3 Faktor Kepribadian Terkuat Positif", id: "hspq_rank_3_positif", checked: false },
-  { label: "Rank 4 Faktor Kepribadian Terkuat Positif", id: "hspq_rank_4_positif", checked: false },
-  { label: "Rank 5 Faktor Kepribadian Terkuat Positif", id: "hspq_rank_5_positif", checked: false },
-  { label: "Rank 1 Faktor Kepribadian Terkuat Negatif", id: "hspq_rank_1_negatif", checked: false },
-  { label: "Rank 2 Faktor Kepribadian Terkuat Negatif", id: "hspq_rank_2_negatif", checked: false },
-  { label: "Rank 3 Faktor Kepribadian Terkuat Negatif", id: "hspq_rank_3_negatif", checked: false },
-  { label: "Rank 4 Faktor Kepribadian Terkuat Negatif", id: "hspq_rank_4_negatif", checked: false },
-  { label: "Rank 5 Faktor Kepribadian Terkuat Negatif", id: "hspq_rank_5_negatif", checked: false },
-  { label: "Minat Pekerjaan Rank 1", id: "minat_pekerjaan_1_persen", checked: false },
-  { label: "Minat Pekerjaan Rank 2", id: "minat_pekerjaan_2_persen", checked: false },
-  { label: "Minat Pekerjaan Rank 3", id: "minat_pekerjaan_3_persen", checked: false },
+  {
+    label: "Rank 1 Faktor Kepribadian Terkuat Positif",
+    id: "hspq_rank_1_positif",
+    checked: false,
+  },
+  {
+    label: "Rank 2 Faktor Kepribadian Terkuat Positif",
+    id: "hspq_rank_2_positif",
+    checked: false,
+  },
+  {
+    label: "Rank 3 Faktor Kepribadian Terkuat Positif",
+    id: "hspq_rank_3_positif",
+    checked: false,
+  },
+  {
+    label: "Rank 4 Faktor Kepribadian Terkuat Positif",
+    id: "hspq_rank_4_positif",
+    checked: false,
+  },
+  {
+    label: "Rank 5 Faktor Kepribadian Terkuat Positif",
+    id: "hspq_rank_5_positif",
+    checked: false,
+  },
+  {
+    label: "Rank 1 Faktor Kepribadian Terkuat Negatif",
+    id: "hspq_rank_1_negatif",
+    checked: false,
+  },
+  {
+    label: "Rank 2 Faktor Kepribadian Terkuat Negatif",
+    id: "hspq_rank_2_negatif",
+    checked: false,
+  },
+  {
+    label: "Rank 3 Faktor Kepribadian Terkuat Negatif",
+    id: "hspq_rank_3_negatif",
+    checked: false,
+  },
+  {
+    label: "Rank 4 Faktor Kepribadian Terkuat Negatif",
+    id: "hspq_rank_4_negatif",
+    checked: false,
+  },
+  {
+    label: "Rank 5 Faktor Kepribadian Terkuat Negatif",
+    id: "hspq_rank_5_negatif",
+    checked: false,
+  },
+  {
+    label: "Minat Pekerjaan Rank 1",
+    id: "minat_pekerjaan_1_persen",
+    checked: false,
+  },
+  {
+    label: "Minat Pekerjaan Rank 2",
+    id: "minat_pekerjaan_2_persen",
+    checked: false,
+  },
+  {
+    label: "Minat Pekerjaan Rank 3",
+    id: "minat_pekerjaan_3_persen",
+    checked: false,
+  },
 ]);
 
 const onToggleList = (index) => {

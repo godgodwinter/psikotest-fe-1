@@ -147,35 +147,113 @@ const inputCariKelas = ref({
 
 const doPilihKelas = () => {
   if (inputCariKelas.value.id === "Semua Kelas") {
-    data.value = dataAsli.value.map((item, index) => {
-      return {
+    // data.value = dataAsli.value.map((item, index) => {
+    //   return {
+    //     ...item,
+    //     nama: item.nama,
+    //     kelas: `${item.kelas ? item.kelas.nama : ""}`,
+    //   };
+    // });
+
+    dataAsli.value.forEach((item, index) => {
+      let tempDataList = {};
+      if (item.siswadetailwithsertifikat) {
+        ListTampilkan.value.forEach((listItem) => {
+          tempDataList[listItem.id] =
+            item.siswadetailwithsertifikat.apiprobkwithsertifikat.apiprobk_sertifikat[
+              listItem.id
+            ];
+        });
+      }
+      // console.log(tempDataList);
+      data.value.push({
         ...item,
         nama: item.nama,
+        id: item.id,
         kelas: `${item.kelas ? item.kelas.nama : ""}`,
-      };
+      });
+
+      ListTampilkan.value.forEach((listItem) => {
+        data.value[index][listItem.id] = tempDataList[listItem.id];
+      });
     });
   } else if (inputCariKelas.value.id === "Belum masuk Kelas") {
     let dataFiltered = dataAsli.value.filter((item) => {
       return item.kelas === null;
     });
-    data.value = dataFiltered.map((item, index) => {
-      return {
-        ...item,
-        nama: item.nama,
-        kelas: "Belum Masuk Kelas",
-      };
-    });
+
+    if (dataFiltered.length > 0) {
+      dataFiltered.forEach((item, index) => {
+        let tempDataList = {};
+        if (item.siswadetailwithsertifikat) {
+          ListTampilkan.value.forEach((listItem) => {
+            tempDataList[listItem.id] =
+              item.siswadetailwithsertifikat.apiprobkwithsertifikat.apiprobk_sertifikat[
+                listItem.id
+              ];
+          });
+        }
+        // console.log(tempDataList);
+        data.value.push({
+          ...item,
+          nama: item.nama,
+          id: item.id,
+          kelas: `${item.kelas ? item.kelas.nama : ""}`,
+        });
+
+        ListTampilkan.value.forEach((listItem) => {
+          data.value[index][listItem.id] = tempDataList[listItem.id];
+        });
+      });
+    } else {
+      data.value = [];
+    }
+    // data.value = dataFiltered.map((item, index) => {
+    //   return {
+    //     ...item,
+    //     nama: item.nama,
+    //     kelas: "Belum Masuk Kelas",
+    //   };
+    // });
   } else {
     let dataFiltered = dataAsli.value.filter((item) => {
       return item.kelas_id == inputCariKelas.value.id;
     });
-    data.value = dataFiltered.map((item, index) => {
-      return {
-        ...item,
-        nama: item.nama,
-        kelas: `${item.kelas ? item.kelas.nama : ""}`,
-      };
-    });
+    // data.value = dataFiltered.map((item, index) => {
+    //   return {
+    //     ...item,
+    //     nama: item.nama,
+    //     kelas: `${item.kelas ? item.kelas.nama : ""}`,
+    //   };
+    // });
+
+    if (dataFiltered.length > 0) {
+      data.value = [];
+      dataFiltered.forEach((item, index) => {
+        let tempDataList = {};
+        if (item.siswadetailwithsertifikat) {
+          ListTampilkan.value.forEach((listItem) => {
+            tempDataList[listItem.id] =
+              item.siswadetailwithsertifikat.apiprobkwithsertifikat.apiprobk_sertifikat[
+                listItem.id
+              ];
+          });
+        }
+        // console.log(tempDataList);
+        data.value.push({
+          ...item,
+          nama: item.nama,
+          id: item.id,
+          kelas: `${item.kelas ? item.kelas.nama : ""}`,
+        });
+
+        ListTampilkan.value.forEach((listItem) => {
+          data.value[index][listItem.id] = tempDataList[listItem.id];
+        });
+      });
+    } else {
+      data.value = [];
+    }
   }
 };
 
