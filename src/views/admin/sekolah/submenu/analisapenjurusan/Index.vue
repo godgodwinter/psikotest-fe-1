@@ -115,7 +115,7 @@ const columns = ref([
     type: "String",
   },
   {
-    label: "Bakat 1",
+    label: "Tipe Minat - Bakat Rank 1",
     field: "tipe_bakat_1",
     type: "String",
   },
@@ -181,11 +181,11 @@ const doPilihKelas = () => {
 
 // seleksi yang ditampilkan
 const ListTampilkan = ref([
-  { label: "Bakat 1", id: "tipe_bakat_1", checked: true },
-  { label: "Bakat 2", id: "tipe_bakat_2", checked: false },
-  { label: "Bakat 3", id: "tipe_bakat_3", checked: false },
+  { label: "Tipe Minat - Bakat Rank 1", id: "tipe_bakat_1", checked: true },
+  { label: "Tipe Minat - Bakat Rank 2", id: "tipe_bakat_2", checked: false },
+  { label: "Tipe Minat - Bakat Rank 3", id: "tipe_bakat_3", checked: false },
   {
-    label: "Minat Studi Lanjut SMP",
+    label: "Studi lanjut dari SMP yg diinginkan",
     id: "mnt_studi_lanjut_smp",
     checked: false,
   },
@@ -215,22 +215,22 @@ const ListTampilkan = ref([
     checked: false,
   },
   {
-    label: "Studi Lanjut SMA",
+    label: "Jurusan SMA yg diinginkan",
     id: "mnt_studi_lanjut_sma",
     checked: false,
   },
   {
-    label: "Studi Lanjut SMK 1",
+    label: "Jurusan SMK yg diinginkan 1",
     id: "mnt_studi_lanjut_smk_1",
     checked: false,
   },
   {
-    label: "Studi Lanjut SMK 2",
+    label: "Jurusan SMK yg diinginkan 2",
     id: "mnt_studi_lanjut_smk_2",
     checked: false,
   },
   {
-    label: "Studi Lanjut SMK 3",
+    label: "Jurusan SMK yg diinginkan 3",
     id: "mnt_studi_lanjut_smk_3",
     checked: false,
   },
@@ -245,22 +245,22 @@ const ListTampilkan = ref([
     checked: false,
   },
   {
-    label: "Saran Fakultas 1",
+    label: "Saran ke Fakultas 1",
     id: "saran_fakultas_1",
     checked: false,
   },
   {
-    label: "Saran Fakultas 1 Prodi",
+    label: "Saran ke Fakultas 1 Prodi",
     id: "saran_fakultas_1_prodi",
     checked: false,
   },
   {
-    label: "Saran Fakultas 2",
+    label: "Saran ke Fakultas 2",
     id: "saran_fakultas_2",
     checked: false,
   },
   {
-    label: "Saran Fakultas 2 Prodi",
+    label: "Saran ke Fakultas 2 Prodi",
     id: "saran_fakultas_2_prodi",
     checked: false,
   },
