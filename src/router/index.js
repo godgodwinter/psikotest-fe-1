@@ -44,6 +44,7 @@ import AdminSekolahDetailHasilPsikologi from '../views/admin/sekolah/submenu/has
 import AdminSekolahDetailHasilPsikologiPenanganan from '../views/admin/sekolah/submenu/hasilpsikologi/Penanganan.vue'
 import AdminSekolahDetailHasilPsikologiPenangananCetak from '../views/admin/sekolah/submenu/hasilpsikologi/PenangananCetak.vue'
 import AdminSekolahDetailHasilPsikologiTerapis from '../views/admin/sekolah/submenu/hasilpsikologi/Terapis.vue'
+import AdminSekolahDetailHasilPsikologiTerapisCetak from '../views/admin/sekolah/submenu/hasilpsikologi/TerapisCetak.vue'
 import AdminSekolahDetailHasilPsikologiSertifikat from '../views/admin/sekolah/submenu/hasilpsikologi/Sertifikat.vue'
 import AdminSekolahDetailHasilPsikologiDeteksi from '../views/admin/sekolah/submenu/hasilpsikologi/Deteksi.vue'
 
@@ -277,6 +278,11 @@ const routes = [
             path: '/pages/admin/sekolahdetail/:id/hasilpsikologi/:id2/terapis', 
             name: 'AdminSekolahDetailHasilPsikologiTerapis',
             component: AdminSekolahDetailHasilPsikologiTerapis,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/hasilpsikologi/:id2/terapiscetak', 
+            name: 'AdminSekolahDetailHasilPsikologiTerapisCetak',
+            component: AdminSekolahDetailHasilPsikologiTerapisCetak,
           },
           {
             path: '/pages/admin/sekolahdetail/:id/nilaipsikologisiswa', 

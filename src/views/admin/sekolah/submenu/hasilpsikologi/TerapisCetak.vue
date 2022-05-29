@@ -1,33 +1,35 @@
 <script setup>
-import { ref, watch } from "vue";
-import ButtonEdit from "@/components/atoms/ButtonEdit.vue";
-import ButtonDelete from "@/components/atoms/ButtonDel.vue";
-import ButtonDetail from "@/components/atoms/ButtonDetail1.vue";
-import BreadCrumb from "@/components/atoms/BreadCrumb.vue";
-import BreadCrumbSpace from "@/components/atoms/BreadCrumbSpace.vue";
-import { useRouter, useRoute } from "vue-router";
-import Toast from "@/components/lib/Toast";
+import { jsPDF } from "jspdf";
+import { ref, onMounted, watch } from "vue";
 import Api from "@/axios/axios";
-const router = useRouter();
-const route = useRoute();
+// import moment from "moment";
+import moment from "moment/min/moment-with-locales";
+import localization from "moment/locale/id";
 
+moment.updateLocale("id", localization);
+
+import { useRouter, useRoute } from "vue-router";
+const route = useRoute();
 const id = route.params.id;
 const id2 = route.params.id2;
 
 const dataAsli = ref([]);
-const dataKelas = ref([]);
+const dataCek = ref(false);
 const data = ref([]);
 const siswa = ref([]);
 const aspekKepribadianRank = ref([]);
 const tempPositifDiungkap = ref([]);
-
 const getData = async () => {
   try {
-    const response = await Api.get(`admin/sertifikat/${id2}`);
+    const response = await Api.get(`admin/datahasildeteksi/${id}/terapis`);
     // console.log(response);
-    dataAsli.value = response.data;
-    data.value = response.data;
+
     siswa.value = response.siswa;
+    siswa.value.sekolah_nama = response.siswa.sekolah.nama;
+    siswa.value.kelas_nama = response.siswa.kelas.nama;
+    dataAsli.value = response.data;
+    // array map dataAsli to data
+    data.value = response.data;
 
     aspekKepribadianRank.value = [
       {
@@ -270,16 +272,56 @@ const getData = async () => {
       // array push
       tempPositifDiungkap.value.push(tempData);
       triggetData.value = tempData;
-      // console.log(tempPositifDiungkap.value.length);
     }
-    // console.log(tempPositifDiungkap.value);
     return response;
   } catch (error) {
-    Toast.danger("Warning", "Data Gagal dimuat");
     console.error(error);
   }
 };
 getData();
+// import html2canvas from "html2canvas";
+let doc = new jsPDF("p", "pt", "A4", "potrait");
+let margins = {
+  top: 40,
+  bottom: 60,
+  left: 40,
+  width: 522,
+};
+const testHtml = ref();
+
+margins.left, // x coord
+  margins.top,
+  {
+    // y coord
+    width: margins.width, // max width of content on PDF
+  },
+  watch(dataCek, (newVal) => {
+    doc.html(testHtml.value, {
+      margin: [
+        30, //left x coord
+        10, //top y coord
+        30, //right x coord
+        10, //bottom y coord
+      ],
+      callback: function (doc) {
+        doc.save();
+        //   doc.output("save", "filename.pdf"); //Try to save PDF as a file (not works on ie before 10, and some mobile devices)
+        // doc.output("datauristring"); //returns the data uri string
+        // doc.output("datauri"); //opens the data uri in current window
+        // doc.output("dataurlnewwindow"); //opens the data uri in new window
+        // let iframe = document.createElement("iframe");
+        // iframe.setAttribute(
+        //   "style",
+        //   "position:absolute;right:0; top:0; bottom:0; height:100%; width:700px"
+        // );
+        // document.body.appendChild(iframe);
+        // iframe.src = doc.output("datauristring");
+      },
+      x: 15,
+      y: 15,
+    });
+  });
+
 const triggetData = ref("");
 
 const getTerapisPerKalimat = async (arrPerKalimat, index) => {
@@ -302,211 +344,109 @@ const getTerapisPerKalimat = async (arrPerKalimat, index) => {
   }
 };
 
-// function similar(a, b) {
-//   var equivalency = 0;
-//   var minLength = a.length > b.length ? b.length : a.length;
-//   var maxLength = a.length < b.length ? b.length : a.length;
-//   for (var i = 0; i < minLength; i++) {
-//     if (a[i] == b[i]) {
-//       equivalency++;
-//     }
-//   }
-
-//   var weight = equivalency / maxLength;
-//   return weight * 100 + "%";
-// }
-
-// similar_text(strtolower(trim($kata1)),strtolower(trim($kata2)),$percent);
-// console.log(similar("test", "tes"));
-// var b = a.replace(/[^a-z0-9\s\-]/gi,'');
-
 // watcher vue
 watch(triggetData, async (newData, oldData) => {
   // console.log(tempPositifDiungkap.value);
   for (let i = 0; i < tempPositifDiungkap.value.length; i++) {
     getTerapisPerKalimat(tempPositifDiungkap.value[i].dataSend, i);
+
+    if (i == tempPositifDiungkap.value.length - 1) {
+      setTimeout(() => {
+        dataCek.value = true;
+      }, 5000);
+    }
   }
 });
 </script>
 <template>
-  <div>
-    <div class="pt-4 px-10 md:flex justify-between">
-      <div>
-        <span
-          class="text-2xl sm:text-3xl leading-none font-bold text-gray-700 shadow-sm"
-          >Terapis Karakter Positif</span
-        >
-      </div>
-      <div class="md:py-0 py-4 space-x-2 space-y-2">
-        <router-link
-          target="_blank"
-          :to="{
-            name: 'AdminSekolahDetailHasilPsikologiTerapisCetak',
-            params: { id, id2 },
-          }"
-        >
-          <button
-            class="btn hover:shadow-lg btn-success shadow text-white hover:text-gray-100 gap-2"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
-              />
-            </svg>
-            PDF
-          </button>
-        </router-link>
-        <router-link
-          :to="{ name: 'AdminSekolahDetailHasilPsikologi', params: { id } }"
-        >
-          <button
-            class="btn hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-              />
-            </svg>
-            Kembali
-          </button></router-link
-        >
-      </div>
-    </div>
-
-    <div class="md:py-2 px-4 lg:flex flex-wrap gap-4">
-      <div class="w-full lg:w-full">
+  <div v-if="data" class="flex justify-center">
+    <div ref="testHtml" data-theme="light" class="">
+      <div class="max-w-xl bg-white text-sm">
+        <div class="px-4 py-4">
+          <img src="@/assets/img/cetak/kop_mentah.png" alt="" />
+        </div>
+        <div class="flex gap-4 justify-center font-bold uppercase">
+          <p class="text-center py-4">Terapis</p>
+          <p class="text-center py-4">Karakter</p>
+          <p class="text-center py-4">Positif</p>
+        </div>
         <div class="bg-white shadow rounded-lg px-4 py-4">
-          <div class="overflow-x-auto">
-            <table class="table table-compact">
+          <div>
+            <table class="table table-compact w-1/2">
               <tbody>
-                <!-- row 1 -->
                 <tr>
-                  <td class="whitespace-nowrap w-1/12">No Induk</td>
-                  <td class="whitespace-nowrap w-1/12">:</td>
-                  <td class="whitespace-nowrap w-10/12">
-                    {{ siswa.nomeridentitas }}
+                  <td class="whitespace-nowrap w-1/100">Nama</td>
+                  <td class="whitespace-pre-wrap w-5/12">:</td>
+                  <td class="whitespace-nowrap w-5/12">{{ siswa.nama }}</td>
+                </tr>
+                <tr>
+                  <td class="whitespace-nowrap w-1/100">Umur</td>
+                  <td class="whitespace-pre-wrap w-5/12">:</td>
+                  <td class="whitespace-nowrap w-5/12">
+                    {{ data.umur }}
                   </td>
                 </tr>
-                <!-- row 2 -->
                 <tr>
-                  <td>Nama</td>
-                  <td>:</td>
-                  <td>{{ siswa.nama }}</td>
+                  <td class="whitespace-nowrap w-1/100">Jenis Kelamin</td>
+                  <td class="whitespace-pre-wrap w-5/12">:</td>
+                  <td class="whitespace-nowrap w-5/12">
+                    {{ siswa.jk }}
+                  </td>
                 </tr>
-                <!-- row 3 -->
                 <tr>
-                  <td>Umur</td>
-                  <td>:</td>
-                  <td>{{ data.umur }}</td>
-                </tr>
-                <!-- row 3 -->
-                <tr>
-                  <td>Jenis Kelamin</td>
-                  <td>:</td>
-                  <td>{{ siswa.jk }}</td>
-                </tr>
-                <!-- row 3 -->
-                <tr>
-                  <td>Sekolah</td>
-                  <td>:</td>
-                  <td>{{ siswa.sekolah ? siswa.sekolah.nama : "-" }}</td>
+                  <td class="whitespace-nowrap w-1/100">Sekolah</td>
+                  <td class="whitespace-pre-wrap w-5/12">:</td>
+                  <td class="whitespace-nowrap w-5/12">
+                    {{ siswa.sekolah_nama }}
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- <div class="py-4 px-10 md:flex justify-between">
-      <div>
-        <span
-          class="text-2xl sm:text-2xl leading-none font-bold text-gray-700 shadow-sm"
-        >
-          Faktor Kepribadian Subyek Terkuat Positif (+)</span
-        >
-      </div>
-      <div class="md:py-0 py-4 space-x-2 space-y-2"></div>
-    </div>
-    <div class="bg-white shadow rounded-lg px-4 py-4">
-      <div class="overflow-x-auto">
-        <table class="table table-compact table-zebra w-full">
-          <tbody>
-            <tr>
-              <th class="whitespace-nowrap w-1/100"></th>
-              <th class="whitespace-nowrap w-5/12"></th>
-            </tr>
-            <tr v-for="(item, index) in aspekKepribadianRank.slice(0, 5)">
-              <td>{{ index + 1 }}.</td>
-              <td class="whitespace-pre-wrap">
-                {{ item.positif_diungkap }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div> -->
-    <div
-      class="md:py-2 px-4 lg:flex flex-wrap gap-4"
-      v-for="(item, index) in tempPositifDiungkap"
-    >
-      <div class="w-full lg:w-full">
-        <div class="bg-white shadow rounded-lg px-4 py-4">
-          <div class="overflow-x-auto px-4 space-y-10 py-4">
-            <div class="space-y-2">
-              <h1
-                class="text-lg font-bold text-gray-700 py-2 bg-gray-100 shadow"
-              >
-                {{ item.label }}
-              </h1>
-
-              <div
-                class="space-y-2 border-b-2 py-2"
-                v-for="(it, index) in item.data"
-              >
-                <h1
-                  class="text-lg font-bold text-gray-700 py-2 bg-gray-100 capitalize"
+        <div class="px-4 lg:flex flex-wrap gap-4">
+          <div class="w-full lg:w-full">
+            <div class="bg-white shadow rounded-lg px-4 py-0">
+              <div class="px-4 space-y-10 mt-4 pb-4">
+                <div
+                  v-for="(item, index) in tempPositifDiungkap"
+                  class="space-y-2"
                 >
-                  {{ index + 1 }}. {{ it.nama }}
-                </h1>
-                <h1 class="text-md font-bold text-gray-700 bg-gray-50">
-                  a. Pemahaman dan Pengertian
-                </h1>
+                  <h1 class="text-lg font-bold text-gray-700">
+                    {{ index + 1 }}. {{ item.label }}
+                  </h1>
 
-                <p class="indent-8 text-gray-700">
-                  {{ it.pemahaman }}
-                </p>
-                <h1 class="text-md font-bold text-gray-700 bg-gray-50">
-                  b. Tujuan dan Manfaat
-                </h1>
+                  <div
+                    class="space-y-2 border-b-2 py-2"
+                    v-for="(it, index) in item.data"
+                  >
+                    <h1
+                      class="text-lg font-bold text-gray-700 py-2 bg-gray-100 capitalize"
+                    >
+                      {{ index + 1 }}. {{ it.nama }}
+                    </h1>
+                    <h1 class="text-md font-bold text-gray-700 bg-gray-50">
+                      a. Pemahaman dan Pengertian
+                    </h1>
 
-                <p class="indent-8 text-gray-700">
-                  {{ it.tujuandanmanfaat }}
-                </p>
-                <h1 class="text-md font-bold text-gray-700 bg-gray-50">
-                  c. Pembiasaan Sikap dan Penerapan
-                </h1>
-                <p class="indent-8 text-gray-700">
-                  {{ it.pembiasaansikap }}
-                </p>
+                    <p class="indent-8 text-gray-700">
+                      {{ it.pemahaman }}
+                    </p>
+                    <h1 class="text-md font-bold text-gray-700 bg-gray-50">
+                      b. Tujuan dan Manfaat
+                    </h1>
+
+                    <p class="indent-8 text-gray-700">
+                      {{ it.tujuandanmanfaat }}
+                    </p>
+                    <h1 class="text-md font-bold text-gray-700 bg-gray-50">
+                      c. Pembiasaan Sikap dan Penerapan
+                    </h1>
+                    <p class="indent-8 text-gray-700">
+                      {{ it.pembiasaansikap }}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
