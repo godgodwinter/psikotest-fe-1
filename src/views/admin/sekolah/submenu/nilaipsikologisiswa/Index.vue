@@ -55,12 +55,35 @@ const getData = async () => {
     // console.log(response);
     dataAsli.value = response.data;
     // array map dataAsli to data
-    data.value = dataAsli.value.map((item, index) => {
-      return {
+    // data.value = dataAsli.value.map((item, index) => {
+    //   return {
+    //     ...item,
+    //     nama: item.nama,
+    //     kelas: `${item.kelas ? item.kelas.nama : ""}`,
+    //   };
+    // });
+
+    dataAsli.value.forEach((item, index) => {
+      let tempDataList = {};
+      if (item.siswadetailwithsertifikat) {
+        ListTampilkan.value.forEach((listItem) => {
+          tempDataList[listItem.id] =
+            item.siswadetailwithsertifikat.apiprobkwithsertifikat.apiprobk_sertifikat[
+              listItem.id
+            ];
+        });
+      }
+      // console.log(tempDataList);
+      data.value.push({
         ...item,
         nama: item.nama,
+        id: item.id,
         kelas: `${item.kelas ? item.kelas.nama : ""}`,
-      };
+      });
+
+      ListTampilkan.value.forEach((listItem) => {
+        data.value[index][listItem.id] = tempDataList[listItem.id];
+      });
     });
     return response;
   } catch (error) {
@@ -367,10 +390,10 @@ const onToggleList = (index) => {
                 </div>
                 <div v-else>
                   {{ props.formattedRow[props.column.field] }}
-                  {{
+                  <!-- {{
                     props.row.siswadetailwithsertifikat.apiprobkwithsertifikat
                       .apiprobk_sertifikat[props.column.field]
-                  }}
+                  }} -->
                   <!-- {{ props.column.field }} -->
                 </div>
               </span>
