@@ -310,9 +310,6 @@ watch(ListTampilkan.value, (newValue, oldValue) => {
       listData.value.push(item.id);
     }
   });
-  console.log("====================================");
-  console.log(newValue);
-  console.log("====================================");
 });
 </script>
 <template>
