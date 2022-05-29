@@ -51,7 +51,9 @@ import AdminSekolahDetailHasilPsikologiDeteksi from '../views/admin/sekolah/subm
 
 import AdminSekolahDetailNilaiPsikologiSiswa from '../views/admin/sekolah/submenu/nilaipsikologisiswa/Index.vue'
 import AdminSekolahDetailAnalisaMinatBakat from '../views/admin/sekolah/submenu/analisaminatbakat/Index.vue'
+import AdminSekolahDetailAnalisaMinatBakatDetail from '../views/admin/sekolah/submenu/analisaminatbakat/Detail.vue'
 import AdminSekolahDetailAnalisaPenjurusan from '../views/admin/sekolah/submenu/analisapenjurusan/Index.vue'
+import AdminSekolahDetailAnalisaPenjurusanDetail from '../views/admin/sekolah/submenu/analisapenjurusan/Detail.vue'
 import AdminSekolahDetailCatatanKasusSiswa from '../views/admin/sekolah/submenu/catatankasussiswa/Index.vue'
 import AdminSekolahDetailCatatanKasusSiswaDetail from '../views/admin/sekolah/submenu/catatankasussiswa/Detail.vue'
 import AdminSekolahDetailCatatanKasusSiswaTambah from '../views/admin/sekolah/submenu/catatankasussiswa/Tambah.vue'
@@ -295,9 +297,19 @@ const routes = [
             component: AdminSekolahDetailAnalisaMinatBakat,
           },
           {
+            path: '/pages/admin/sekolahdetail/:id/analisaminatbakat/:id2', 
+            name: 'AdminSekolahDetailAnalisaMinatBakatDetail',
+            component: AdminSekolahDetailAnalisaMinatBakatDetail,
+          },
+          {
             path: '/pages/admin/sekolahdetail/:id/analisanpenjurusan', 
             name: 'AdminSekolahDetailAnalisaPenjurusan',
             component: AdminSekolahDetailAnalisaPenjurusan,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/analisanpenjurusan/:id2', 
+            name: 'AdminSekolahDetailAnalisaPenjurusanDetail',
+            component: AdminSekolahDetailAnalisaPenjurusanDetail,
           },
           {
             path: '/pages/admin/sekolahdetail/:id/catatankasussiswa', 

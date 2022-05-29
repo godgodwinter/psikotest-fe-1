@@ -110,6 +110,14 @@ const columns = ref([
     thClass: "text-center",
   },
   {
+    label: "Actions",
+    field: "actions",
+    sortable: false,
+    width: "50px",
+    tdClass: "text-center",
+    thClass: "text-center",
+  },
+  {
     label: "Nama Siswa",
     field: "nama",
     type: "String",
@@ -521,6 +529,35 @@ watch(ListTampilkan.value, (newValue, oldValue) => {
             <template #table-row="props">
               <span v-if="props.column.field == 'no'">
                 <div class="text-center">{{ props.index + 1 }}</div>
+              </span>
+
+              <span v-if="props.column.field == 'actions'">
+                <div
+                  class="text-sm font-medium text-center flex justify-center space-x-1"
+                >
+                  <router-link
+                    :to="{
+                      name: 'AdminSekolahDetailAnalisaPenjurusanDetail',
+                      params: { id: id, id2: props.row.id },
+                    }"
+                  >
+                    <button class="btn btn-sm btn-primary">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg></button
+                  ></router-link>
+                </div>
               </span>
               <span v-else-if="props.column.field == 'nama'">
                 <div class="text-left">{{ props.row.nama }}</div>
