@@ -16,25 +16,29 @@ const id2 = route.params.id2;
 const dataAsli = ref([]);
 const dataCek = ref(false);
 const data = ref([]);
+const siswa = ref([]);
 const getData = async () => {
   try {
     const response = await Api.get(
       `admin/datasekolah/${id}/siswa/${id2}/catatankasussiswa`
     );
     // console.log(response);
+
+    siswa.value = response.siswa;
+    siswa.value.sekolah_nama = response.siswa.sekolah.nama;
+    siswa.value.kelas_nama = response.siswa.kelas.nama;
     dataAsli.value = response.data;
     // array map dataAsli to data
     data.value = dataAsli.value.map((item, index) => {
       return {
         ...item,
-        nama: item.nama,
-        kelas: `${item.kelas ? item.kelas.nama : ""}`,
+        // nama: item.nama,
+        // kelas: `${item.kelas ? item.kelas.nama : ""}`,
       };
     });
     dataCek.value = true;
     return response;
   } catch (error) {
-    Toast.danger("Warning", "Data Gagal dimuat");
     console.error(error);
   }
 };
@@ -83,8 +87,8 @@ margins.left, // x coord
   });
 </script>
 <template>
-  <div v-if="data">
-    <div ref="testHtml" data-theme="light">
+  <div v-if="data" class="flex justify-center">
+    <div ref="testHtml" data-theme="light" class="shadow shadow-lg border">
       <div class="max-w-xl bg-white text-sm">
         <div class="px-4 py-4">
           <img src="@/assets/img/cetak/kop_mentah.png" alt="" />
@@ -101,46 +105,70 @@ margins.left, // x coord
                 <tr>
                   <td class="whitespace-nowrap w-1/100">Nama.</td>
                   <td class="whitespace-pre-wrap w-5/12">:</td>
-                  <td class="whitespace-pre-wrap w-5/12">-</td>
+                  <td class="whitespace-nowrap w-5/12">{{ siswa.nama }}</td>
+                </tr>
+                <tr>
+                  <td class="whitespace-nowrap w-1/100">Sekolah.</td>
+                  <td class="whitespace-pre-wrap w-5/12">:</td>
+                  <td class="whitespace-nowrap w-5/12">
+                    {{ siswa.sekolah_nama }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="whitespace-nowrap w-1/100">Sekolah.</td>
+                  <td class="whitespace-pre-wrap w-5/12">:</td>
+                  <td class="whitespace-nowrap w-5/12">
+                    {{ siswa.kelas_nama }}
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-
         <div class="px-4 lg:flex flex-wrap gap-4">
           <div class="w-full lg:w-full">
             <div class="bg-white shadow rounded-lg px-4 py-0">
               <div class="px-4 space-y-10 mt-4 pb-4">
                 <div v-for="(item, index) in data" class="space-y-2">
                   <h1 class="text-lg font-bold text-gray-700">
-                    {{ index + 1 }}. Nama Kasus {{ item.kasus }} , Tanggal
+                    {{ index + 1 }}. Nama Kasus {{ item.kasus }} ,
+                  </h1>
+                  <div class="px-4 text-gray-700">
+                    <span class="font-bold">Tanggal :</span>
                     {{
                       moment(item.tanggal).locale("id").format("DD MMM YYYY")
                     }}
-                  </h1>
-                  <p class="indent-8 text-gray-700">
-                    Pengambilan data : {{ item.pengambilandata }}
-                  </p>
-                  <p class="indent-8 text-gray-700">
-                    Sumber Kasus : {{ item.sumberkasus }}
-                  </p>
-                  <p class="indent-8 text-gray-700">
-                    Golongan Kasus : {{ item.golkasus }}
-                  </p>
-                  <p class="indent-8 text-gray-700">
-                    Penyebab Kasus : {{ item.penyebabtimbulkasus }}
-                  </p>
-                  <p class="indent-8 text-gray-700">
-                    Teknik Konseling : {{ item.teknikkonseling }}
-                  </p>
-                  <p class="indent-8 text-gray-700">
-                    Keberhasilan Penanganan Kasus :
+                  </div>
+                  <div class="px-4 text-gray-700">
+                    <span class="font-bold">Pengambilan data :</span>
+                    {{ item.pengambilandata }}
+                  </div>
+                  <div class="px-4 text-gray-700">
+                    <span class="font-bold">Sumber Kasus :</span>
+                    {{ item.sumberkasus }}
+                  </div>
+                  <div class="px-4 text-gray-700">
+                    <span class="font-bold">Golongan Kasus</span>
+                    : {{ item.golkasus }}
+                  </div>
+                  <div class="px-4 text-gray-700">
+                    <span class="font-bold"> Penyebab Kasus :</span>
+                    {{ item.penyebabtimbulkasus }}
+                  </div>
+                  <div class="px-4 text-gray-700">
+                    <span class="font-bold">Teknik Konseling :</span>
+                    {{ item.teknikkonseling }}
+                  </div>
+                  <div class="px-4 text-gray-700">
+                    <span class="font-bold"
+                      >Keberhasilan Penanganan Kasus :</span
+                    >
                     {{ item.keberhasilanpenanganankasus }}
-                  </p>
-                  <p class="indent-8 text-gray-700">
-                    Keterangan : {{ item.keterangan }}
-                  </p>
+                  </div>
+                  <div class="px-4 text-gray-700">
+                    <span class="font-bold">Keterangan :</span>
+                    {{ item.keterangan }}
+                  </div>
                 </div>
               </div>
             </div>
