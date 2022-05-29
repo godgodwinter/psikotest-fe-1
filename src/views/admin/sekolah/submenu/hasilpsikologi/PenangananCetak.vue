@@ -19,9 +19,7 @@ const data = ref([]);
 const siswa = ref([]);
 const getData = async () => {
   try {
-    const response = await Api.get(
-      `admin/datasekolah/${id}/siswa/${id2}/catatanpengembangandiri`
-    );
+    const response = await Api.get(`admin/datahasildeteksi/${id2}/penanganan`);
     // console.log(response);
 
     siswa.value = response.siswa;
@@ -29,13 +27,8 @@ const getData = async () => {
     siswa.value.kelas_nama = response.siswa.kelas.nama;
     dataAsli.value = response.data;
     // array map dataAsli to data
-    data.value = dataAsli.value.map((item, index) => {
-      return {
-        ...item,
-        // nama: item.nama,
-        // kelas: `${item.kelas ? item.kelas.nama : ""}`,
-      };
-    });
+
+    data.value = response.data;
     dataCek.value = true;
     return response;
   } catch (error) {
@@ -85,6 +78,30 @@ margins.left, // x coord
       y: 15,
     });
   });
+
+const singkatan = (item = 99) => {
+  let hasil = null;
+  if (item > 90) {
+    hasil = "Sangat Tinggi Sekali / Sangat Mengganggu Sekali";
+  } else if (91 > item && item >= 81) {
+    hasil = "Tinggi Sekali / Mengganggu Sekali (TS)";
+  } else if (81 > item && item >= 71) {
+    hasil = "Tinggi / Mengganggu";
+  } else if (71 > item && item >= 61) {
+    hasil = "Cukup Tinggi / Cukup Mengganggu";
+  } else if (61 > item && item >= 41) {
+    hasil = "Cukup / Terkendali ";
+  } else if (41 > item && item >= 31) {
+    hasil = "Agak Rendah / Cukup Terkendali ";
+  } else if (31 > item && item >= 21) {
+    hasil = "Rendah / Terkendali Baik ";
+  } else if (21 > item && item >= 11) {
+    hasil = "Rendah Sekali / Terkendali Baik Sekali";
+  } else {
+    hasil = "Sangat Rendah Sekali / Sangan Terkendali Baik Sekali ";
+  }
+  return hasil;
+};
 </script>
 <template>
   <div v-if="data" class="flex justify-center">
@@ -93,10 +110,10 @@ margins.left, // x coord
         <div class="px-4 py-4">
           <img src="@/assets/img/cetak/kop_mentah.png" alt="" />
         </div>
-        <div class="flex gap-4 justify-center font-bold uppercase">
-          <p class="text-center py-4">Catatan</p>
-          <p class="text-center py-4">Pengambangandiri</p>
-          <p class="text-center py-4">Siswa</p>
+        <div class="flex gap-2 justify-center">
+          <p class="text-center py-4">Penanganan</p>
+          <p class="text-center py-4">Deteksi</p>
+          <p class="text-center py-4">Masalah</p>
         </div>
         <div class="bg-white shadow rounded-lg px-4 py-4">
           <div>
@@ -108,17 +125,24 @@ margins.left, // x coord
                   <td class="whitespace-nowrap w-5/12">{{ siswa.nama }}</td>
                 </tr>
                 <tr>
+                  <td class="whitespace-nowrap w-1/100">Umur</td>
+                  <td class="whitespace-pre-wrap w-5/12">:</td>
+                  <td class="whitespace-nowrap w-5/12">
+                    {{ data.umur }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="whitespace-nowrap w-1/100">Jenis Kelamin</td>
+                  <td class="whitespace-pre-wrap w-5/12">:</td>
+                  <td class="whitespace-nowrap w-5/12">
+                    {{ siswa.jk }}
+                  </td>
+                </tr>
+                <tr>
                   <td class="whitespace-nowrap w-1/100">Sekolah</td>
                   <td class="whitespace-pre-wrap w-5/12">:</td>
                   <td class="whitespace-nowrap w-5/12">
                     {{ siswa.sekolah_nama }}
-                  </td>
-                </tr>
-                <tr>
-                  <td class="whitespace-nowrap w-1/100">Kelas</td>
-                  <td class="whitespace-pre-wrap w-5/12">:</td>
-                  <td class="whitespace-nowrap w-5/12">
-                    {{ siswa.kelas_nama }}
                   </td>
                 </tr>
               </tbody>
@@ -129,50 +153,16 @@ margins.left, // x coord
           <div class="w-full lg:w-full">
             <div class="bg-white shadow rounded-lg px-4 py-0">
               <div class="px-4 space-y-10 mt-4 pb-4">
-                <div v-for="(item, index) in data" class="space-y-2">
+                <div v-for="(item, index) in data.deteksi" class="space-y-2">
                   <h1 class="text-lg font-bold text-gray-700">
-                    {{ index + 1 }}. Ide dan Imajinasi :
-                    {{ item.idedanimajinasi }}
+                    {{ index + 1 }}. {{ item.nama }} : {{ item.score }} -
+                    {{ singkatan(item.keterangan) }}
                   </h1>
-                  <div class="px-4 text-gray-700">
-                    <span class="font-bold">Tanggal :</span>
-                    {{
-                      moment(item.tanggal).locale("id").format("DD MMM YYYY")
-                    }}
-                  </div>
-
-                  <div class="px-4 text-gray-700">
-                    <span class="font-bold">Ketrampilan :</span>
-                    {{ item.ketrampilan }}
-                  </div>
-                  <div class="px-4 text-gray-700">
-                    <span class="font-bold">Kreatif</span>
-                    : {{ item.kreatif }}
-                  </div>
-                  <div class="px-4 text-gray-700">
-                    <span class="font-bold"> Organisasi :</span>
-                    {{ item.organisasi }}
-                  </div>
-                  <div class="px-4 text-gray-700">
-                    <span class="font-bold">Kelanjutan Studi :</span>
-                    {{ item.kelanjutanstudi }}
-                  </div>
-                  <div class="px-4 text-gray-700">
-                    <span class="font-bold">Hobi :</span>
-                    {{ item.hobi }}
-                  </div>
-                  <div class="px-4 text-gray-700">
-                    <span class="font-bold">Cita - cita :</span>
-                    {{ item.citacita }}
-                  </div>
-                  <div class="px-4 text-gray-700">
-                    <span class="font-bold">Kemampuan Khusus :</span>
-                    {{ item.kemampuankhusus }}
-                  </div>
-                  <div class="px-4 text-gray-700">
-                    <span class="font-bold">Keterangan :</span>
-                    {{ item.keterangan }}
-                  </div>
+                  <p class="indent-8 text-gray-700">{{ item.penanganan }}</p>
+                  <!-- <div class="px-4 text-gray-700">
+                    <span class="font-bold"> Kesimpulan dan Saran :</span>
+                    {{ item.kesimpulandansaran }}
+                  </div> -->
                 </div>
               </div>
             </div>

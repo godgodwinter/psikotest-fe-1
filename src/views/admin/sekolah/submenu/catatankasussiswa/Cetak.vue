@@ -93,10 +93,10 @@ margins.left, // x coord
         <div class="px-4 py-4">
           <img src="@/assets/img/cetak/kop_mentah.png" alt="" />
         </div>
-        <div class="flex gap-4 justify-center">
-          <p class="text-center py-4">CATATAN</p>
-          <p class="text-center py-4">KASUS</p>
-          <p class="text-center py-4">SISWA</p>
+        <div class="flex gap-4 justify-center font-bold uppercase">
+          <p class="text-center py-4">Catatan</p>
+          <p class="text-center py-4">Kasus</p>
+          <p class="text-center py-4">Siswa</p>
         </div>
         <div class="bg-white shadow rounded-lg px-4 py-4">
           <div>
@@ -115,7 +115,7 @@ margins.left, // x coord
                   </td>
                 </tr>
                 <tr>
-                  <td class="whitespace-nowrap w-1/100">Sekolah</td>
+                  <td class="whitespace-nowrap w-1/100">Kelas</td>
                   <td class="whitespace-pre-wrap w-5/12">:</td>
                   <td class="whitespace-nowrap w-5/12">
                     {{ siswa.kelas_nama }}
