@@ -22,6 +22,21 @@ const apiRequest = (method, url, request) => {
   }).then((res) => Promise.resolve(res.data))
     .catch((err) => Promise.reject(err));
 };
+const apiRequestDown = (method, url, request) => {
+  // console.log(localStorage.getItem('token'));
+  const headers = {
+    authorization: `Bearer ${localStorage.getItem('token')}`,
+    responseType: 'blob',
+  };
+    // using the axios instance to perform the request that received from each http method
+  return axiosAPI({
+    method,
+    url,
+    data: request,
+    headers,
+  }).then((res) => Promise.resolve(res.data))
+    .catch((err) => Promise.reject(err));
+};
 
 // function to execute the http get request
 const get = (url, request) => apiRequest('get', url, request);
@@ -31,6 +46,7 @@ const deleteRequest = (url, request) => apiRequest('delete', url, request);
 
 // function to execute the http post request
 const post = (url, request) => apiRequest('post', url, request);
+const postDown = (url, request) => apiRequestDown('post', url, request);
 
 // function to execute the http put request
 const put = (url, request) => apiRequest('put', url, request);
@@ -43,6 +59,7 @@ const API = {
   get,
   delete: deleteRequest,
   post,
+  postDown,
   put,
   patch,
 };
