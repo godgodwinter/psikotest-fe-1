@@ -60,11 +60,13 @@ import AdminSekolahDetailCatatanPengembanganDiri from '../views/admin/sekolah/su
 import AdminSekolahDetailCatatanPengembanganDiriDetail from '../views/admin/sekolah/submenu/catatanpengembangandiri/Detail.vue'
 import AdminSekolahDetailCatatanPengembanganDiriTambah from '../views/admin/sekolah/submenu/catatanpengembangandiri/Tambah.vue'
 import AdminSekolahDetailCatatanPengembanganDiriEdit from '../views/admin/sekolah/submenu/catatanpengembangandiri/Edit.vue'
+import AdminSekolahDetailCatatanPengembanganDiriCetak from '../views/admin/sekolah/submenu/catatanpengembangandiri/Cetak.vue'
 
 import AdminSekolahDetailCatatanPrestasiSiswa from '../views/admin/sekolah/submenu/catatanprestasisiswa/Index.vue'
 import AdminSekolahDetailCatatanPrestasiSiswaDetail from '../views/admin/sekolah/submenu/catatanprestasisiswa/Detail.vue'
 import AdminSekolahDetailCatatanPrestasiSiswaTambah from '../views/admin/sekolah/submenu/catatanprestasisiswa/Tambah.vue'
 import AdminSekolahDetailCatatanPrestasiSiswaEdit from '../views/admin/sekolah/submenu/catatanprestasisiswa/Edit.vue'
+import AdminSekolahDetailCatatanPrestasiSiswaCetak from '../views/admin/sekolah/submenu/catatanprestasisiswa/Cetak.vue'
 // MENU-SEKOLAH-SUB
 // MENU-SEKOLAH
 
@@ -331,6 +333,11 @@ const routes = [
             component: AdminSekolahDetailCatatanPengembanganDiriEdit,
           },
           {
+            path: '/pages/admin/sekolahdetail/:id/catatanpengembangandiri/:id2/cetak', 
+            name: 'AdminSekolahDetailCatatanPengembanganDiriCetak',
+            component: AdminSekolahDetailCatatanPengembanganDiriCetak,
+          },
+          {
             path: '/pages/admin/sekolahdetail/:id/catatanprestasisiswa', 
             name: 'AdminSekolahDetailCatatanPrestasiSiswa',
             component: AdminSekolahDetailCatatanPrestasiSiswa,
@@ -344,6 +351,11 @@ const routes = [
             path: '/pages/admin/sekolahdetail/:id/catatanprestasisiswa/:id2/tambah', 
             name: 'AdminSekolahDetailCatatanPrestasiSiswaTambah',
             component: AdminSekolahDetailCatatanPrestasiSiswaTambah,
+          },
+          {
+            path: '/pages/admin/sekolahdetail/:id/catatanprestasisiswa/:id2/cetak', 
+            name: 'AdminSekolahDetailCatatanPrestasiSiswaCetak',
+            component: AdminSekolahDetailCatatanPrestasiSiswaCetak,
           },
           {
             path: '/pages/admin/sekolahdetail/:id/catatanprestasisiswa/:id2/edit/:id3', 

@@ -20,7 +20,7 @@ const siswa = ref([]);
 const getData = async () => {
   try {
     const response = await Api.get(
-      `admin/datasekolah/${id}/siswa/${id2}/catatankasussiswa`
+      `admin/datasekolah/${id}/siswa/${id2}/catatanpengembangandiri`
     );
     // console.log(response);
 
@@ -93,9 +93,9 @@ margins.left, // x coord
         <div class="px-4 py-4">
           <img src="@/assets/img/cetak/kop_mentah.png" alt="" />
         </div>
-        <div class="flex gap-4 justify-center">
+        <div class="flex gap-2 justify-center">
           <p class="text-center py-4">CATATAN</p>
-          <p class="text-center py-4">KASUS</p>
+          <p class="text-center py-4">PENGEMBANGANDIRI</p>
           <p class="text-center py-4">SISWA</p>
         </div>
         <div class="bg-white shadow rounded-lg px-4 py-4">
@@ -131,7 +131,8 @@ margins.left, // x coord
               <div class="px-4 space-y-10 mt-4 pb-4">
                 <div v-for="(item, index) in data" class="space-y-2">
                   <h1 class="text-lg font-bold text-gray-700">
-                    {{ index + 1 }}. Nama Kasus {{ item.kasus }}
+                    {{ index + 1 }}. Ide dan Imajinasi :
+                    {{ item.idedanimajinasi }}
                   </h1>
                   <div class="px-4 text-gray-700">
                     <span class="font-bold">Tanggal :</span>
@@ -139,31 +140,34 @@ margins.left, // x coord
                       moment(item.tanggal).locale("id").format("DD MMM YYYY")
                     }}
                   </div>
+
                   <div class="px-4 text-gray-700">
-                    <span class="font-bold">Pengambilan data :</span>
-                    {{ item.pengambilandata }}
+                    <span class="font-bold">Ketrampilan :</span>
+                    {{ item.ketrampilan }}
                   </div>
                   <div class="px-4 text-gray-700">
-                    <span class="font-bold">Sumber Kasus :</span>
-                    {{ item.sumberkasus }}
+                    <span class="font-bold">Kreatif</span>
+                    : {{ item.kreatif }}
                   </div>
                   <div class="px-4 text-gray-700">
-                    <span class="font-bold">Golongan Kasus</span>
-                    : {{ item.golkasus }}
+                    <span class="font-bold"> Organisasi :</span>
+                    {{ item.organisasi }}
                   </div>
                   <div class="px-4 text-gray-700">
-                    <span class="font-bold"> Penyebab Kasus :</span>
-                    {{ item.penyebabtimbulkasus }}
+                    <span class="font-bold">Kelanjutan Studi :</span>
+                    {{ item.kelanjutanstudi }}
                   </div>
                   <div class="px-4 text-gray-700">
-                    <span class="font-bold">Teknik Konseling :</span>
-                    {{ item.teknikkonseling }}
+                    <span class="font-bold">Hobi :</span>
+                    {{ item.hobi }}
                   </div>
                   <div class="px-4 text-gray-700">
-                    <span class="font-bold"
-                      >Keberhasilan Penanganan Kasus :</span
-                    >
-                    {{ item.keberhasilanpenanganankasus }}
+                    <span class="font-bold">Cita - cita :</span>
+                    {{ item.citacita }}
+                  </div>
+                  <div class="px-4 text-gray-700">
+                    <span class="font-bold">Kemampuan Khusus :</span>
+                    {{ item.kemampuankhusus }}
                   </div>
                   <div class="px-4 text-gray-700">
                     <span class="font-bold">Keterangan :</span>
