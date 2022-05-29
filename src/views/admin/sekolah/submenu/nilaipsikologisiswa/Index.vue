@@ -1,5 +1,8 @@
 <script setup>
-import { ref } from "vue";
+const BASE_URL = import.meta.env.VITE_API_URL
+  ? import.meta.env.VITE_API_URL
+  : "http://localhost:8000/";
+import { ref, watch } from "vue";
 import ButtonEdit from "@/components/atoms/ButtonEdit.vue";
 import ButtonDelete from "@/components/atoms/ButtonDel.vue";
 import ButtonDetail from "@/components/atoms/ButtonDetail1.vue";
@@ -298,6 +301,16 @@ const onToggleList = (index) => {
   // );
   // console.log("====================================");
 };
+
+const listData = ref("kb_persen");
+watch(ListTampilkan.value, (newValue, oldValue) => {
+  listData.value = [];
+  ListTampilkan.value.forEach((item, index) => {
+    if (item.checked) {
+      listData.value.push(item.id);
+    }
+  });
+});
 </script>
 <template>
   <div class="pt-4 px-10 md:flex justify-between">
@@ -310,7 +323,7 @@ const onToggleList = (index) => {
     <div class="md:py-0 py-4 space-x-2 space-y-2"></div>
   </div>
   <div class="w-full bg-white shadow shadow-md py-4 px-4">
-    <div class="flex justify-center">
+    <div class="flex justify-center gap-2">
       <v-select
         class="py-2 px-3 w-72 mx-auto md:mx-0"
         :options="pilihKelas"
@@ -322,20 +335,65 @@ const onToggleList = (index) => {
           Cari
         </button>
       </div>
+      <a
+        :href="
+          BASE_URL +
+          'api/admin/proses/export/datasiswa/' +
+          id +
+          '/get?listdata=' +
+          listData
+        "
+        target="_blank"
+      >
+        <button
+          class="btn hover:shadow-lg btn-success shadow text-white hover:text-gray-100 gap-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
+            />
+          </svg>
+          Export
+        </button>
+      </a>
     </div>
   </div>
   <div class="w-full bg-white shadow shadow-md py-4 px-4">
     <div class="flex justify-center gap-2 w-full flex-wrap">
-      <div v-for="(item, index) in ListTampilkan">
-        <div class="form-control">
-          <label class="cursor-pointer label" @click="onToggleList(index)">
-            <span class="label-text px-2">{{ item.label }}</span>
-            <input
-              type="checkbox"
-              :checked="item.checked"
-              class="checkbox checkbox-secondary"
-            />
-          </label>
+      <div class="collapse">
+        <input type="checkbox" />
+        <div
+          class="collapse-title text-xl font-medium bg-gray-300 rounded-lg text-gray-600 text-center"
+        >
+          List Pilihan Data
+        </div>
+        <div class="collapse-content">
+          <div class="flex justify-center gap-2 w-full flex-wrap py-2">
+            <div v-for="(item, index) in ListTampilkan">
+              <div class="form-control">
+                <label
+                  class="cursor-pointer label"
+                  @click="onToggleList(index)"
+                >
+                  <span class="label-text px-2">{{ item.label }}</span>
+                  <input
+                    type="checkbox"
+                    :checked="item.checked"
+                    class="checkbox checkbox-secondary"
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

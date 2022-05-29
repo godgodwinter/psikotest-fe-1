@@ -23,7 +23,6 @@ const id = route.params.id;
 const dataAsli = ref([]);
 const dataKelas = ref([]);
 const data = ref([]);
-const listData = ref("tipe_bakat_1,tipe_bakat_2,tipe_bakat_3");
 
 let pilihKelas = ref([
   {
@@ -327,6 +326,7 @@ const doExport = async () => {
   }
 };
 
+const listData = ref("tipe_bakat_1");
 watch(ListTampilkan.value, (newValue, oldValue) => {
   listData.value = [];
   ListTampilkan.value.forEach((item, index) => {
