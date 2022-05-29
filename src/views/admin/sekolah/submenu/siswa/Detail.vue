@@ -21,10 +21,7 @@ const dataDetail = ref({
   alamat: "",
   jk: "",
   kelas_id: "",
-  sekolah_id: {
-    label: "",
-    id: "",
-  },
+  sekolah_id: "",
 });
 
 const getDataId = async () => {
@@ -36,14 +33,8 @@ const getDataId = async () => {
       nomeridentitas: response.data.nomeridentitas,
       alamat: response.data.alamat,
       jk: response.data.jk,
-      kelas_id: {
-        label: `${response.data.kelas ? response.data.kelas.nama : ""}`,
-        id: response.data.kelas_id,
-      },
-      sekolah_id: {
-        label: `${response.data.sekolah ? response.data.sekolah.nama : ""}`,
-        id: response.data.sekolah_id,
-      },
+      kelas_id: response.data.kelas_id,
+      sekolah_id: response.data.sekolah_id,
       tempatlahir: response.data.tempatlahir,
       tgllahir: response.data.tgllahir,
       usia: response.data.usia,
@@ -78,34 +69,26 @@ const validateData = (value) => {
   return true;
 };
 const onSubmit = () => {
-  const res = doStoreData();
+  if (dataDetail.value.sekolah_id) {
+    if (dataDetail.value.kelas_id) {
+      //do Update
+      console.log(dataDetail.value.kelas_id, dataDetail.value.sekolah_id);
+      doStoreData();
+    } else {
+      Toast.danger("Warning", "Kelas tidak boleh kosong");
+    }
+  } else {
+    Toast.danger("Warning", "Sekolah tidak boleh kosong");
+  }
+  // const res = doStoreData();
 };
 const doStoreData = async (d) => {
   let dataStore = {
-    nama: dataDetail.value.nama,
-    nomeridentitas: dataDetail.value.nomeridentitas,
-    alamat: dataDetail.value.alamat,
-    jk: dataDetail.value.jk,
-    kelas_id: dataDetail.value.kelas_id.id,
-    tempatlahir: dataDetail.value.tempatlahir,
-    tgllahir: dataDetail.value.tgllahir,
-    usia: dataDetail.value.usia,
-    agama: dataDetail.value.agama,
-    anak: dataDetail.value.anak,
-    kandung: dataDetail.value.kandung,
-    angkat: dataDetail.value.angkat,
-    tiri: dataDetail.value.tiri,
-    statusanak: dataDetail.value.statusanak,
-    bahasa: dataDetail.value.bahasa,
-    tinggal: dataDetail.value.tinggal,
-    jarak: dataDetail.value.jarak,
-    telp: dataDetail.value.telp,
+    sekolah_id: dataDetail.value.sekolah_id,
+    kelas_id: dataDetail.value.kelas_id,
   };
   try {
-    const response = await Api.put(
-      `admin/datasekolah/${id}/siswa/${id2}`,
-      dataStore
-    );
+    const response = await Api.put(`admin/siswa/${id2}/pindahkelas`, dataStore);
     Toast.success("Success", "Data Berhasil update!");
     // resetForm();
     router.push({ name: "AdminSekolahDetailSiswa", params: { id: id } });
@@ -171,6 +154,7 @@ const getDataKelas = async (sekolah_id) => {
 getDataKelas(idTemp.value);
 
 const changedValue = (value) => {
+  dataDetail.value.kelas_id = null;
   getDataKelas(dataDetail.value.sekolah_id);
 };
 </script>
