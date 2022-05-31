@@ -267,6 +267,11 @@ const ListTampilkan = ref([
   { label: "Cita Cita 1", id: "mnt_cita2_1", checked: false },
   { label: "Cita Cita 2", id: "mnt_cita2_2", checked: false },
   { label: "Cita Cita 3", id: "mnt_cita2_3", checked: false },
+  { label: "Hobi", id: "hobi", checked: false },
+  { label: "Pekerjaan Bapak", id: "pekerjaanbapak", checked: false },
+  { label: "Pekerjaan Ibu", id: "pekerjaanibu", checked: false },
+  { label: "Pekerjaan Kakek", id: "pekerjaankakek", checked: false },
+  { label: "Analisa Pekerjaan", id: "analisapekerjaan", checked: false },
 ]);
 
 const onToggleList = (index) => {

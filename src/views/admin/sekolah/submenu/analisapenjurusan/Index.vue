@@ -350,6 +350,11 @@ const ListTampilkan = ref([
     id: "saran_fakultas_2_prodi",
     checked: false,
   },
+  {
+    label: "Keterangan",
+    id: "keterangan",
+    checked: false,
+  },
 ]);
 
 const onToggleList = (index) => {
