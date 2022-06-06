@@ -22,6 +22,10 @@ const dataDetail = ref({
   kecamatan: "",
   kabupaten: "",
   provinsi: "",
+  paket_id: {
+    id: "",
+    nama: "",
+  },
 });
 
 const getDataId = async () => {
@@ -39,8 +43,9 @@ const getDataId = async () => {
       kecamatan: response.data.kecamatan,
       kabupaten: response.data.kabupaten,
       provinsi: response.data.provinsi,
+      paket_id: response.data.paket_id,
     };
-    // console.log(data.value);
+
     return response;
   } catch (error) {
     Toast.danger("Warning", "Data Gagal dimuat");
@@ -49,6 +54,23 @@ const getDataId = async () => {
 };
 
 getDataId();
+
+const dataPaket = ref([]);
+const getPaket = async () => {
+  try {
+    const response = await Api.get(`admin/paket`);
+    // console.log(response);
+    // dataDetail.value = response.data;
+    dataPaket.value = response.data;
+
+    return response;
+  } catch (error) {
+    Toast.danger("Warning", "Data Gagal dimuat");
+    console.error(error);
+  }
+};
+
+getPaket();
 // validasi
 const validateData = (value) => {
   if (!value) {
@@ -73,6 +95,7 @@ const doStoreData = async (d) => {
     kecamatan: dataDetail.value.kecamatan,
     kabupaten: dataDetail.value.kabupaten,
     provinsi: dataDetail.value.provinsi,
+    paket_id: dataDetail.value.paket_id,
   };
   try {
     const response = await Api.put(`admin/sekolah/${id}`, dataStore);
@@ -208,6 +231,25 @@ const resetForm = () => {
                         </select>
                         <div class="text-xs text-red-600 mt-1">
                           {{ errors.status }}
+                        </div>
+                      </div>
+                      <div>
+                        <label
+                          for="name"
+                          class="text-sm font-medium text-gray-900 block mb-2"
+                          >Paket</label
+                        >
+                        <select
+                          class="select select-bordered w-full max-w-xs"
+                          v-model="dataDetail.paket_id"
+                        >
+                          <option disabled selected>Pilih Paket ?</option>
+                          <option v-for="item in dataPaket" :value="item.id">
+                            {{ item.nama }}
+                          </option>
+                        </select>
+                        <div class="text-xs text-red-600 mt-1">
+                          {{ errors.paket_id }}
                         </div>
                       </div>
                       <div>

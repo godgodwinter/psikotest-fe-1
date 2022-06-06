@@ -63,6 +63,11 @@ const columns = [
     type: "String",
   },
   {
+    label: "Paket",
+    field: "paket_id",
+    type: "String",
+  },
+  {
     label: "Logo",
     field: "logo",
     type: "String",
@@ -211,6 +216,12 @@ const doDeleteData = async (id, index) => {
 
               <span v-else-if="props.column.field == 'no'">
                 <div class="text-center">{{ props.index + 1 }}</div>
+              </span>
+
+              <span v-else-if="props.column.field == 'paket_id'">
+                <div class="text-center">
+                  {{ props.row.paket ? props.row.paket.nama : "Premium" }}
+                </div>
               </span>
 
               <span v-else>
