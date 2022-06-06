@@ -708,7 +708,7 @@ function romanize(num) {
                   <td class="whitespace-nowrap w-1/100">
                     {{ data.eq_persen }}
                   </td>
-                  <td>/ {{ kesimpulan(data.eq_persen_keterangan) }}</td>
+                  <td>/ {{ kepanjangan(data.eq_persen_keterangan) }}</td>
                 </tr>
                 <tr>
                   <td class="whitespace-nowrap w-1/100">III.</td>
@@ -719,7 +719,7 @@ function romanize(num) {
                   <td class="whitespace-nowrap w-1/100">
                     {{ data.scq_persen }}
                   </td>
-                  <td>/ {{ kesimpulan(data.scq_persen_keterangan) }}</td>
+                  <td>/ {{ kepanjangan(data.scq_persen_keterangan) }}</td>
                 </tr>
 
                 <!-- row 2 -->
