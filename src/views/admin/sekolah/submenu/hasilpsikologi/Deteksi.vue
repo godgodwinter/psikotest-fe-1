@@ -127,7 +127,9 @@ const dataKetNegativ = ref([
                 <tr>
                   <td class="whitespace-nowrap w-1/12">No Induk</td>
                   <td class="whitespace-nowrap w-1/12">:</td>
-                  <td class="whitespace-nowrap w-10/12">{{ siswa.nomeridentitas }}</td>
+                  <td class="whitespace-nowrap w-10/12">
+                    {{ siswa.nomeridentitas }}
+                  </td>
                 </tr>
                 <!-- row 2 -->
                 <tr>
@@ -187,7 +189,10 @@ const dataKetNegativ = ref([
                 <!-- row 1 -->
                 <tr
                   class="hover"
-                  v-for="(item, index) in data.apiprobk_deteksi_list"
+                  v-for="(item, index) in data.apiprobk_deteksi_list.slice(
+                    0,
+                    79
+                  )"
                   :key="item.id"
                 >
                   <td>{{ index + 1 }}</td>
