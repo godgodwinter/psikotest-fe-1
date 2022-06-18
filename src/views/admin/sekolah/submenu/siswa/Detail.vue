@@ -116,7 +116,7 @@ const pilihSekolah = ref([]);
 // get Sekolah
 const getDataSekolah = async () => {
   try {
-    const response = await Api.get(`admin/sekolah/`);
+    const response = await Api.get(`admin/sekolah`);
     // console.log(response);
     dataSekolah.value = response.data;
     dataSekolah.value.forEach((item) => {
