@@ -242,7 +242,7 @@ const getDataFromApiUjianSertifikat = async (
 ) => {
   try {
     const response = await axios.post(
-      "http://161.97.84.91:9001/api/probk/DataSertifikat_Get",
+      "http://185.227.135.32:9001/api/probk/DataSertifikat_Get",
       {
         username: username,
       },
@@ -272,7 +272,7 @@ const getDataFromApiUjianDeteksi = async (
 ) => {
   try {
     const response = await axios.post(
-      "http://161.97.84.91:9001/api/probk/DataDeteksi_Get",
+      "http://185.227.135.32:9001/api/probk/DataDeteksi_Get",
       {
         username: username,
       },
