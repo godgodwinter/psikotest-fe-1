@@ -127,8 +127,8 @@ const doBackupPerId = async (
   if (confirm("Apakah anda yakin melakukan backup data ini?")) {
     Toast.success("Info", "Proses backup di mulai, Tunggu hingga selesai!");
     // console.log(id, index, username);
-    await getDataFromApiUjianSertifikat(username, id, index, sertifikat_id);
-    await getDataFromApiUjianDeteksi(username, id, index, deteksi_id);
+    getDataFromApiUjianSertifikat(username, id, index, sertifikat_id);
+    getDataFromApiUjianDeteksi(username, id, index, deteksi_id);
     getData();
   }
 };
