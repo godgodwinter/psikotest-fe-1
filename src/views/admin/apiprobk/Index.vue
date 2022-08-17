@@ -198,7 +198,7 @@ const doStoreDataBackupSertifikat = async (d, index) => {
 };
 
 const doStoreDataBackupDeteksi = async (d, index) => {
-  // console.log(d);
+  // console.log(d.apiprobk_id);
   try {
     const response = await Api.post("admin/apiprobk/api_backup_deteksi", d);
     // console.log(response.data);
@@ -283,9 +283,9 @@ const getDataFromApiUjianDeteksi = async (
     // console.log(response);
     dataFormDeteksi = response.data;
     dataFormDeteksi.apiprobk_id = apiprobk_id;
-    // console.log(dataFormDeteksi);
+    // console.log(dataFormDeteksi.apiprobk_id);
     doStoreDataBackupDeteksi(dataFormDeteksi, index);
-    data.value[index].sertifikat = "sudah";
+    data.value[index].deteksi = "sudah";
     return response;
   } catch (error) {
     doProsesGetApiGagal(apiprobk_id, index);
