@@ -186,7 +186,7 @@ const routes = [
             component: AdminSekolahDetailDashboard,
           },
           {
-            path: "/pages/admin/sekolahdetail/:id/siswa",
+            path: "/pages/admin/sekolahdetail/:id/siswa/:kelas_id?",
             name: "AdminSekolahDetailSiswa",
             component: AdminSekolahDetailSiswa,
           },
