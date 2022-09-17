@@ -25,6 +25,25 @@ const progressBarValue = ref(0);
 let dataForm = {};
 let dataFormDeteksi = {};
 
+
+// get link sertifikat dan deteksi from server
+
+const linkDeteksi = ref(null);
+const linkSertifikat = ref(null);
+const fnGetLinkFromBe = async () => {
+  try {
+    const response = await Api.get(`admin/apiprobk/serveraktif`);
+    // console.log(response.data);
+    linkDeteksi.value = response.data.deteksi ? response.data.deteksi.link : null;
+    linkSertifikat.value = response.data.sertifikat ? response.data.sertifikat.link : null;
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+fnGetLinkFromBe();
+
 const getData = async () => {
   try {
     const response = await Api.get(`admin/apiprobk/kelas/${id2}`);
@@ -140,26 +159,30 @@ const getDataFromApiUjianSertifikat = async (
   sertifikat_id = 0
 ) => {
   try {
-    const response = await axios.post(
-      "http://185.227.135.32:9001/api/probk/DataSertifikat_Get",
-      {
-        username: username,
-      },
-      {
-        headers: {},
-      }
-    );
-    // console.log(response);
-    dataForm = response.data;
-    dataForm.apiprobk_id = apiprobk_id;
-    // console.log(dataForm);
-    doStoreDataBackupSertifikat(dataForm, index, sertifikat_id);
-    data.value[index].sertifikat = "sudah";
-    Toast.success("Success", "Data Sertifikat Berhasil update!");
-    // console.log(dataForm.iq);
-    // data.value[index].iq = dataForm.iq;
-    getData();
-    return response;
+    if (linkSertifikat.value) {
+      const response = await axios.post(
+        `${linkSertifikat.value}`,
+        {
+          username: username,
+        },
+        {
+          headers: {},
+        }
+      );
+      // console.log(response);
+      dataForm = response.data;
+      dataForm.apiprobk_id = apiprobk_id;
+      // console.log(dataForm);
+      doStoreDataBackupSertifikat(dataForm, index, sertifikat_id);
+      data.value[index].sertifikat = "sudah";
+      Toast.success("Success", "Data Sertifikat Berhasil update!");
+      // console.log(dataForm.iq);
+      // data.value[index].iq = dataForm.iq;
+      getData();
+      return response;
+    } else {
+      Toast.babeng("Warning", "Link Sertifikat tidak ditemukan!");
+    }
   } catch (error) {
     doProsesGetApiGagal(apiprobk_id, index);
     // data.value[index].sertifikat = "gagal";
@@ -175,22 +198,27 @@ const getDataFromApiUjianDeteksi = async (
   deteksi_id = 0
 ) => {
   try {
-    const response = await axios.post(
-      "http://185.227.135.32:9001/api/probk/DataDeteksi_Get",
-      {
-        username: username,
-      },
-      {
-        headers: {},
-      }
-    );
-    // console.log(response);
-    dataFormDeteksi = response.data;
-    dataFormDeteksi.apiprobk_id = apiprobk_id;
-    console.log(dataFormDeteksi);
-    doStoreDataBackupDeteksi(dataFormDeteksi, index, deteksi_id);
-    data.value[index].sertifikat = "sudah";
-    return response;
+    if (linkDeteksi) {
+      const response = await axios.post(
+        `${linkDeteksi.value}`,
+        {
+          username: username,
+        },
+        {
+          headers: {},
+        }
+      );
+      // console.log(response);
+      dataFormDeteksi = response.data;
+      dataFormDeteksi.apiprobk_id = apiprobk_id;
+      console.log(dataFormDeteksi);
+      doStoreDataBackupDeteksi(dataFormDeteksi, index, deteksi_id);
+      data.value[index].sertifikat = "sudah";
+      return response;
+    }
+    else {
+      Toast.babeng("Warning", "Link Deteksi tidak ditemukan!")
+    }
   } catch (error) {
     doProsesGetApiGagal(apiprobk_id, index, deteksi_id);
     // data.value[index].sertifikat = "gagal";
@@ -279,35 +307,18 @@ const doProsesGetApiGagal = async (id, index) => {
 <template>
   <div class="pt-4 px-10 md:flex justify-between">
     <div>
-      <span
-        class="text-2xl sm:text-3xl leading-none font-bold text-gray-700 shadow-sm"
-        >SINKRON APIPROBK</span
-      >
+      <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-700 shadow-sm">SINKRON APIPROBK</span>
     </div>
     <div class="md:py-0 py-4 space-x-2 space-y-2">
-      <router-link
-        :to="{ name: 'AdminSekolahDetailKelas', params: { id: id } }"
-      >
-        <button
-          class="btn hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-            />
+      <router-link :to="{ name: 'AdminSekolahDetailKelas', params: { id: id } }">
+        <button class="btn hover:shadow-lg shadow text-white hover:text-gray-100 gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
           </svg>
           Kembali
-        </button></router-link
-      >
+        </button>
+      </router-link>
     </div>
   </div>
 
@@ -315,51 +326,29 @@ const doProsesGetApiGagal = async (id, index) => {
     <div class="w-full lg:w-full">
       <div class="bg-white shadow rounded-lg px-4 py-4">
         <div v-if="data">
-          <vue-good-table
-            :line-numbers="true"
-            :columns="columns"
-            :rows="data"
-            :search-options="{
-              enabled: true,
-            }"
-            :pagination-options="{
-              enabled: true,
-              perPageDropdown: [10, 20, 50],
-            }"
-            styleClass="vgt-table striped bordered condensed"
-            class="py-0"
-          >
+          <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
+            enabled: true,
+          }" :pagination-options="{
+            enabled: true,
+            perPageDropdown: [10, 20, 50],
+          }" styleClass="vgt-table striped bordered condensed" class="py-0">
             <template #table-row="props">
               <span v-if="props.column.field == 'actions'">
-                <div
-                  class="text-sm font-medium text-center flex justify-center"
-                >
-                  <button
-                    @click="
-                      doBackupPerId(
-                        props.row.id,
-                        props.index,
-                        props.row.username,
-                        props.row.sertifikat_id,
-                        props.row.deteksi_id
-                      )
-                    "
-                    data-tip="UPDATE"
-                    class="tooltip text-orange-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-orange-300 bg-orange-400 rounded-lg"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                      />
+                <div class="text-sm font-medium text-center flex justify-center">
+                  <button @click="
+                    doBackupPerId(
+                      props.row.id,
+                      props.index,
+                      props.row.username,
+                      props.row.sertifikat_id,
+                      props.row.deteksi_id
+                    )
+                  " data-tip="UPDATE"
+                    class="tooltip text-orange-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-orange-300 bg-orange-400 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                     </svg>
                   </button>
                 </div>
@@ -370,193 +359,85 @@ const doProsesGetApiGagal = async (id, index) => {
               </span>
 
               <span v-else-if="props.column.field == 'sertifikat'">
-                <div
-                  class="text-sm font-medium text-center flex justify-center"
-                >
-                  <button
-                    v-if="props.row.sertifikat == 'sudah'"
-                    data-tip="Sukses"
-                    class="tooltip text-green-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-green-300 bg-green-400 rounded-lg"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-                      />
+                <div class="text-sm font-medium text-center flex justify-center">
+                  <button v-if="props.row.sertifikat == 'sudah'" data-tip="Sukses"
+                    class="tooltip text-green-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-green-300 bg-green-400 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                     </svg>
                   </button>
-                  <button
-                    v-else-if="props.row.sertifikat == 'gagal'"
-                    data-tip="Gagal"
-                    class="tooltip text-red-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-red-300 bg-red-400 rounded-lg"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fill-rule="evenodd"
+                  <button v-else-if="props.row.sertifikat == 'gagal'" data-tip="Gagal"
+                    class="tooltip text-red-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-red-300 bg-red-400 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd"
                         d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                        clip-rule="evenodd"
-                      />
+                        clip-rule="evenodd" />
                     </svg>
                   </button>
-                  <button
-                    v-else
-                    data-tip="Belum"
-                    class="tooltip text-gray-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-gray-300 bg-gray-400"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
+                  <button v-else data-tip="Belum"
+                    class="tooltip text-gray-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-gray-300 bg-gray-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </button>
                 </div>
               </span>
               <span v-else-if="props.column.field == 'deteksi'">
-                <div
-                  class="text-sm font-medium text-center flex justify-center"
-                >
-                  <button
-                    v-if="props.row.deteksi == 'sudah'"
-                    data-tip="Sukses"
-                    class="tooltip text-green-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-green-300 bg-green-400"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-                      />
+                <div class="text-sm font-medium text-center flex justify-center">
+                  <button v-if="props.row.deteksi == 'sudah'" data-tip="Sukses"
+                    class="tooltip text-green-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-green-300 bg-green-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                     </svg>
                   </button>
-                  <button
-                    v-else-if="props.row.deteksi == 'gagal'"
-                    data-tip="Gagal"
-                    class="tooltip text-red-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-red-300 bg-red-400 rounded-lg"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fill-rule="evenodd"
+                  <button v-else-if="props.row.deteksi == 'gagal'" data-tip="Gagal"
+                    class="tooltip text-red-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-red-300 bg-red-400 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd"
                         d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                        clip-rule="evenodd"
-                      />
+                        clip-rule="evenodd" />
                     </svg>
                   </button>
-                  <button
-                    v-else
-                    data-tip="Belum"
-                    class="tooltip text-gray-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-gray-300 bg-gray-400 rounded-lg"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
+                  <button v-else data-tip="Belum"
+                    class="tooltip text-gray-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-gray-300 bg-gray-400 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </button>
                 </div>
               </span>
               <span v-else-if="props.column.field == 'sinkron'">
-                <div
-                  class="text-sm font-medium text-center flex justify-center"
-                >
-                  <button
-                    v-if="props.row.sinkron == 'sudah'"
-                    data-tip="Sukses"
-                    class="tooltip text-green-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-green-300 bg-green-400"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-                      />
+                <div class="text-sm font-medium text-center flex justify-center">
+                  <button v-if="props.row.sinkron == 'sudah'" data-tip="Sukses"
+                    class="tooltip text-green-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-green-300 bg-green-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                     </svg>
                   </button>
-                  <button
-                    v-else-if="props.row.sinkron == 'gagal'"
-                    data-tip="Gagal"
-                    class="tooltip text-red-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-red-300 bg-red-400 rounded-lg"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fill-rule="evenodd"
+                  <button v-else-if="props.row.sinkron == 'gagal'" data-tip="Gagal"
+                    class="tooltip text-red-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-red-300 bg-red-400 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd"
                         d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                        clip-rule="evenodd"
-                      />
+                        clip-rule="evenodd" />
                     </svg>
                   </button>
-                  <button
-                    v-else
-                    data-tip="Belum"
-                    class="tooltip text-gray-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-gray-300 bg-gray-400 rounded-lg"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
+                  <button v-else data-tip="Belum"
+                    class="tooltip text-gray-100 block rounded-lg font-bold py-1 px-1 mr-2 flex items-center hover:text-gray-300 bg-gray-400 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </button>
                 </div>
@@ -571,3 +452,4 @@ const doProsesGetApiGagal = async (id, index) => {
     </div>
   </div>
 </template>
+  
