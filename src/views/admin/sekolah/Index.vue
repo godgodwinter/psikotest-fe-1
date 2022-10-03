@@ -64,12 +64,17 @@ const columns = [
   },
   {
     label: "Paket",
-    field: "paket_id",
+    field: "paket_nama",
     type: "String",
   },
   {
-    label: "Logo",
-    field: "logo",
+    label: "Jumlah Siswa",
+    field: "jml_siswa",
+    type: "String",
+  },
+  {
+    label: "Jumlah Kelas",
+    field: "jml_kelas",
     type: "String",
   },
 ];
@@ -97,14 +102,13 @@ const doDeleteData = async (id, index) => {
 <template>
   <div class="pt-4 px-10 md:flex justify-between">
     <div>
-      <span
-        class="text-2xl sm:text-3xl leading-none font-bold text-gray-700 shadow-sm"
-        >Sekolah</span
-      >
+      <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-700 shadow-sm">Sekolah</span>
     </div>
     <div class="md:py-0 py-4">
       <BreadCrumb>
-        <template v-slot:content> Sekolah <BreadCrumbSpace /> Index </template>
+        <template v-slot:content> Sekolah
+          <BreadCrumbSpace /> Index
+        </template>
       </BreadCrumb>
     </div>
   </div>
@@ -113,63 +117,28 @@ const doDeleteData = async (id, index) => {
     <div class="md:flex justify-between px-10">
       <div class="space-x-1 space-y-1 pt-1 md:pt-0">
         <router-link :to="{ name: 'AdminSekolahTambah' }">
-          <button
-            class="btn btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-              />
+          <button class="btn btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
             </svg>
             Tambah
-          </button></router-link
-        >
+          </button>
+        </router-link>
       </div>
       <div class="space-x-1 space-y-1 pt-1 md:pt-0">
-        <button
-          class="btn btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-            />
+        <button class="btn btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
           </svg>
           Import
         </button>
-        <button
-          class="btn btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-            />
+        <button class="btn btn-info hover:shadow-lg shadow text-white hover:text-gray-100 gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
           </svg>
           Export
         </button>
@@ -181,36 +150,23 @@ const doDeleteData = async (id, index) => {
     <div class="w-full lg:w-full">
       <div class="bg-white shadow rounded-lg px-4 py-4">
         <div v-if="data">
-          <vue-good-table
-            :columns="columns"
-            :rows="data"
-            :search-options="{
-              enabled: true,
-            }"
-            :pagination-options="{
+          <vue-good-table :columns="columns" :rows="data" :search-options="{
+            enabled: true,
+          }" :pagination-options="{
               enabled: true,
               perPageDropdown: [10, 20, 50],
-            }"
-            styleClass="vgt-table striped bordered condensed"
-            class="py-0"
-          >
+            }" styleClass="vgt-table striped bordered condensed" class="py-0">
             <template #table-row="props">
               <span v-if="props.column.field == 'actions'">
-                <div
-                  class="text-sm font-medium text-center flex justify-center"
-                >
+                <div class="text-sm font-medium text-center flex justify-center">
                   <ButtonEdit @click="doEditData(props.row.id, props.index)" />
-                  <ButtonDelete
-                    @click="doDeleteData(props.row.id, props.index)"
-                  />
-                  <router-link
-                    :to="{
-                      name: 'AdminSekolahDetailDashboard',
-                      params: { id: props.row.id },
-                    }"
-                  >
-                    <ButtonDetail
-                  /></router-link>
+                  <ButtonDelete @click="doDeleteData(props.row.id, props.index)" />
+                  <router-link :to="{
+                    name: 'AdminSekolahDetailDashboard',
+                    params: { id: props.row.id },
+                  }">
+                    <ButtonDetail />
+                  </router-link>
                 </div>
               </span>
 
