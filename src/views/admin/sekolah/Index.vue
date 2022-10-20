@@ -98,6 +98,18 @@ const doDeleteData = async (id, index) => {
     }
   }
 };
+const forceDestroy = async (id, index) => {
+  if (confirm("Apakah anda yakin menghapus PERMANENT data ini? data tidak bisa dikembalikan")) {
+    try {
+      const response = await Api.delete(`admin/sekolah/${id}/forceDestroy`);
+      data.value.splice(index, 1);
+      Toast.success("Success", "Data Berhasil dihapus!");
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
 </script>
 <template>
   <div class="pt-4 px-10 md:flex justify-between">
@@ -153,9 +165,9 @@ const doDeleteData = async (id, index) => {
           <vue-good-table :columns="columns" :rows="data" :search-options="{
             enabled: true,
           }" :pagination-options="{
-              enabled: true,
-              perPageDropdown: [10, 20, 50],
-            }" styleClass="vgt-table striped bordered condensed" class="py-0">
+            enabled: true,
+            perPageDropdown: [10, 20, 50],
+          }" styleClass="vgt-table striped bordered condensed" class="py-0">
             <template #table-row="props">
               <span v-if="props.column.field == 'actions'">
                 <div class="text-sm font-medium text-center flex justify-center">
@@ -167,6 +179,15 @@ const doDeleteData = async (id, index) => {
                   }">
                     <ButtonDetail />
                   </router-link>
+                  <button class="btn btn-danger btn-sm tooltip" data-tip="Permanent Delete ( Siswa, ApiProBK)"
+                    @click="forceDestroy(props.row.id, props.index)">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                      stroke="currentColor" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 9.75L14.25 12m0 0l2.25 2.25M14.25 12l2.25-2.25M14.25 12L12 14.25m-2.58 4.92l-6.375-6.375a1.125 1.125 0 010-1.59L9.42 4.83c.211-.211.498-.33.796-.33H19.5a2.25 2.25 0 012.25 2.25v10.5a2.25 2.25 0 01-2.25 2.25h-9.284c-.298 0-.585-.119-.796-.33z" />
+                    </svg>
+
+                  </button>
                 </div>
               </span>
 
