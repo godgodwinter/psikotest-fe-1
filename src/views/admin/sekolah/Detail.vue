@@ -62,14 +62,14 @@ getDataId();
 <template>
   <div class="pt-4 px-10 md:flex justify-between">
     <div>
-      <span
-        class="text-2xl sm:text-3xl leading-none font-bold text-gray-700 shadow-sm"
-        >{{ dataDetail.nama }}
+      <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-700 shadow-sm">{{ dataDetail.nama }}
       </span>
     </div>
     <div class="md:py-0 py-4">
       <BreadCrumb>
-        <template v-slot:content> Sekolah <BreadCrumbSpace /> Detail </template>
+        <template v-slot:content>Sekolah
+          <BreadCrumbSpace /> Detail
+        </template>
       </BreadCrumb>
     </div>
   </div>
